@@ -1,3 +1,34 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Java ###
 # Compiled class file
 *.class
 
@@ -22,3 +53,135 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Maven target 폴더
+target/
+
+# Gradle 빌드 폴더
+.gradle/
+build/
+
+# Gradle 캐시 및 설정 파일
+.gradle
+gradle-app.setting
+
+# Lombok 캐시 파일
+.lombok.config
+
+# JetBrains Rider & WebStorm
+.idea/
+
+# IntelliJ workspace 관련 파일 (자동 생성되는 파일들)
+*.iml
+*.iws
+*.ipr
+
+# H2 Database
+*.h2.db
+*.mv.db
+*.trace.db
+
+# SQLite
+*.sqlite
+*.sqlite3
+
+# Linux
+*.swp
+
+# 환경 변수 파일
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# 인증 키/토큰
+*.pem
+*.crt
+*.key
+
+# 로그 파일
+logs/
+*.log
+*.out
+*.err
+
+# Debug 관련 파일
+debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.db-shm
+*.db-wal
+
+### Homebrew ###
+Brewfile.lock.json
+
+!.idea/misc.xml
+!.idea/modules.xml
