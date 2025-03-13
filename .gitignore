@@ -185,3 +185,6 @@ Brewfile.lock.json
 
 !.idea/misc.xml
 !.idea/modules.xml
+
+# 환경 설정 파일 제외
+src/resources/config.properties
