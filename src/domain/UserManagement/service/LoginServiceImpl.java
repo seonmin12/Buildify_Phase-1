@@ -5,7 +5,7 @@ import dto.AdminDto;
 
 public class LoginServiceImpl implements LoginService{
 
-   private LoginRepository loginRepository;
+   private final LoginRepository loginRepository;
 
     public LoginServiceImpl(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;

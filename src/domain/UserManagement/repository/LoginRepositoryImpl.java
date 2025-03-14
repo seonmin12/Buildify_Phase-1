@@ -42,9 +42,7 @@ public class LoginRepositoryImpl implements LoginRepository {
         } catch (SQLException e) {
             e.printStackTrace();
 
-
         }
         return adminDto;
     }
 }
-
