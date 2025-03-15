@@ -1,5 +1,8 @@
 package controller;
 
-// 전체 통합 메인 컨트롤러
-public class WarehouseController {
+public interface WarehouseController {
+
+    void start();
+    void adminStart();
+    void userStart();
 }
