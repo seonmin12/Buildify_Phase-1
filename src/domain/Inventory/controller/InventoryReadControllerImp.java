@@ -39,10 +39,16 @@ public class InventoryReadControllerImp implements InventoryReadController {
         System.out.println("나중에 업데이트 예정");
 
         for(WarehouseDto warehouseDto : warehouseDtoList){
-            System.out.printf("%s %-10S %2s %8d %6S %5S\n",
-                    warehouseDto.getWare_id(), warehouseDto.getClient_id(),
-                    warehouseDto.getProd_id(), warehouseDto.getQuantity(),
-                    warehouseDto.getLast_outbount_day(),warehouseDto.getLast_inbound_day());
+            System.out.printf(
+                    "상품명:%-8s | 창고ID:%-6s | 회원(입점사)ID:%-6s | 상품ID:%-8s | 재고:%4d | 최종출고일:%-10s | 최종입고일:%-10s\n",
+                    warehouseDto.getProd_name(),
+                    warehouseDto.getWare_id(),
+                    warehouseDto.getClient_id(),
+                    warehouseDto.getProd_id(),
+                    warehouseDto.getQuantity(),
+                    warehouseDto.getLast_outbount_day(),   // Date 타입 -> toString()으로 출력
+                    warehouseDto.getLast_inbound_day()     // Date 타입 -> toString()으로 출력
+            );
         }
 
     }

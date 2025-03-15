@@ -16,39 +16,43 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     CallableStatement cs = null;
     ResultSet rs = null;
     PreparedStatement pstmt = null;
-    @Override
-    public Optional<List<WarehouseDto>> ReadAll() {
-        try {
-            List<WarehouseDto> List = new ArrayList<>();
 
-            String sql = new StringBuilder()
-                    .append("SELECT * FROM WAREHOUSE").toString();
-            pstmt = connection.prepareStatement(sql);
-            rs = pstmt.executeQuery();
+    @Override
+    public Optional<List<WarehouseDto>> ReadAll() throws InventoryException {
+        List<WarehouseDto> warehouseDtoList = new ArrayList<>();
+
+        try {
+            connection.setAutoCommit(false);
+
+            cs = connection.prepareCall("{call inventory_readAll()}");
+            rs = cs.executeQuery();
 
             while(rs.next()){
-                WarehouseDto dto = WarehouseDto.builder()
-                        .ware_id(rs.getString("ware_id"))
-                        .client_id(rs.getString("client_id"))
+
+                WarehouseDto warehouseDto = WarehouseDto.builder()
                         .prod_id(rs.getString("prod_id"))
+                        .prod_name(rs.getString("prod_name"))
+                        .client_id(rs.getString("client_id"))
+                        .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
                         .last_inbound_day(rs.getDate("last_inbound_day"))
                         .last_outbount_day(rs.getDate("last_outbount_day"))
                         .build();
-                List.add(dto);
-            }
-            pstmt.close();
 
-            return Optional.of(List);
+                warehouseDtoList.add(warehouseDto);
+
+
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
-
-
         }
+
+        return Optional.of(warehouseDtoList);
 
 
     }
-
 }
 
