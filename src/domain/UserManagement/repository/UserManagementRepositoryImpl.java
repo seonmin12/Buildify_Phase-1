@@ -12,7 +12,7 @@ import java.util.List;
 
 import static common.Text.*;
 
-public class UserManagementRepositoryImpl implements UserManagementRepository{
+public class UserManagementRepositoryImpl implements UserManagementRepository {
 
     Connection connection = DBConnection.getConnection();
     CallableStatement cs = null;
@@ -84,7 +84,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
     }
 
     @Override
-    public List<UserDto> pendingApprovalUsers() throws BuildifyException{
+    public List<UserDto> pendingApprovalUsers() throws BuildifyException {
         List<UserDto> pendinglist = new ArrayList<>();
 
         try {
@@ -116,7 +116,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
     }
 
     @Override
-    public void approveUser(String Client_id) throws BuildifyException{
+    public void approveUser(String Client_id) throws BuildifyException {
         String sql = new StringBuilder()
                 .append("UPDATE user SET user_status = 1 WHERE client_id = ? ").toString();
 
@@ -145,10 +145,10 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
         try {
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call DB_USER_READONE(?)}");
-            cs.setString(1,Client_id);
+            cs.setString(1, Client_id);
             rs = cs.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 dto = UserDto.builder()
                         .client_id(rs.getString("client_id"))
                         .user_name(rs.getString("user_name"))
@@ -170,20 +170,20 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
     }
 
     @Override
-    public void updateUser(String Client_id,Integer choice,String newValue) {
+    public void updateUser(String Client_id, Integer choice, String newValue) {
         String sql = "";
 
-        switch (choice){
+        switch (choice) {
             case 1:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE user SET user_phone = ? WHERE client_id = ? ").toString();
                 break;
             case 2:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE user SET user_email = ? WHERE client_id = ? ").toString();
                 break;
             case 3:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE user SET user_adress = ? WHERE client_id = ? ").toString();
                 break;
         }
@@ -212,17 +212,17 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
     public void updateSelfAdmin(String Admin_id, Integer choice, String newValue) {
         String sql = "";
 
-        switch (choice){
+        switch (choice) {
             case 1:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE admin SET admin_phone = ? WHERE admin_number = ? ").toString();
                 break;
             case 2:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE admin SET admin_email = ? WHERE admin_number = ? ").toString();
                 break;
             case 3:
-                sql =  new StringBuilder()
+                sql = new StringBuilder()
                         .append("UPDATE admin SET admin_adress = ? WHERE admin_number = ? ").toString();
                 break;
         }
@@ -245,5 +245,25 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
             e.printStackTrace();
             throw new BuildifyException(ErrorCode.DB_READ_ALL_ERROR);
         }
+    }
+
+    @Override
+    public int getUseWareSize() {
+        int size = 0;
+        try {
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call USEWARE()}");
+            rs = cs.executeQuery();
+            if (rs.next()) {
+                size = rs.getInt(1);
+            }
+            cs.close();
+            return size;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return size;
     }
 }

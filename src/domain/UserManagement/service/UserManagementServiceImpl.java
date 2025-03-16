@@ -47,4 +47,9 @@ public class UserManagementServiceImpl implements UserManagementService{
     public void updateSelfAdmin(String Admin_id, Integer choice, String newValue) {
         userManagementRepository.updateSelfAdmin(Admin_id,choice,newValue);
     }
+
+    @Override
+    public int getUseWareSize() {
+        return userManagementRepository.getUseWareSize();
+    }
 }

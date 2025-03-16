@@ -15,4 +15,6 @@ public interface UserManagementRepository {
     void updateUser(String Client_id,Integer choice,String newValue);
 
     void updateSelfAdmin(String Admin_id,Integer choice,String newValue);
+
+    int getUseWareSize();
 }

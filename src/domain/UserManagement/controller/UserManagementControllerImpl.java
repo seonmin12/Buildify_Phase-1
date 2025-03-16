@@ -35,6 +35,8 @@ public class UserManagementControllerImpl implements UserManagementController{
                     users.getUser_adress(),users.getUser_enterday(),
                     users.getUser_status());
         }
+        int size = userManagementService.getUseWareSize();
+        System.out.println("현재 사용중인 창고 평수 : " + size);
     }
 
     @Override
