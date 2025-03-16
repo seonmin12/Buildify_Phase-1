@@ -1,5 +1,11 @@
 import common.ValidCheck;
 import controller.WarehouseController;
+import domain.DH_UserManagement.controller.SignUpController;
+import domain.DH_UserManagement.controller.SignUpControllerImpl;
+import domain.DH_UserManagement.repository.SignUpRepository;
+import domain.DH_UserManagement.repository.SignUpRepositoryImpl;
+import domain.DH_UserManagement.service.SignUpService;
+import domain.DH_UserManagement.service.SignUpServiceImpl;
 import domain.Inventory.controller.InventoryReadController;
 import domain.Inventory.controller.InventoryReadControllerImp;
 import domain.Inventory.repository.InventoryReadRepo;
@@ -18,6 +24,11 @@ public class Main {
         ValidCheck validCheck = new ValidCheck();
         InventoryReadController controller = new InventoryReadControllerImp(service,validCheck);
         controller.ReadByCategory();
+
+//        SignUpRepository repository = new SignUpRepositoryImpl();
+//        SignUpService service1 = new SignUpServiceImpl(repository);
+//        SignUpController controller1 = new SignUpControllerImpl(validCheck, service1);
+//        controller1.signUp();
 
 
 
