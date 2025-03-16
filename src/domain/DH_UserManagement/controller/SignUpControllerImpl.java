@@ -1,9 +1,7 @@
-package UserManagement.controller;
+package domain.DH_UserManagement.controller;
 
 import common.ValidCheck;
-import domain.UserManagement.service.LoginService;
-import domain.UserManagement.service.SignUpService;
-import dto.AdminDto;
+import domain.DH_UserManagement.service.SignUpService;
 
 public class SignUpControllerImpl {
     private final ValidCheck validCheck;

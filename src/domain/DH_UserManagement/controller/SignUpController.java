@@ -1,4 +1,4 @@
-package UserManagement.controller;
+package domain.DH_UserManagement.controller;
 
 import dto.UserDto;
 
