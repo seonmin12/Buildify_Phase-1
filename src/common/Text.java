@@ -3,8 +3,8 @@ package common;
 public enum Text {
     ACCESS_ADMIN("관리자만 접근 가능한 메뉴입니다."),
     ACCESS_SUPER_ADMIN("총 관리자만 접근 가능한 메뉴입니다."),
-    SUPER_ADMIN("총 관리자"),
-    LOCAL_ADMIN("창고 관리자"),
+    SUPER_ADMIN("총관리자"),
+    LOCAL_ADMIN("창고관리자"),
     ACCESS_USER_INPUT("승인할 회원 ID를 입력하세요."),
     SEARCH_USER_INPUT("검색할 회원 Number를 입력해주세요."),
     SEARCH_ADMIN_INPUT("검색할 관리자 Number를 입력해주세요."),
