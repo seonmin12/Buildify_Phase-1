@@ -23,4 +23,13 @@ public class InventoryReadServiceImp implements InventoryReadService {
 
 
     }
+
+    @Override
+    public WarehouseDto ReadOneProductName(String productName) {
+        try {
+            return inventoryReadRepo.ReadOneProductName(productName).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
+        } catch (NotFoundException e) {
+            throw new InventoryException(ErrorCode.ERROR_INPUT);
+        }
+    }
 }
