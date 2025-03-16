@@ -32,4 +32,13 @@ public class InventoryReadServiceImp implements InventoryReadService {
             throw new InventoryException(ErrorCode.ERROR_INPUT);
         }
     }
+
+    @Override
+    public WarehouseDto ReadByClientID(String clientID) {
+        try {
+            return inventoryReadRepo.ReadByClientID(clientID).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
+        } catch (NotFoundException e) {
+            throw new InventoryException(ErrorCode.ERROR_INPUT);
+        }
+    }
 }

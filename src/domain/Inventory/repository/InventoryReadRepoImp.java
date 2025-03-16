@@ -96,5 +96,37 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
 
     }
+
+    @Override
+    public Optional<WarehouseDto> ReadByClientID(String clientID) {
+        try {
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call inventory_read_by_clientID(?)}");
+            cs.setString(1,clientID);
+            rs = cs.executeQuery();
+
+            if(rs.next()){
+                WarehouseDto warehouseDto = WarehouseDto.builder()
+                        .prod_id(rs.getString("prod_id"))
+                        .prod_name(rs.getString("prod_name"))
+                        .client_id(rs.getString("client_id"))
+                        .ware_id(rs.getString("ware_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbount_day"))
+
+                        .build();
+
+
+                cs.close();
+                return Optional.of(warehouseDto);
+
+
+            }else return Optional.empty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+        }
+    }
 }
 

@@ -11,4 +11,6 @@ public interface InventoryReadController {
 
     List<WarehouseDto> ReadAll();
 
+    WarehouseDto ReadByClientID();
+
 }

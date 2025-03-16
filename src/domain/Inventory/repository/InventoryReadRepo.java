@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface InventoryReadRepo {
     Optional<List<WarehouseDto>> ReadAll();
     Optional<WarehouseDto> ReadOneProductName(String productName);
+    Optional <WarehouseDto> ReadByClientID(String clientID);
 }
