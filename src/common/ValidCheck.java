@@ -68,4 +68,9 @@ public class ValidCheck {
         }while (!str.matches(NUMBER_REGEX) || str.isEmpty());
         return input;
     }
+
+    // 입력 값 제한 없는 입력 메소드
+    public String inputAnyString(){
+        return scanner.nextLine();
+    }
 }

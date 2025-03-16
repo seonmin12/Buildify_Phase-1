@@ -7,6 +7,8 @@ import dto.UserDto;
 
 import java.util.List;
 
+import static common.Text.*;
+
 public class UserManagementControllerImpl implements UserManagementController{
     private final UserManagementService userManagementService;
     private final ValidCheck validCheck;
@@ -18,8 +20,9 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void pendingApprovalUsers(AdminDto adminDto) {
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
 
@@ -37,12 +40,13 @@ public class UserManagementControllerImpl implements UserManagementController{
     @Override
     public void approveUser(AdminDto adminDto) {
 
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
 
-        System.out.println("승인할 회원 ID를 입력하세요.");
+        System.out.println(ACCESS_USER_INPUT.getText());
         String client_id = validCheck.inputAnyString();
         userManagementService.approveUser(client_id);
 
@@ -51,8 +55,9 @@ public class UserManagementControllerImpl implements UserManagementController{
     @Override
     public void listAllUsers(AdminDto adminDto) {
 
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
 
@@ -69,12 +74,13 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void searchUser(AdminDto adminDto) {
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
-        System.out.println("검색할 회원 Number를 입력해주세요.");
-        System.out.printf("입력 : ");
+        System.out.println(SEARCH_USER_INPUT.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         String client_id = validCheck.inputAnyString();
         UserDto userdto = userManagementService.searchUser(client_id);
         System.out.println("회원ID 이름 연락처 이메일 주소 가입일 상태");
@@ -87,20 +93,21 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void updateUser(AdminDto adminDto) {
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
 
-        System.out.println("변경할 회원 ID를 입력하세여.");
-        System.out.println("선택 : ");
+        System.out.println(SEARCH_USER_INPUT.getText());
+        System.out.println(INPUT_CHOICE.getText());
         String client_id = validCheck.inputAnyString();
-        System.out.println("변경할 회원정보를 선택하세요.");
+        System.out.println(CHOICE_INPUT_INFO.getText());
         System.out.println("1.연락처 2.이메일 3.주소");
-        System.out.println("선택 : ");
+        System.out.println(INPUT_CHOICE.getText());
         int choice = validCheck.inputNumRegex();
-        System.out.printf("변경할 정보를 입력하세요.");
-        System.out.printf("선택 : ");
+        System.out.printf(INPUT_NEW_VALUE.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         String newValue = null;
         switch (choice){
             case 1 -> newValue = validCheck.inputStringRegex(validCheck.NUMBER_REGEX);
@@ -112,20 +119,21 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void updateSelfAdmin(AdminDto adminDto) {
-        if ((adminDto == null) || (!adminDto.getAdminRole().equals("총관리자") && !adminDto.getAdminRole().equals("창고관리자"))){
-            System.out.println("관리자만 접근 가능한 메뉴입니다.");
+        if ((adminDto == null) || (!adminDto.getAdminRole().equals(SUPER_ADMIN.getText())
+                && !adminDto.getAdminRole().equals(LOCAL_ADMIN.getText()))){
+            System.out.println(ACCESS_ADMIN.getText());
             return;
         }
 
-        System.out.println("변경할 회원 ID를 입력하세여.");
-        System.out.println("선택 : ");
+        System.out.println(SEARCH_USER_INPUT.getText());
+        System.out.println(INPUT_CHOICE.getText());
         String admin_id = adminDto.getAdminNumber();
-        System.out.println("변경할 관리자 정보를 선택하세요.");
+        System.out.println(CHOICE_INPUT_INFO.getText());
         System.out.println("1.연락처  2.이메일  3.주소");
-        System.out.println("선택 : ");
+        System.out.println(INPUT_CHOICE.getText());
         int choice = validCheck.inputNumRegex();
-        System.out.printf("변경할 정보를 입력하세요.");
-        System.out.printf("선택 : ");
+        System.out.printf(INPUT_NEW_VALUE.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         String newValue = null;
         switch (choice){
             case 1 -> newValue = validCheck.inputStringRegex(validCheck.NUMBER_REGEX);
@@ -137,20 +145,20 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void updateAdmin(AdminDto adminDto) {
-        if (adminDto == null || !adminDto.getAdminRole().equals("총관리자")){
-            System.out.println("창고관리자 수정은 총관리자만 가능합니다.");
+        if (adminDto == null || !adminDto.getAdminRole().equals(SUPER_ADMIN.getText())){
+            System.out.println(ACCESS_SUPER_ADMIN.getText());
             return;
         }
 
-        System.out.println("변경할 회원 ID를 입력하세여.");
-        System.out.println("선택 : ");
+        System.out.println(SEARCH_ADMIN_INPUT.getText());
+        System.out.println(INPUT_CHOICE.getText());
         String admin_id = validCheck.inputAnyString();
-        System.out.println("변경할 관리자 정보를 선택하세요.");
+        System.out.println(CHOICE_INPUT_INFO.getText());
         System.out.println("1.연락처  2.이메일  3.주소");
-        System.out.println("선택 : ");
+        System.out.println(INPUT_CHOICE.getText());
         int choice = validCheck.inputNumRegex();
-        System.out.printf("변경할 정보를 입력하세요.");
-        System.out.printf("선택 : ");
+        System.out.println(INPUT_NEW_VALUE.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         String newValue = null;
         switch (choice){
             case 1 -> newValue = validCheck.inputStringRegex(validCheck.NUMBER_REGEX);
@@ -162,8 +170,8 @@ public class UserManagementControllerImpl implements UserManagementController{
 
     @Override
     public void listAllLocalAdmin(AdminDto adminDto) {
-        if (adminDto == null || !adminDto.getAdminRole().equals("총관리자")){
-            System.out.println("창고관리자 조회는 총관리자만 가능합니다.");
+        if (adminDto == null || !adminDto.getAdminRole().equals(SUPER_ADMIN.getText())){
+            System.out.println(ACCESS_SUPER_ADMIN.getText());
             return;
         }
         List<AdminDto> adminDtoList = userManagementService.listAllLocalAdmin();
