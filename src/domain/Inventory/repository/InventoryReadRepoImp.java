@@ -2,6 +2,7 @@ package domain.Inventory.repository;
 
 import common.ErrorCode;
 import config.DBConnection;
+import dto.InventoryDto;
 import dto.WarehouseDto;
 import exception.InventoryException;
 
@@ -18,8 +19,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     PreparedStatement pstmt = null;
 
     @Override
-    public Optional<List<WarehouseDto>> ReadAll() throws InventoryException {
-        List<WarehouseDto> warehouseDtoList = new ArrayList<>();
+    public Optional<List<InventoryDto>> ReadAll() throws InventoryException {
+        List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
             connection.setAutoCommit(false);
@@ -29,7 +30,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
             while(rs.next()){
 
-                WarehouseDto warehouseDto = WarehouseDto.builder()
+                InventoryDto inventoryDto = InventoryDto.builder()
                         .prod_id(rs.getString("prod_id"))
                         .prod_name(rs.getString("prod_name"))
                         .client_id(rs.getString("client_id"))
@@ -41,7 +42,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
 
 
-                warehouseDtoList.add(warehouseDto);
+                inventoryDtoList.add(inventoryDto);
 
 
             }
@@ -52,7 +53,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
             throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
         }
 
-        return Optional.of(warehouseDtoList);
+        return Optional.of(inventoryDtoList);
 
 
     }
@@ -60,7 +61,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     // 상품명을 입력받아 재고를 조회하는 메소드
 
     @Override
-    public Optional<WarehouseDto> ReadOneProductName(String productName) throws InventoryException {
+    public Optional<InventoryDto> ReadOneProductName(String productName) throws InventoryException {
 
         try {
             connection.setAutoCommit(false);
@@ -70,7 +71,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
 
             if(rs.next()){
-                WarehouseDto warehouseDto = WarehouseDto.builder()
+                InventoryDto inventoryDto = InventoryDto.builder()
                         .prod_id(rs.getString("prod_id"))
                         .prod_name(rs.getString("prod_name"))
                         .client_id(rs.getString("client_id"))
@@ -84,7 +85,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
                         cs.close();
 
-                        return Optional.of(warehouseDto);
+                        return Optional.of(inventoryDto);
 
 
             }else return Optional.empty();
@@ -98,7 +99,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     }
 
     @Override
-    public Optional<WarehouseDto> ReadByClientID(String clientID) {
+    public Optional<InventoryDto> ReadByClientID(String clientID) {
         try {
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_read_by_clientID(?)}");
@@ -106,7 +107,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
             rs = cs.executeQuery();
 
             if(rs.next()){
-                WarehouseDto warehouseDto = WarehouseDto.builder()
+                InventoryDto inventoryDto = InventoryDto.builder()
                         .prod_id(rs.getString("prod_id"))
                         .prod_name(rs.getString("prod_name"))
                         .client_id(rs.getString("client_id"))
@@ -119,10 +120,43 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
 
                 cs.close();
-                return Optional.of(warehouseDto);
+                return Optional.of(inventoryDto);
 
 
             }else return Optional.empty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+        }
+    }
+
+    @Override
+    public List<InventoryDto> ReadByCategory(String category) {
+        List<InventoryDto> list = new ArrayList<>();
+
+        try {
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call inventory_read_by_category(?)}");
+            cs.setString(1,category);
+            rs = cs.executeQuery();
+
+            while(rs.next()){
+                InventoryDto inventoryDto = InventoryDto.builder()
+                        .prod_id(rs.getString("prod_id"))
+                        .prod_name(rs.getString("prod_name"))
+                        .client_id(rs.getString("client_id"))
+                        .ware_id(rs.getString("ware_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbount_day"))
+
+                        .build();
+                list.add(inventoryDto);
+
+            }
+            cs.close();
+            return list;
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
