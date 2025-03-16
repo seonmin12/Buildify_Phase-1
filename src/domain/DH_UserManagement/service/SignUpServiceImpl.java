@@ -1,4 +1,10 @@
 package domain.DH_UserManagement.service;
 
-public class SignUpServiceImpl {
+import dto.UserDto;
+
+public class SignUpServiceImpl implements SignUpService {
+    @Override
+    public boolean registerUser(UserDto userDto) {
+        return false;
+    }
 }

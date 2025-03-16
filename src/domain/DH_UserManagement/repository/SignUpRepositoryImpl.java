@@ -1,4 +1,10 @@
 package domain.DH_UserManagement.repository;
 
-public class SignUpRepositoryImpl {
+import dto.UserDto;
+
+public class SignUpRepositoryImpl implements SignUpRepository {
+    @Override
+    public boolean InsertUser(UserDto userDto) {
+        return false;
+    }
 }
