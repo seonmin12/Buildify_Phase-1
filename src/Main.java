@@ -17,7 +17,7 @@ public class Main {
         InventoryReadService service = new InventoryReadServiceImp(repo);
         ValidCheck validCheck = new ValidCheck();
         InventoryReadController controller = new InventoryReadControllerImp(service,validCheck);
-        controller.ReadOneProductName();
+        controller.ReadByClientID();
 
 
 

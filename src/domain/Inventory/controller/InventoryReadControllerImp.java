@@ -73,4 +73,26 @@ public class InventoryReadControllerImp implements InventoryReadController {
 
         return null;
     }
+
+    @Override
+    public WarehouseDto ReadByClientID() {
+      Scanner scanner = new Scanner(System.in);
+        System.out.print("고객 ID(client_id)를 입력하세요: ");
+        String clientId = scanner.nextLine();
+        WarehouseDto warehouseDto = inventoryReadService.ReadByClientID(clientId);
+        if(warehouseDto == null) {
+            System.out.println("정보를 찾을 수 없습니다.");
+            return null;
+        }
+        System.out.printf(  "상품명:%-8s | 창고ID:%-6s | 회원(입점사)ID:%-6s | 상품ID:%-8s | 재고:%4d | 최종출고일:%-10s | 최종입고일:%-10s\n",
+                warehouseDto.getProd_name(),
+                warehouseDto.getWare_id(),
+                warehouseDto.getClient_id(),
+                warehouseDto.getProd_id(),
+                warehouseDto.getQuantity(),
+                warehouseDto.getLast_outbount_day(),
+                warehouseDto.getLast_inbound_day() );
+        return warehouseDto;
+
+    }
 }
