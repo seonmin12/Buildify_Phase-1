@@ -10,6 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static common.Text.*;
+
 public class UserManagementRepositoryImpl implements UserManagementRepository{
 
     Connection connection = DBConnection.getConnection();
@@ -195,9 +197,9 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println(Client_id + " 회원님의 정보가 변경되었습니다.");
+                System.out.println(Client_id + CHANGE_SUCCESS.getText());
             } else {
-                System.out.println("회원 정보 변경 실패: 존재하지 않는 회원 ID");
+                System.out.println(USER_CHANGE_FAIL.getText());
             }
 
         } catch (SQLException e) {
@@ -234,9 +236,9 @@ public class UserManagementRepositoryImpl implements UserManagementRepository{
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println(Admin_id + " 관리자님의 정보가 변경되었습니다.");
+                System.out.println(Admin_id + CHANGE_SUCCESS.getText());
             } else {
-                System.out.println("관리자 정보 변경 실패: 존재하지 않는 관리자 ID");
+                System.out.println(ADMIN_CHANGE_FAIL.getText());
             }
 
         } catch (SQLException e) {

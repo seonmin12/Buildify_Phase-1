@@ -15,6 +15,9 @@ import domain.UserManagement.service.UserManagementService;
 import domain.UserManagement.service.UserManagementServiceImpl;
 import dto.AdminDto;
 
+import static common.ErrorCode.*;
+import static common.Text.*;
+
 // 전체 통합 메인 컨트롤러
 public class WarehouseControllerImpl implements WarehouseController{
     private final LoginController loginController;
@@ -29,28 +32,26 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void start() {
-        System.out.println("+--------------------------------------+");
-        System.out.println("|      Warehouse Management System     |");
-        System.out.println("|                                      |");
-        System.out.println("|           Buildify System            |");
-        System.out.println("|                                      |");
-        System.out.println("+--------------------------------------+");
+        System.out.println(PROGRAM_START_1.getText());
+        System.out.println(PROGRAM_START_2.getText());
+        System.out.println(PROGRAM_START_3.getText());
+        System.out.println(PROGRAM_START_4.getText());
+        System.out.println(PROGRAM_START_5.getText());
+        System.out.println(PROGRAM_START_6.getText());
 
-        System.out.println("1.관리자 로그인");
-        System.out.println("2.회원 로그인");
-        System.out.println("3.프로그램 종료");
-        System.out.printf("선택 : ");
+        System.out.println(LOGIN_MENU.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         int choice = validCheck.inputNumRegex();
 
         switch (choice){
             case 1 -> adminStart();
             case 2 -> userStart();
             case 3 -> {
-                System.out.println("종료");
+                System.out.println(EXIT.getText());
                 System.exit(0);
             }
             default -> {
-                System.out.println("올바른 숫자를 입력해주세요");
+                System.out.println(ERROR_INPUT.getText());
                 start();
             }
         }
@@ -58,7 +59,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void adminStart() {
-        System.out.println("로그인을 시작합니다.");
+        System.out.println(START_LOGIN.getText());
         loginController.login();
         AdminDto adminDto = loginController.getAdminLoginStatus();
 
@@ -73,8 +74,8 @@ public class WarehouseControllerImpl implements WarehouseController{
         }
 
         while (true) {
-            System.out.println("1.회원관리 2.입고관리 3.출고관리 4.재고관리 5.로그아웃");
-            System.out.println("메뉴선택:");
+            System.out.println(ADMIN_MENU.getText());
+            System.out.println(INPUT_CHOICE.getText());
             int choice = validCheck.inputNumRegex();
             switch (choice) {
                 case 1 -> adminUserManagement(adminDto);
@@ -82,11 +83,11 @@ public class WarehouseControllerImpl implements WarehouseController{
                 case 3 -> adminOutboundStart(adminDto);
                 case 4 -> adminInventoryStart(adminDto);
                 case 5 -> {
-                    System.out.println("로그아웃");
+                    System.out.println(LOGOUT.getText());
                     start();
                 }
                 default -> {
-                    System.out.println("올바른 번호를 입력하세요");
+                    System.out.println(ERROR_INPUT.getText());
                     break;
                 }
             }
@@ -100,12 +101,12 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void adminUserManagement(AdminDto adminDto) {
-        System.out.println("1.승인대기회원 2.회원조회 3.회원정보수정 4.내 정보 수정 5.관리자 수정 및 조회(총관리자만가능)");
+        System.out.println(ADMIN_USER_MANAGEMENT_MENU.getText());
         int choice = validCheck.inputNumRegex();
         switch (choice){
             case 1:
                 userManagementController.pendingApprovalUsers(adminDto);
-                System.out.println("1.승인 2.이전메뉴");
+                System.out.println(ADMIN_MENU_CHOICE.getText());
                 choice = validCheck.inputNumRegex();
                 switch (choice) {
                     case 1 -> userManagementController.approveUser(adminDto);
@@ -115,7 +116,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                 }
                 break;
             case 2:
-                System.out.println("1.전체 회원 조회 2.회원 검색");
+                System.out.println(ADMIN_USER_SERACH.getText());
                 choice = validCheck.inputNumRegex();
                 switch (choice) {
                     case 1 -> userManagementController.listAllUsers(adminDto);
@@ -123,23 +124,23 @@ public class WarehouseControllerImpl implements WarehouseController{
                 }
                 break;
             case 3:
-                System.out.println("회원정보수정");
+                System.out.println(USER_INFO_CHANGER.getText());
                 userManagementController.updateUser(adminDto);
                 break;
             case 4:
                 userManagementController.updateSelfAdmin(adminDto);
                 break;
             case 5:
-                System.out.println("1.창고관리자 조회 2.창고관리자 수정");
+                System.out.println(LOCAL_ADMIN_MENU.getText());
                 choice = validCheck.inputNumRegex();
                 switch (choice){
                     case 1 -> userManagementController.listAllLocalAdmin(adminDto);
                     case 2 -> userManagementController.updateAdmin(adminDto);
-                    default -> System.out.println("올바른 메뉴를 선택하세요.");
+                    default -> System.out.println(ERROR_INPUT.getText());
                 }
                 break;
             default:
-                System.out.println("올바른 메뉴를 선택하세요.");
+                System.out.println(ERROR_INPUT.getText());
                 return;
         }
 
