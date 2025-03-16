@@ -1,16 +1,19 @@
 package domain.Inventory.controller;
 
+import dto.InventoryDto;
 import dto.WarehouseDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface InventoryReadController {
-    WarehouseDto ReadOneProductName();
+    InventoryDto ReadOneProductName();
 
 
-    List<WarehouseDto> ReadAll();
+    List<InventoryDto> ReadAll();
 
-    WarehouseDto ReadByClientID();
+    InventoryDto ReadByClientID();
+
+    List<InventoryDto> ReadByCategory();
 
 }

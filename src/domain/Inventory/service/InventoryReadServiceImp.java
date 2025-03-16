@@ -2,6 +2,7 @@ package domain.Inventory.service;
 
 import common.ErrorCode;
 import domain.Inventory.repository.InventoryReadRepo;
+import dto.InventoryDto;
 import dto.WarehouseDto;
 import exception.InventoryException;
 import exception.NotFoundException;
@@ -14,7 +15,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
         this.inventoryReadRepo = inventoryReadRepo;
     }
     @Override
-    public List<WarehouseDto> ReadAll() {
+    public List<InventoryDto> ReadAll() {
         try {
             return inventoryReadRepo.ReadAll().orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
         } catch (NotFoundException e) {
@@ -25,7 +26,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
     }
 
     @Override
-    public WarehouseDto ReadOneProductName(String productName) {
+    public InventoryDto ReadOneProductName(String productName) {
         try {
             return inventoryReadRepo.ReadOneProductName(productName).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
         } catch (NotFoundException e) {
@@ -34,11 +35,22 @@ public class InventoryReadServiceImp implements InventoryReadService {
     }
 
     @Override
-    public WarehouseDto ReadByClientID(String clientID) {
+    public InventoryDto ReadByClientID(String clientID) {
         try {
             return inventoryReadRepo.ReadByClientID(clientID).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
         } catch (NotFoundException e) {
             throw new InventoryException(ErrorCode.ERROR_INPUT);
         }
+    }
+
+    @Override
+    public List<InventoryDto> ReadByCategory(String category) {
+        List<InventoryDto> inventoryList = inventoryReadRepo.ReadByCategory(category);
+
+        if (inventoryList == null || inventoryList.isEmpty()) {
+            throw new InventoryException(ErrorCode.ERROR_INPUT);
+        }
+
+        return inventoryList;
     }
 }

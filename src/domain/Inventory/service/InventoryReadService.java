@@ -1,11 +1,13 @@
 package domain.Inventory.service;
 
+import dto.InventoryDto;
 import dto.WarehouseDto;
 
 import java.util.List;
 
 public interface InventoryReadService {
-    List<WarehouseDto> ReadAll();
-    WarehouseDto ReadOneProductName(String productName);
-    WarehouseDto ReadByClientID(String clientID);
+    List<InventoryDto> ReadAll();
+    InventoryDto ReadOneProductName(String productName);
+    InventoryDto ReadByClientID(String clientID);
+    List<InventoryDto> ReadByCategory(String category);
 }
