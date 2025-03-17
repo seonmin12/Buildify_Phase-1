@@ -115,6 +115,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                         .user_adress(rs.getString("user_adress"))
                         .user_enterday(rs.getDate("user_enterday"))
                         .user_status(rs.getInt("user_status"))
+                        .user_ware_size(rs.getBigDecimal("user_ware_size"))
                         .build();
                 pendinglist.add(dto);
             }
@@ -143,9 +144,9 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println(Client_id + " 회원이 승인되었습니다.");
+                System.out.println(Client_id + USER_APPROVE_SUCCESS.getText());
             } else {
-                System.out.println("회원 승인 실패: 존재하지 않는 회원 ID");
+                System.out.println(USER_CHANGE_FAIL.getText());
             }
 
         } catch (SQLException e) {

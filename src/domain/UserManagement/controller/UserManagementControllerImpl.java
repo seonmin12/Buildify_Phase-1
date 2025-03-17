@@ -31,8 +31,7 @@ public class UserManagementControllerImpl implements UserManagementController{
         }
 
         List<UserDto> pendingList = userManagementService.pendingApprovalUsers();
-        System.out.printf("%-10s %-8s %-15s %-25s %-20s %-12s %-10s\n",
-                "회원ID", "이름", "연락처", "이메일", "주소", "가입일", "희망계약면적");
+        System.out.printf(PENDING_USER_LIST.getText());
         for (UserDto users : pendingList) {
             System.out.printf("%-10s %-8s %-15s %-25s %-20s %-12s %-10.2f\n",
                     users.getClient_id(),users.getUser_name(),
@@ -41,7 +40,7 @@ public class UserManagementControllerImpl implements UserManagementController{
                     users.getUser_ware_size());
         }
         int size = userManagementService.getUseWareSize();
-        System.out.println("계약 가능한 창고 면적 : " + size);
+        System.out.println(AVAILABLE_WAREHOUSE.getText() + size);
     }
 
     /**
@@ -77,8 +76,7 @@ public class UserManagementControllerImpl implements UserManagementController{
         }
 
         List<UserDto> userDtoList = userManagementService.listAllUsers();
-        System.out.printf("%-8s %-6s %-15s %-25s %-18s %-12s %-4s\n",
-                "회원ID", "이름", "연락처", "이메일", "주소", "가입일", "상태");
+        System.out.printf(USER_LIST.getText());
         for (UserDto users : userDtoList) {
             String status;
             if (users.getUser_status() == 0 ){
@@ -108,7 +106,7 @@ public class UserManagementControllerImpl implements UserManagementController{
         String client_id = validCheck.inputAnyString();
         UserDto userdto = userManagementService.searchUser(client_id);
         if (userdto == null){
-            System.out.println(client_id + "는 없는 고객입니다.");
+            System.out.println(client_id + NOT_FIND_USER.getText());
             return;
         }
         System.out.printf("%-10s %-10s %-15s %-25s %-20s %-12s %-6s\n",
@@ -139,7 +137,7 @@ public class UserManagementControllerImpl implements UserManagementController{
         String client_id = validCheck.inputAnyString();
         UserDto userdto = userManagementService.searchUser(client_id);
         if (userdto == null){
-            System.out.println(client_id + "는 없는 고객입니다.");
+            System.out.println(client_id + NOT_FIND_USER.getText());
             return;
         }
         System.out.println(CHOICE_INPUT_INFO.getText());
@@ -227,8 +225,7 @@ public class UserManagementControllerImpl implements UserManagementController{
             return;
         }
         List<AdminDto> adminDtoList = userManagementService.listAllLocalAdmin();
-        System.out.printf("%-12s %-10s %-8s %-25s %-12s %-20s %-15s\n",
-                "관리자번호", "직급", "이름", "이메일", "입사일", "주소", "연락처");
+        System.out.printf(ADMIN_LIST_MENU.getText());
         System.out.println(ROUND_BAR.getText());
         for (AdminDto admins : adminDtoList){
             System.out.printf("%-12s %-10s %-8s %-25s %-12s %-20s %-15s\n",
@@ -245,8 +242,7 @@ public class UserManagementControllerImpl implements UserManagementController{
     @Override
     public void searchMyInfo(AdminDto admindto) {
         AdminDto searchAdmin = userManagementService.searchAdmin(admindto.getAdminNumber());
-        System.out.printf("%-12s %-10s %-8s %-25s %-12s %-20s %-15s\n",
-                "관리자번호", "직급", "이름", "이메일", "입사일", "주소", "연락처");
+        System.out.printf(ADMIN_LIST_MENU.getText());
         System.out.println(ROUND_BAR.getText());
         System.out.printf("%-12s %-10s %-8s %-25s %-12s %-20s %-15s\n",
                 searchAdmin.getAdminNumber(),searchAdmin.getAdminRole(),
