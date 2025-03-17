@@ -14,6 +14,10 @@ public class LoginControllerImpl implements LoginController {
         this.loginService = loginService;
     }
 
+    /**
+     * 관리자 로그인 기능
+     * @return adminDto
+     */
     @Override
     public AdminDto login() {
         int count = 0;
@@ -52,6 +56,10 @@ public class LoginControllerImpl implements LoginController {
         return null;
     }
 
+    /**
+     * 로그인 되어있는 관리자 객체 호출
+     * @return adminDto
+     */
     @Override
     public AdminDto getAdminLoginStatus() {
         return adminDto;
