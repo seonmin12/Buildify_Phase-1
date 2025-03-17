@@ -8,10 +8,16 @@ import domain.DH_UserManagement.service.SignUpService;
 import domain.DH_UserManagement.service.SignUpServiceImpl;
 import domain.Inventory.controller.InventoryReadController;
 import domain.Inventory.controller.InventoryReadControllerImp;
+import domain.Inventory.controller.InventoryUpdateController;
+import domain.Inventory.controller.InventoryUpdateCotrollerImp;
 import domain.Inventory.repository.InventoryReadRepo;
 import domain.Inventory.repository.InventoryReadRepoImp;
+import domain.Inventory.repository.InventoryUpdateRepo;
+import domain.Inventory.repository.InventoryUpdateRepoImp;
 import domain.Inventory.service.InventoryReadService;
 import domain.Inventory.service.InventoryReadServiceImp;
+import domain.Inventory.service.InventoryUpdateService;
+import domain.Inventory.service.InventoryUpdateServiceImp;
 import dto.WarehouseDto;
 
 public class Main {
@@ -19,11 +25,16 @@ public class Main {
     // 테스트용 메인
     public static void main(String[] args) {
 
-        InventoryReadRepo repo = new InventoryReadRepoImp();
-        InventoryReadService service = new InventoryReadServiceImp(repo);
-        ValidCheck validCheck = new ValidCheck();
-        InventoryReadController controller = new InventoryReadControllerImp(service,validCheck);
-        controller.ReadByCategory();
+        // inventory Test
+//        InventoryReadRepo repo = new InventoryReadRepoImp();
+//        InventoryReadService service = new InventoryReadServiceImp(repo);
+//        ValidCheck validCheck = new ValidCheck();
+//        InventoryReadController controller = new InventoryReadControllerImp(service,validCheck);
+//        InventoryUpdateRepo updateRepo = new InventoryUpdateRepoImp();
+//        InventoryUpdateService updateService = new InventoryUpdateServiceImp(updateRepo);
+//        InventoryUpdateController updateController = new InventoryUpdateCotrollerImp(updateService,validCheck);
+//        updateController.updateQuantity();
+
 
 //        SignUpRepository repository = new SignUpRepositoryImpl();
 //        SignUpService service1 = new SignUpServiceImpl(repository);
