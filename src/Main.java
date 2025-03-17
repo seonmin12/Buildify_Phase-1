@@ -6,12 +6,9 @@ import domain.DH_UserManagement.repository.SignUpRepository;
 import domain.DH_UserManagement.repository.SignUpRepositoryImpl;
 import domain.DH_UserManagement.service.SignUpService;
 import domain.DH_UserManagement.service.SignUpServiceImpl;
-import domain.Inbound.controller.InboundSearchController;
-import domain.Inbound.controller.InboundSearchControllerImp;
-import domain.Inbound.repository.InboundSearchRepo;
-import domain.Inbound.repository.InboundSearchRepoImp;
-import domain.Inbound.service.InboundSearchService;
-import domain.Inbound.service.InboundSearchServiceImp;
+import domain.Inbound.controller.*;
+import domain.Inbound.repository.*;
+import domain.Inbound.service.*;
 import domain.Inventory.controller.InventoryReadController;
 import domain.Inventory.controller.InventoryReadControllerImp;
 import domain.Inventory.repository.InventoryReadRepo;
@@ -36,11 +33,26 @@ public class Main {
 //        SignUpController controller1 = new SignUpControllerImpl(validCheck, service1);
 //        controller1.signUp();
 
-        InboundSearchRepo repo = new InboundSearchRepoImp(); // Repository 생성
-        InboundSearchService service = new InboundSearchServiceImp(repo);
+//        InboundSearchRepo repo = new InboundSearchRepoImp(); // Repository 생성
+//        InboundSearchService service = new InboundSearchServiceImp(repo);
+//        ValidCheck validCheck = new ValidCheck();
+//        InboundSearchController inboundSearchController =new InboundSearchControllerImp(service, validCheck);
+//        inboundSearchController.SearchAll();
+
+//        InboundInsertRepo repo = new InboundInsertRepoImp();
+//        InboundSearchRepo searchRepo = new InboundSearchRepoImp();
+//        InboundInsertService service = new InboundInsertServiceImp(repo, searchRepo);
+//        ValidCheck validCheck = new ValidCheck();
+//        InboundInsertController inboundInsertController = new InboounInsertControllerImp(service);
+//        inboundInsertController.insertrun();
+
+        InboundDeleteRepo repo = new InboundDeleteRepoImp();
+        InboundSearchRepo searchRepo = new InboundSearchRepoImp();
+        InboundDeleteService service = new InboundDeleteServiceImp(repo, searchRepo);
         ValidCheck validCheck = new ValidCheck();
-        InboundSearchController inboundSearchController =new InboundSearchControllerImp(service, validCheck);
-        inboundSearchController.SearchAll();
+        InboundDeleteController inboundDeleteController = new InboundDeleteControllerImp(service);
+        inboundDeleteController.delete();
+
 
 
 
