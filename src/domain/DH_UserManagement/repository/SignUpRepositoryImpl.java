@@ -25,7 +25,7 @@ public class SignUpRepositoryImpl implements SignUpRepository {
             cs.setString(2, userDto.getUser_phone());
             cs.setString(3, userDto.getUser_email());
             cs.setString(4, userDto.getUser_adress());
-            cs.setInt(5, userDto.getBusiness_number());
+            cs.setString(5, userDto.getBusiness_number());
             cs.setString(6, userDto.getUser_id());
             cs.setString(7, userDto.getUser_pw());
             cs.setInt(8, userDto.getUser_status());
