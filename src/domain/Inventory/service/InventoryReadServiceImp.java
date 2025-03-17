@@ -26,21 +26,26 @@ public class InventoryReadServiceImp implements InventoryReadService {
     }
 
     @Override
-    public InventoryDto ReadOneProductName(String productName) {
-        try {
-            return inventoryReadRepo.ReadOneProductName(productName).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
-        } catch (NotFoundException e) {
+    public List<InventoryDto> ReadByProductName(String productName) {
+        List<InventoryDto> inventoryList = inventoryReadRepo.ReadByProductName(productName);
+
+        if (inventoryList == null || inventoryList.isEmpty()) {
             throw new InventoryException(ErrorCode.ERROR_INPUT);
         }
+
+        return inventoryList;
     }
 
     @Override
-    public InventoryDto ReadByClientID(String clientID) {
-        try {
-            return inventoryReadRepo.ReadByClientID(clientID).orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
-        } catch (NotFoundException e) {
+    public List <InventoryDto> ReadByClientID(String clientID) {
+        List<InventoryDto> inventoryList = inventoryReadRepo.ReadByCategory(clientID);
+
+        if (inventoryList == null || inventoryList.isEmpty()) {
             throw new InventoryException(ErrorCode.ERROR_INPUT);
         }
+
+        return inventoryList;
+
     }
 
     @Override

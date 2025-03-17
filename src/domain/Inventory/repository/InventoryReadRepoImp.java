@@ -61,7 +61,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     // 상품명을 입력받아 재고를 조회하는 메소드
 
     @Override
-    public Optional<InventoryDto> ReadOneProductName(String productName) throws InventoryException {
+    public List<InventoryDto> ReadByProductName(String productName) throws InventoryException {
+        List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
             connection.setAutoCommit(false);
@@ -70,7 +71,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
             rs = cs.executeQuery();
 
 
-            if(rs.next()){
+            while(rs.next()){
                 InventoryDto inventoryDto = InventoryDto.builder()
                         .prod_id(rs.getString("prod_id"))
                         .prod_name(rs.getString("prod_name"))
@@ -82,13 +83,11 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
                         .build();
 
+                inventoryDtoList.add(inventoryDto);
 
-                        cs.close();
-
-                        return Optional.of(inventoryDto);
-
-
-            }else return Optional.empty();
+            }
+            cs.close();
+            return inventoryDtoList;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,14 +98,15 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     }
 
     @Override
-    public Optional<InventoryDto> ReadByClientID(String clientID) {
+    public List<InventoryDto> ReadByClientID(String clientID) {
+        List<InventoryDto> inventoryDtoList = new ArrayList<>();
         try {
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_read_by_clientID(?)}");
             cs.setString(1,clientID);
             rs = cs.executeQuery();
 
-            if(rs.next()){
+            while(rs.next()){
                 InventoryDto inventoryDto = InventoryDto.builder()
                         .prod_id(rs.getString("prod_id"))
                         .prod_name(rs.getString("prod_name"))
@@ -118,12 +118,12 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
                         .build();
 
+               inventoryDtoList.add(inventoryDto);
 
-                cs.close();
-                return Optional.of(inventoryDto);
+            }
+            cs.close();
+            return inventoryDtoList;
 
-
-            }else return Optional.empty();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
