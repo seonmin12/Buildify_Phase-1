@@ -9,7 +9,7 @@ CREATE PROCEDURE SignUp(
     IN p_user_phone VARCHAR(15),
     IN p_user_email VARCHAR(30),
     IN p_user_address VARCHAR(30),
-    IN p_business_number INT,
+    IN p_business_number VARCHAR(30),
     IN p_user_id VARCHAR(15),
     IN p_user_pw VARCHAR(15),
     IN p_user_status TINYINT(1),
@@ -52,3 +52,6 @@ BEGIN
 END //
 
 DELIMITER ;
+
+ALTER TABLE user
+    MODIFY COLUMN business_number VARCHAR(30) NOT NULL;

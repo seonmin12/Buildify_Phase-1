@@ -14,12 +14,12 @@ public class ValidCheck {
     //이메일
     public final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     //ID 영어+문자 12글자 제한
-    public final String ID_REGEX = "^[A-Za-z\\d]{1,12}";
+    public final String ID_REGEX = "^[A-Za-z\\d]{4,12}";
     //PW 양어+숫자+특수문자 조합 8글자 이상
     public final String PW_REGEX ="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-    // 유저 아이디 (이메일 형식) 정규식
-    public final String SIGN_UP_ID_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    // 유저 이메일 형식 정규식
+    public final String SIGN_UP_EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     // 유저 비밀번호 (영문 + 숫자 + 특수문자 포함, 8~15자) 정규식
     public final String SIGN_UP_PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$";
     // 유저 이름 (한글/영문, 2~30자)
