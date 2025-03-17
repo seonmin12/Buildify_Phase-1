@@ -23,13 +23,15 @@ public enum Text {
     EXIT("종료"),
     START_LOGIN("로그인을 시작합니다."),
     LOGOUT("로그아웃"),
-    LOGIN_MENU("1.관리자 로그인 2. 회원 로그인 3.프로그램종료"),
+    LOGIN_MENU("1.관리자 로그인 2. 회원가입 3. 회원 로그인 4.프로그램종료"),
     ADMIN_MENU("1.회원관리 2.입고관리 3.출고관리 4.재고관리 5.로그아웃"),
-    ADMIN_USER_MANAGEMENT_MENU("1.승인대기회원 2.회원조회 3.회원정보수정 4.내 정보 수정 5.관리자 수정 및 조회(총관리자만가능)"),
+    ADMIN_USER_MANAGEMENT_MENU("1.승인대기회원 2.회원조회 3.회원정보수정 4.내 정보 조회 및 수정 5.관리자 수정 및 조회(총관리자만가능)"),
     ADMIN_MENU_CHOICE("1.승인 2.이전메뉴"),
     ADMIN_USER_SERACH("1.전체 회원 조회 2.회원 검색"),
     USER_INFO_CHANGER("회원정보수정"),
-    LOCAL_ADMIN_MENU("1.창고관리자 조회 2.창고관리자 수정");
+    LOCAL_ADMIN_MENU("1.창고관리자 조회 2.창고관리자 수정"),
+    SELECT_UPDATE("1.연락처  2.이메일  3.주소"),
+    ROUND_BAR("=====================================================================================================================");
 
     private final String text;
       Text(String text) {

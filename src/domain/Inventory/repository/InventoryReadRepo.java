@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface InventoryReadRepo {
     Optional<List<InventoryDto>> ReadAll();
-    Optional<InventoryDto> ReadOneProductName(String productName);
-    Optional <InventoryDto> ReadByClientID(String clientID);
+    List<InventoryDto> ReadByProductName(String productName);
+    List <InventoryDto> ReadByClientID(String clientID);
     List<InventoryDto> ReadByCategory(String category);
 }

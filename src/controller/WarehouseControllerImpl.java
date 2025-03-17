@@ -1,6 +1,18 @@
 package controller;
 
 import common.ValidCheck;
+import domain.DH_UserManagement.controller.SignUpController;
+import domain.DH_UserManagement.controller.SignUpControllerImpl;
+import domain.DH_UserManagement.controller.UserLoginController;
+import domain.DH_UserManagement.controller.UserLoginControllerImpl;
+import domain.DH_UserManagement.repository.SignUpRepository;
+import domain.DH_UserManagement.repository.SignUpRepositoryImpl;
+import domain.DH_UserManagement.repository.UserLoginRepository;
+import domain.DH_UserManagement.repository.UserLoginRepositoryImpl;
+import domain.DH_UserManagement.service.SignUpService;
+import domain.DH_UserManagement.service.SignUpServiceImpl;
+import domain.DH_UserManagement.service.UserLoginService;
+import domain.DH_UserManagement.service.UserLoginServiceImpl;
 import domain.UserManagement.controller.LoginController;
 import domain.UserManagement.controller.LoginControllerImpl;
 import domain.UserManagement.controller.UserManagementController;
@@ -14,6 +26,7 @@ import domain.UserManagement.service.LoginServiceImpl;
 import domain.UserManagement.service.UserManagementService;
 import domain.UserManagement.service.UserManagementServiceImpl;
 import dto.AdminDto;
+import dto.UserDto;
 
 import static common.ErrorCode.*;
 import static common.Text.*;
@@ -22,11 +35,15 @@ import static common.Text.*;
 public class WarehouseControllerImpl implements WarehouseController{
     private final LoginController loginController;
     private final UserManagementController userManagementController;
+    private final UserLoginController userLoginController;
+    private final SignUpController signUpController;
     private final ValidCheck validCheck;
 
-    public WarehouseControllerImpl(LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
+    public WarehouseControllerImpl(UserLoginController userLoginController, SignUpController signUpController, LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
+        this.userLoginController = userLoginController;
+        this.signUpController = signUpController;
         this.validCheck = validCheck;
     }
 
@@ -45,8 +62,9 @@ public class WarehouseControllerImpl implements WarehouseController{
 
         switch (choice){
             case 1 -> adminStart();
-            case 2 -> userStart();
-            case 3 -> {
+            case 2 -> signUp();
+            case 3 -> userStart();
+            case 4 -> {
                 System.out.println(EXIT.getText());
                 System.exit(0);
             }
@@ -96,7 +114,20 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void userStart() {
+        userLoginController.login();
+        UserDto userDto = userLoginController.getUserInfo();
 
+        System.out.println(userDto);
+
+        //menu
+        //만약에 로그아웃 해서 최상위 메뉴로 간다면?
+        //start();
+    }
+
+    @Override
+    public void signUp() {
+        signUpController.signUp();
+        start();
     }
 
     @Override
@@ -128,14 +159,24 @@ public class WarehouseControllerImpl implements WarehouseController{
                 userManagementController.updateUser(adminDto);
                 break;
             case 4:
-                userManagementController.updateSelfAdmin(adminDto);
+                System.out.println("1. 내 정보 조회 2. 내 정보 수정");
+                choice = validCheck.inputNumRegex();
+                switch (choice) {
+                    case 1 -> userManagementController.searchMyInfo(adminDto);
+                    case 2 -> userManagementController.updateSelfAdmin(adminDto);
+                    default -> System.out.println(ERROR_INPUT.getText());
+                }
+
                 break;
             case 5:
                 System.out.println(LOCAL_ADMIN_MENU.getText());
                 choice = validCheck.inputNumRegex();
                 switch (choice){
                     case 1 -> userManagementController.listAllLocalAdmin(adminDto);
-                    case 2 -> userManagementController.updateAdmin(adminDto);
+                    case 2 -> {
+                        adminDto = loginController.getAdminLoginStatus();
+                        userManagementController.updateAdmin(adminDto);
+                    }
                     default -> System.out.println(ERROR_INPUT.getText());
                 }
                 break;
@@ -174,7 +215,15 @@ public class WarehouseControllerImpl implements WarehouseController{
         UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
         UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService,validCheck1);
 
-        WarehouseController warehouseController = new WarehouseControllerImpl(loginController1,userManagementController1,validCheck1);
+        UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
+        UserLoginService userLoginService = new UserLoginServiceImpl(userLoginRepository);
+        UserLoginController userLoginController = new UserLoginControllerImpl(validCheck1,userLoginService);
+
+        SignUpRepository signUpRepository = new SignUpRepositoryImpl();
+        SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
+        SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
+
+        WarehouseController warehouseController = new WarehouseControllerImpl(userLoginController, signUpController, loginController1, userManagementController1,validCheck1);
         warehouseController.start();
     }
 }

@@ -1,6 +1,6 @@
 package domain.DH_UserManagement.controller;
 
-public class FindUseridImpl implements FindUseridController {
+public class FindUseridControllerImpl implements FindUseridController {
 
     @Override
     public String findUserIdByBusinessNumber(String businessNumber) {

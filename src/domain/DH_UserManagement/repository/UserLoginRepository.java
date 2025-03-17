@@ -1,5 +1,7 @@
 package domain.DH_UserManagement.repository;
 
+import dto.UserDto;
+
 public interface UserLoginRepository {
-    boolean login(String userid, String password);
+    UserDto login(String userid, String password);
 }

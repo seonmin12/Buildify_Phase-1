@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InventoryReadController {
-    InventoryDto ReadOneProductName();
+    List<InventoryDto> ReadByProductName();
 
 
     List<InventoryDto> ReadAll();
 
-    InventoryDto ReadByClientID();
+    List<InventoryDto> ReadByClientID();
 
     List<InventoryDto> ReadByCategory();
 

@@ -5,7 +5,7 @@ import dto.AdminDto;
 public interface LoginController {
     /**
      * 관리자 로그인 기능
-     * @return AdminDto
+     * @return adminDto
      */
     AdminDto login();
 

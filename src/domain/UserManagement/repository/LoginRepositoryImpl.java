@@ -13,6 +13,11 @@ public class LoginRepositoryImpl implements LoginRepository {
 
     PreparedStatement pstmt = null;
 
+    /**
+     * id를 넣고 일치하는 관리자 정보를 DB에서 가져오는 Repository
+     * @param id
+     * @return AdminDto
+     */
     @Override
     public AdminDto login(String id) {
         AdminDto adminDto = null;
