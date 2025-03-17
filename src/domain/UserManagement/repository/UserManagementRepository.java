@@ -36,23 +36,6 @@ public interface UserManagementRepository {
      * @return UserDto
      */
     UserDto searchUser(String Client_id);
-
-    /**
-     * 업데이트할 정보를 선택하여 고객정보를 업데이트하는 메소드입니다.
-     * @param Client_id
-     * @param choice
-     * @param newValue
-     */
-    void updateUser(String Client_id,Integer choice,String newValue);
-
-    /**
-     * 관리자 본인 정보 업데이트하는 메소드입니다.
-     * @param Admin_id
-     * @param choice
-     * @param newValue
-     */
-    void updateSelfAdmin(String Admin_id,Integer choice,String newValue);
-
     /**
      * 현재 임대중인 창고 사용량을 보여주는 메소드입니다.
      * @return int UseWareSize
@@ -65,4 +48,45 @@ public interface UserManagementRepository {
      * @return AdminDto
      */
     AdminDto searchAdmin(String Admin_id);
+
+    /**
+     * 고객의 연락처를 업데이트하는 메소드 입니다.
+     * @param Client_id
+     * @param newValue
+     */
+    void updateUserPhone(String Client_id,String newValue);
+    /**
+     * 고객의 이메일을 업데이트하는 메소드 입니다.
+     * @param Client_id
+     * @param newValue
+     */
+    void updateUserEmail(String Client_id,String newValue);
+    /**
+     * 고객의 주소를 업데이트하는 메소드 입니다.
+     * @param Client_id
+     * @param newValue
+     */
+    void updateUserAddress(String Client_id,String newValue);
+
+    /**
+     * 관리자 본인의 연락처를 수정하는 메소드입니다.
+     * @param Admin_number
+     * @param newValue
+     */
+    void updateSelfAdminPhone(String Admin_number,String newValue);
+
+    /**
+     * 관리자 본인의 이메일을 수정하는 메소드입니다.
+     * @param Admin_number
+     * @param newValue
+     */
+    void updateSelfAdminEmail(String Admin_number,String newValue);
+
+    /**
+     * 관리자 본인의 주소를 수정하는 메소드입니다.
+     * @param Admin_number
+     * @param newValue
+     */
+    void updateSelfAdminAddress(String Admin_number,String newValue);
+
 }
