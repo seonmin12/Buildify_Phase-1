@@ -128,14 +128,24 @@ public class WarehouseControllerImpl implements WarehouseController{
                 userManagementController.updateUser(adminDto);
                 break;
             case 4:
-                userManagementController.updateSelfAdmin(adminDto);
+                System.out.println("1. 내 정보 조회 2. 내 정보 수정");
+                choice = validCheck.inputNumRegex();
+                switch (choice) {
+                    case 1 -> userManagementController.searchMyInfo(adminDto);
+                    case 2 -> userManagementController.updateSelfAdmin(adminDto);
+                    default -> System.out.println(ERROR_INPUT.getText());
+                }
+
                 break;
             case 5:
                 System.out.println(LOCAL_ADMIN_MENU.getText());
                 choice = validCheck.inputNumRegex();
                 switch (choice){
                     case 1 -> userManagementController.listAllLocalAdmin(adminDto);
-                    case 2 -> userManagementController.updateAdmin(adminDto);
+                    case 2 -> {
+                        adminDto = loginController.getAdminLoginStatus();
+                        userManagementController.updateAdmin(adminDto);
+                    }
                     default -> System.out.println(ERROR_INPUT.getText());
                 }
                 break;

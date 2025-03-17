@@ -47,9 +47,15 @@ public interface UserManagementController {
     void updateAdmin(AdminDto adminDto);
 
     /**
-     * 총관리자 전용 메뉴)창고관리자 조회 메소드입니다.
+     * (총관리자 전용 메뉴)창고관리자 조회 메소드입니다.
      * @param adminDto
      */
     void listAllLocalAdmin(AdminDto adminDto);
+
+    /**
+     * (관리자 메뉴) 내 정보 조회 메소드입니다.
+     * @param admindto
+     */
+    void searchMyInfo(AdminDto admindto);
 
 }
