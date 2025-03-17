@@ -1,18 +1,9 @@
 package controller;
 
 import common.ValidCheck;
-import domain.DH_UserManagement.controller.SignUpController;
-import domain.DH_UserManagement.controller.SignUpControllerImpl;
-import domain.DH_UserManagement.controller.UserLoginController;
-import domain.DH_UserManagement.controller.UserLoginControllerImpl;
-import domain.DH_UserManagement.repository.SignUpRepository;
-import domain.DH_UserManagement.repository.SignUpRepositoryImpl;
-import domain.DH_UserManagement.repository.UserLoginRepository;
-import domain.DH_UserManagement.repository.UserLoginRepositoryImpl;
-import domain.DH_UserManagement.service.SignUpService;
-import domain.DH_UserManagement.service.SignUpServiceImpl;
-import domain.DH_UserManagement.service.UserLoginService;
-import domain.DH_UserManagement.service.UserLoginServiceImpl;
+import domain.DH_UserManagement.controller.*;
+import domain.DH_UserManagement.repository.*;
+import domain.DH_UserManagement.service.*;
 import domain.UserManagement.controller.LoginController;
 import domain.UserManagement.controller.LoginControllerImpl;
 import domain.UserManagement.controller.UserManagementController;
@@ -37,13 +28,15 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserManagementController userManagementController;
     private final UserLoginController userLoginController;
     private final SignUpController signUpController;
+    private final ReqProdRegitController  reqProdRegitController;
     private final ValidCheck validCheck;
 
-    public WarehouseControllerImpl(UserLoginController userLoginController, SignUpController signUpController, LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
+    public WarehouseControllerImpl(ReqProdRegitController reqProdRegitController, UserLoginController userLoginController, SignUpController signUpController, LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
         this.userLoginController = userLoginController;
         this.signUpController = signUpController;
+        this.reqProdRegitController = reqProdRegitController;
         this.validCheck = validCheck;
     }
 
@@ -114,11 +107,48 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void userStart() {
-        userLoginController.login();
+        boolean isLogin = userLoginController.login();
+
+        if(!isLogin) {
+            start();
+            return;
+        }
+
         UserDto userDto = userLoginController.getUserInfo();
 
-        System.out.println(userDto);
 
+        while (true){
+            System.out.println("1. 상품 정보 등록 2. 재고관리 3. 입고관리 4. 출고관리 5. 나의 정보 변경");
+            int menu = validCheck.inputNumRegex();
+
+            switch (menu) {
+                case 1:
+                    System.out.println("상품 정보 등록 기능 동작");
+                    boolean result = reqProdRegitController.requestProdcutRegist();
+                    if(result){
+                        System.out.println("상품 정보 등록되었습니다.");
+                    }
+                    break;
+                case 2:
+                    System.out.println("재고 관리 기능 동작");
+                    break;
+                case 3:
+                    System.out.println("입고 관리 기능 동작");
+                    break;
+                case 4 :
+                    System.out.println("출고 관리 기능 동작");
+                    break;
+                case 5:
+                    System.out.println("나의 정보 변경 동작");
+                    break;
+                default:
+                    System.out.println("잘못 입력 하였습니다.");
+                    break;
+            }
+        }
+
+        // 1. 상품 등록 요청
+        // 2.
         //menu
         //만약에 로그아웃 해서 최상위 메뉴로 간다면?
         //start();
@@ -223,7 +253,11 @@ public class WarehouseControllerImpl implements WarehouseController{
         SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
         SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
 
-        WarehouseController warehouseController = new WarehouseControllerImpl(userLoginController, signUpController, loginController1, userManagementController1,validCheck1);
+        ReqProdRegitRepository reqProdRegitRepository = new ReqProdRegitRepositoryImpl();
+        ReqProdRegitService reqProdRegitService = new ReqProdRegitServiceImpl(reqProdRegitRepository);
+        ReqProdRegitController reqProdRegitController = new ReqProdRegitControllerImpl(validCheck1, reqProdRegitService);
+
+        WarehouseController warehouseController = new WarehouseControllerImpl(reqProdRegitController, userLoginController, signUpController, loginController1, userManagementController1,validCheck1);
         warehouseController.start();
     }
 }
