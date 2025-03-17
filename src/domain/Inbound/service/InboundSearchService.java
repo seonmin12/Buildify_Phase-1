@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface InboundSearchService {
 
+    InboundDto SearchOne(String inbound_number);
+
     List<InboundDto> SearchAll();
 }

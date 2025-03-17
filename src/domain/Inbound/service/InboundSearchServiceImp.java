@@ -19,6 +19,16 @@ public class InboundSearchServiceImp implements InboundSearchService{
 
 
     @Override
+    public InboundDto SearchOne(String inbound_number) throws InboundException{
+        try{
+            return inboundSearchRepo.SearchOne(inbound_number).orElseThrow(() -> new NotFoundException(ErrorCode.ERROR_INPUT + " inbound_number: " + inbound_number));
+        }catch (InboundException e){
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
     public List<InboundDto> SearchAll() {
         try{
             return inboundSearchRepo.SearchAll().orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));

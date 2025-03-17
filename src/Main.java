@@ -6,6 +6,7 @@ import domain.DH_UserManagement.repository.SignUpRepository;
 import domain.DH_UserManagement.repository.SignUpRepositoryImpl;
 import domain.DH_UserManagement.service.SignUpService;
 import domain.DH_UserManagement.service.SignUpServiceImpl;
+
 import domain.Inbound.controller.InboundSearchController;
 import domain.Inbound.controller.InboundSearchControllerImp;
 import domain.Inbound.repository.InboundSearchRepo;
@@ -15,6 +16,7 @@ import domain.Inbound.service.InboundSearchServiceImp;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
+
 import dto.WarehouseDto;
 
 public class Main {
@@ -42,11 +44,13 @@ public class Main {
 //        SignUpController controller1 = new SignUpControllerImpl(validCheck, service1);
 //        controller1.signUp();
 
+
 //         InboundSearchRepo repo = new InboundSearchRepoImp(); // Repository 생성
 //         InboundSearchService service = new InboundSearchServiceImp(repo);
 //         ValidCheck validCheck = new ValidCheck();
 //         InboundSearchController inboundSearchController =new InboundSearchControllerImp(service, validCheck);
 //         inboundSearchController.SearchAll();
+
 
 
 

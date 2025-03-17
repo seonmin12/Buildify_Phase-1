@@ -29,3 +29,4 @@ call inventory_read_by_category('cpu');
 
 select * from product where prod_category = 'cpu';
 
+

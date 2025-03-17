@@ -19,6 +19,35 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
 
 
     @Override
+    public Optional<InboundDto> SearchOne(String inbound_number) throws InboundException {
+        try{
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call DB_inbound_searchone(?)}");
+            cs.setString(1,inbound_number);
+            rs = cs.executeQuery();
+
+            if(rs.next()){
+                InboundDto dto = InboundDto.builder()
+                        .inbound_number(rs.getString("inbound_number"))
+                        .prod_id(rs.getString("prod_id"))
+                        .client_id(rs.getString("client_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .inbound_status(rs.getInt("inboud_status"))
+                        .req_inbound_day(rs.getDate("req_inbound_day"))
+                        .ware_id(rs.getString("ware_id"))
+                        .build();
+
+                cs.close();
+                return Optional.of(dto);
+            }else return Optional.empty();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
     public Optional<List<InboundDto>> SearchAll() {
         List<InboundDto> list = new ArrayList<>();
 
