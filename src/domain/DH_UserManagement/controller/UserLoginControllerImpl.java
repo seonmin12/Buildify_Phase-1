@@ -35,7 +35,19 @@ public class UserLoginControllerImpl implements UserLoginController {
     }
 
     @Override
+    public boolean logout() {
+        userDto = null;
+        System.out.println("로그아웃 되었습니다.");
+        return true;
+    }
+
+    @Override
     public UserDto getUserInfo() {
+        if(userDto == null){
+            System.out.println("로그인 상태가 아닙니다.");
+            return null;
+        }
+
         return userDto;
     }
 }
