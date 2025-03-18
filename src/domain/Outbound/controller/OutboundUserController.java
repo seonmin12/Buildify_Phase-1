@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface OutboundUserController {
     List<OutboundDto> outboundUserRead();
+
+    void outboundUserDelete();
 }

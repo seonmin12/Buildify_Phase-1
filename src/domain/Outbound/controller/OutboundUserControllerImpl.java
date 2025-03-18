@@ -42,4 +42,39 @@ public class OutboundUserControllerImpl implements OutboundUserController{
         }
         return outboundDtoList;
     }
+
+    @Override
+    public void outboundUserDelete() {
+        System.out.println("[회원 출고 취소 신청]");
+        System.out.print("고객 ID(client_ID)를 입력하세요: ");
+        String clientId = validCheck.inputAnyString();
+
+        List<OutboundDto>pendinglist = outboundUserService.getOutboundRequests(clientId);
+        if(pendinglist == null || pendinglist.isEmpty()) {
+            System.out.println("미승인 출고 요청이 없습니다");
+            return;
+        }
+
+        System.out.println("\n[미승인 출고 요청 목록]");
+        for (OutboundDto dto : pendinglist) {
+            System.out.printf("출고번호:%-8s | 상품ID:%-6s | 입점사ID:%-6s | 출고수량:%-8d | 출고상태:%4d | 출고요청일:%s | 창고ID:%s\n",
+                    dto.getOutbound_number(), dto.getProd_id(), dto.getClient_id(),dto.getQuantity(),
+                    dto.getOutbound_status(),dto.getReq_outbound_day(),dto.getWare_id());
+        }
+
+        System.out.print("\n취소할 출고번호를 입력하세요: ");
+        String outbound_number = validCheck.inputAnyString();
+
+        boolean success = outboundUserService.outboundUserDelete(outbound_number,clientId);
+
+        if (success) {
+            System.out.println("출고 요청이 성공적으로 취소되었습니다.");
+        }else{
+            System.out.println("출고 요청 취소에 실패했습니다. 출고번호를 확인해주세요.");
+        }
+
+    }
+
+
+
 }
