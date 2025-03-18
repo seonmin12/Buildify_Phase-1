@@ -79,8 +79,44 @@ public class OutboundUserControllerImpl implements OutboundUserController{
     @Override
     public boolean requestOutbound(String clientId) {
         List<ReqOutboundDto> outboundList = outboundUserService.requestOutbound(clientId);
-        System.out.println(outboundList);
-        return false;
+
+        if(outboundList == null || outboundList.isEmpty()) {
+            System.out.println("출고 요청 가능한 목록이 없습니다,");
+            return false;
+        }
+
+        int index = 1;
+        for (ReqOutboundDto dto : outboundList) {
+            System.out.println(index++ + ". " + dto);
+        }
+
+        System.out.print("\n출고 요청할 상품 번호를 선택하세요 (취소하려면 0 입력): ");
+
+        int select = validCheck.inputNumRegex();
+
+        if(select == 0){
+            return true;
+        } else {
+            ReqOutboundDto reqOutboundDto = outboundList.get(select - 1);
+
+            int amount;
+            do {
+                System.out.println("수량을 입력하세요: ");
+                amount = Integer.parseInt(validCheck.inputAnyString());
+
+                if (amount > reqOutboundDto.getQuantity()) {
+                    System.out.println("❌ 재고 수량보다 많게 입력할 수 없습니다. 다시 입력해주세요.");
+                }
+            } while (amount > reqOutboundDto.getQuantity());  // 🔥 조건을 만족할 때까지 반복
+
+            System.out.println("\n✅ 출고 요청이 완료되었습니다.");
+            System.out.println("출고 요청 상품: " + reqOutboundDto);
+            System.out.println("출고 수량: " + amount);
+
+            // 출고 요청하는 repo 기능 동작 필요
+        }
+
+        return true;
     }
 
 

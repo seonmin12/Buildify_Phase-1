@@ -23,4 +23,10 @@ public class ReqOutboundDto {
     private String clientId;
     private String wareId;
 
+    @Override
+    public String toString() {
+        return String.format("브랜드: %s | 상품명: %s | 가격: %,d원 | 카테고리: %s | 크기: %.2f | 재고 수량: %d",
+                brand, prodName, prodPrice, prodCategory, prodSize, quantity);
+    }
+
 }
