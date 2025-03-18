@@ -1,6 +1,7 @@
 package domain.Inbound.controller;
 
 import common.ValidCheck;
+import dto.UserDto;
 
 import java.util.Scanner;
 
@@ -29,31 +30,31 @@ public class InboundController {
         System.out.println("관리자 입고관리입니다.");
         System.out.println("1.입고요청확인 2.현황조회 3.나가기");
         int a = validCheck.inputNumRegex();
-        sc.nextLine();
         switch (a){
             case 1: inboundCheckController.check();
             case 2:
                 System.out.println("1.전체조회 2. 업체별조회 3.나가기 ");
                 a = validCheck.inputNumRegex();
                 switch (a){
-                    case 1:inboundSearchController.SearchAll();
-                    case 2:inboundSearchController.SearchOne();
+                    case 1:inboundSearchController.SearchAll(); break;
+                    case 2:inboundSearchController.SearchOne(); break;
                 }
             case 3:
-                System.out.println("나가기");
+                inboundAdminMain(); break;
         }
 
     }
 
 
-    public void inboundUserMain() {
+    public void inboundUserMain(UserDto userDto) {
+
         System.out.println("회원 입고관리입니다.");
         System.out.println("1.입고요청 2.입고요청취소 3.현황조회");
         int a = validCheck.inputNumRegex();
-        sc.nextLine();
         switch (a){
-            case 1:inboundInsertController.insertrun();
-            case 2:inboundDeleteController.delete();
+            case 1:inboundInsertController.insertrun(); break;
+            case 2:inboundDeleteController.delete(userDto); break;
+            case 3:inboundSearchController.userSearchAll(userDto); break;
         }
     }
 

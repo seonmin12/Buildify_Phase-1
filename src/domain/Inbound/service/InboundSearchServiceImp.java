@@ -19,8 +19,8 @@ public class InboundSearchServiceImp implements InboundSearchService{
 
 
     @Override
-    public List<InboundDto> userSearchAll() {
-        return null;
+    public List<InboundDto> userSearchAll(String a) {
+        return inboundSearchRepo.userSearch(a);
     }
 
     @Override

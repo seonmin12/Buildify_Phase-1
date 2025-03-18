@@ -33,20 +33,6 @@ public class InboundCheckServiceImp implements InboundCheckService{
 
     }
 
-    @Override
-    public List<InboundDto> prodCheckRead(String ci) {
-        return inboundCheckRepo.prodCheckRead();
-    }
-
-    @Override
-    public void prodCheckUpdate(String ci) {
-
-    }
-
-    @Override
-    public void prodCheckReturn(String ci) {
-
-    }
 
     @Override
     public List<InboundDto> clientCheckRead(String ci) {

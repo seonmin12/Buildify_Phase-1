@@ -19,10 +19,34 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
 
 
     @Override
-    public List<InboundDto> userSearch() {
+    public List<InboundDto> userSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
+        try {
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call DB_inbound_usersearch(?)}");
+            cs.setString(1, a);
+            rs = cs.executeQuery();
 
-        return null;
+            while (rs.next()) {
+                InboundDto dto = InboundDto.builder()
+                        .inbound_number(rs.getString("inbound_number"))
+                        .prod_id(rs.getString("prod_id"))
+                        .client_id(rs.getString("client_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .inbound_status(rs.getInt("inbound_status"))
+                        .req_inbound_day(rs.getDate("req_inbound_day"))
+                        .ware_id(rs.getString("ware_id"))
+                        .build();
+                list.add(dto);
+            }
+            rs.close();
+            cs.close();
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
     }
 
     @Override
@@ -34,13 +58,13 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
             cs.setString(1, inbound_number);
             rs = cs.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 InboundDto dto = InboundDto.builder()
                         .inbound_number(rs.getString("inbound_number"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
-                        .inbound_status(rs.getInt("inboud_status"))
+                        .inbound_status(rs.getInt("inbound_status"))
                         .req_inbound_day(rs.getDate("req_inbound_day"))
                         .ware_id(rs.getString("ware_id"))
                         .build();
@@ -72,7 +96,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
-                        .inbound_status(rs.getInt("inboud_status"))
+                        .inbound_status(rs.getInt("inbound_status"))
                         .req_inbound_day(rs.getDate("req_inbound_day"))
                         .ware_id(rs.getString("ware_id"))
                         .build();
