@@ -288,7 +288,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService, validCheck1);
 
         // 통합 재고 컨트롤러
-        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(
+        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedController(
                 readController,
                 updateController,
                 deleteController,
