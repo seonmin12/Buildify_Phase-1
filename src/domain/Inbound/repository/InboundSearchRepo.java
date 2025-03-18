@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface InboundSearchRepo {
 
+    List<InboundDto> userSearch();
+
     List<InboundDto> SearchOne(String inbound_number);
     Optional<List<InboundDto>> SearchAll();
 

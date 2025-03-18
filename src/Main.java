@@ -1,3 +1,5 @@
+
+
 import config.Diconfig;
 import controller.WarehouseController;
 
@@ -6,6 +8,7 @@ public class Main {
         Diconfig diconfig = new Diconfig();
         WarehouseController warehouseController = diconfig.warehouseController();
         warehouseController.start();
+
     }
 
 }
