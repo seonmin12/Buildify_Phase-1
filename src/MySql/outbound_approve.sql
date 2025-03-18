@@ -10,7 +10,7 @@ BEGIN
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
-            AND i.ware_id = o.ware_id
+            AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0;  -- 아직 승인 안 된 애들만 반영
 
@@ -35,7 +35,7 @@ BEGIN
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
-            AND i.ware_id = o.ware_id
+            AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0
       AND o.outbound_number = outbound_input;  -- 특정 출고번호만 반영
@@ -61,7 +61,7 @@ BEGIN
     UPDATE inventory i
     JOIN outbound o ON i.prod_id = o.prod_id
                    AND i.client_id = o.client_id
-                   AND i.ware_id = o.ware_id
+                  AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0
       AND o.client_id = outbound_input;
