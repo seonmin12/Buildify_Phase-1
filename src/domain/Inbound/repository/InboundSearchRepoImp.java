@@ -19,6 +19,31 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
 
 
     @Override
+    public List<InboundDto> clientsearch() {
+        List<InboundDto> list = new ArrayList<>();
+        try {
+            connection.setAutoCommit(false);
+            cs = connection.prepareCall("{call db_inbound_search_clientup()}");
+            rs = cs.executeQuery();
+
+            while (rs.next()) {
+                InboundDto dto = InboundDto.builder()
+                        .client_id(rs.getString("client_id"))
+                        .build();
+                list.add(dto);
+            }
+            rs.close();
+            cs.close();
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
     public List<InboundDto> userSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
         try {

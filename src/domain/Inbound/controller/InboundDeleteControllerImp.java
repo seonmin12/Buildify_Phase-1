@@ -26,6 +26,7 @@ public class InboundDeleteControllerImp implements InboundDeleteController{
         List<InboundDto> inboundDtoList = inboundDeleteService.deletesearch(a);
         if (inboundDtoList.isEmpty()){
             System.out.println("리스트 비어있음");
+            return;
         }
         for(InboundDto inboundDto : inboundDtoList){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",

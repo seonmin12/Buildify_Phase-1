@@ -162,7 +162,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_update(?) }");
             cs.setString(1,a);
             cs.executeQuery();
-            System.out.println("인바운드 클라이언트체크 업데이트");
+            System.out.println("해당업체 승인완료");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new InboundException(ErrorCode.ERROR_INPUT);
@@ -176,7 +176,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_return(?) }");
             cs.setString(1,a);
             cs.executeQuery();
-            System.out.println("인바운드 클라이언트체크 리턴");
+            System.out.println("해당업체 반려완료");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new InboundException(ErrorCode.ERROR_INPUT);
