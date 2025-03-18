@@ -11,10 +11,11 @@ public class InboundInsertControllerImp implements InboundInsertController{
     Scanner sc = new Scanner(System.in);
 
     private final InboundInsertService insertService;
-    private final ValidCheck validCheck = new ValidCheck();
+    private final ValidCheck validCheck ;
 
-    public InboundInsertControllerImp(InboundInsertService insertService) {
+    public InboundInsertControllerImp(InboundInsertService insertService, ValidCheck validCheck) {
         this.insertService = insertService;
+        this.validCheck = validCheck;
     }
 
     @Override

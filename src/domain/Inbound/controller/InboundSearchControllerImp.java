@@ -19,6 +19,7 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     @Override
     public void userSearchAll() {
+
         List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll();
         for(InboundDto inboundDto : inboundDtoList){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
