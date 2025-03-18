@@ -1,10 +1,14 @@
-import domain.Inbound.controller.InboundController;
-import domain.Inbound.controller.InboundSearchController;
-import domain.Inbound.controller.InboundSearchControllerImp;
+
+
+import config.Diconfig;
+import controller.WarehouseController;
 
 public class Main {
-
     public static void main(String[] args) {
+        Diconfig diconfig = new Diconfig();
+        WarehouseController warehouseController = diconfig.warehouseController();
+        warehouseController.start();
 
     }
+
 }

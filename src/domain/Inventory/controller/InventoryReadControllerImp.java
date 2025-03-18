@@ -7,17 +7,32 @@ import dto.WarehouseDto;
 
 import java.util.*;
 
+/**
+ * 재고 정보를 조회하고 출력하는 컨트롤러 구현 클래스.
+ * 사용자로부터 입력을 받아 서비스 계층에 전달하고, 결과를 포맷팅하여 출력한다.
+ */
 public class InventoryReadControllerImp implements InventoryReadController {
 
     private final InventoryReadService inventoryReadService;
     private final ValidCheck validCheck;
 
+    /**
+     * InventoryReadControllerImp 생성자.
+     *
+     * @param inventoryReadService 재고 조회 서비스 의존성
+     * @param validCheck 사용자 입력 검증 도구
+     */
     public InventoryReadControllerImp(InventoryReadService inventoryReadService, ValidCheck validCheck) {
         this.inventoryReadService = inventoryReadService;
         this.validCheck = validCheck;
     }
 
 
+    /**
+     * 사용자로부터 상품명을 입력받아 재고 정보를 조회하고 출력한다.
+     *
+     * @return 조회된 재고 정보 리스트, 없을 경우 null 반환
+     */
     @Override
     public List<InventoryDto> ReadByProductName() {
         System.out.print("조회할 상품명을 입력하세요: ");
@@ -39,6 +54,11 @@ public class InventoryReadControllerImp implements InventoryReadController {
         return inventoryDtoList;
     }
 
+    /**
+     * 전체 재고 정보를 조회하여 출력한다.
+     *
+     * @return 조회된 재고 정보 리스트, 없을 경우 null 반환
+     */
         @Override
         public List<InventoryDto> ReadAll () {
 
@@ -69,6 +89,12 @@ public class InventoryReadControllerImp implements InventoryReadController {
             return null;
         }
 
+
+    /**
+     * 사용자로부터 클라이언트 ID를 입력받아 재고 정보를 조회하고 출력한다.
+     *
+     * @return 조회된 재고 정보 리스트, 없을 경우 null 반환
+     */
         @Override
         public List<InventoryDto> ReadByClientID () {
 
@@ -92,6 +118,11 @@ public class InventoryReadControllerImp implements InventoryReadController {
 
         }
 
+    /**
+     * 사용자로부터 대분류 및 소분류를 선택받아 해당 카테고리의 재고 정보를 조회하고 출력한다.
+     *
+     * @return 조회된 재고 정보 리스트, 없을 경우 null 반환
+     */
         @Override
         public List<InventoryDto> ReadByCategory () {
 
