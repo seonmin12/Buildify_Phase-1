@@ -5,6 +5,7 @@ import domain.AccountManagement.Admin.controller.AdminController;
 import domain.AccountManagement.Admin.controller.LoginController;
 import domain.AccountManagement.Admin.controller.UserManagementController;
 import domain.AccountManagement.User.controller.UserController;
+import domain.Inbound.controller.InboundController;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
@@ -23,6 +24,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
     private final UserController userController;
     private final AdminController adminController;
+    private final InboundController inboundController;
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
@@ -31,7 +33,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserController userController, AdminController adminController
+            UserController userController, AdminController adminController, InboundController inboundController
     ) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
@@ -39,6 +41,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         this.inventoryIntegratedController = inventoryIntegratedController;
         this.userController = userController;
         this.adminController = adminController;
+        this.inboundController = inboundController;
     }
 
     @Override
@@ -136,6 +139,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
                 case 4 :
                     System.out.println("입고 관리 기능 동작");
+
                     break;
                 case 5:
                     System.out.println("출고 관리 기능 동작");

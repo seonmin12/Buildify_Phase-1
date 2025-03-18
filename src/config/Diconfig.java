@@ -6,6 +6,9 @@ import controller.WarehouseControllerImpl;
 import domain.AccountManagement.User.controller.*;
 import domain.AccountManagement.User.service.*;
 import domain.AccountManagement.User.repository.*;
+import domain.Inbound.controller.*;
+import domain.Inbound.repository.*;
+import domain.Inbound.service.*;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
@@ -52,12 +55,35 @@ public class Diconfig {
     private final UserController userController = new UserController(userLoginController,productController,signUpController);
     private final AdminController adminController = new AdminController(validCheck, loginController, userManagementController);
 
+
+
+    private final InboundSearchRepo inboundSearchRepo = new InboundSearchRepoImp();
+    private final InboundSearchService inboundSearchService = new InboundSearchServiceImp(inboundSearchRepo);
+    private final InboundSearchController inboundSearchController = new InboundSearchControllerImp(inboundSearchService, validCheck);
+    private final InboundInsertRepo inboundInsertRepo = new InboundInsertRepoImp();
+    private final InboundInsertService insertService = new InboundInsertServiceImp(inboundInsertRepo, inboundSearchRepo);
+    private final InboundInsertController inboundInsertController = new InboundInsertControllerImp(insertService, validCheck);
+
+    private final InboundDeleteRepo inboundDeleteRepo = new InboundDeleteRepoImp();
+    private final InboundDeleteService inboundDeleteService = new InboundDeleteServiceImp(inboundDeleteRepo, inboundSearchRepo);
+    private final InboundDeleteController inboundDeleteController = new InboundDeleteControllerImp(inboundDeleteService);
+    private final InboundCheckRepo inboundCheckRepo = new InboundCheckRepoImp();
+    private final InboundCheckService inboundCheckService = new InboundCheckServiceImp(inboundCheckRepo);
+    private final InboundCheckController inboundCheckController = new InboundCheckControllerImp(inboundCheckService,validCheck);
+
+
+    private final InboundController inboundController=new InboundController(validCheck,inboundCheckController,inboundSearchController, inboundInsertController, inboundDeleteController);
+
+
+
+
     public WarehouseController warehouseController(){
         return new WarehouseControllerImpl(loginController,
                 userManagementController,
                 validCheck,
                 inventoryIntegratedController,
                 userController,
-                adminController);
+                adminController,
+                inboundController);
     }
 }

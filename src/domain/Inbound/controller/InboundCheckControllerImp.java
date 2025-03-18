@@ -19,11 +19,12 @@ import java.util.Scanner;
 public class InboundCheckControllerImp implements InboundCheckController {
     private final InboundCheckService inboundCheckService ;
     Scanner sc = new Scanner(System.in);
-    ValidCheck validCheck = new ValidCheck();
+    private final ValidCheck validCheck;
     Connection connection = DBConnection.getConnection();
 
-    public InboundCheckControllerImp(InboundCheckService inboundCheckService) {
+    public InboundCheckControllerImp(InboundCheckService inboundCheckService, ValidCheck validCheck) {
         this.inboundCheckService = inboundCheckService;
+        this.validCheck = validCheck;
     }
 
 
