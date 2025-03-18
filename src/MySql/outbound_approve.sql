@@ -19,7 +19,7 @@ BEGIN
 end $$
 DELIMITER ;
 
-#출고 요청 1개 승인 프로시저(클라이언트 ID 기준)
+#출고 요청 전체 승인 프로시저(클라이언트 ID 기준)
 DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ONE_ID_APPROVE(IN outbound_input VARCHAR(10))
 BEGIN
@@ -37,7 +37,7 @@ BEGIN
 end $$
 DELIMITER ;
 
-#출고 요청 1개 거절 프로시저(클라이언트 ID 기준)
+#출고 요청 전체 거절 프로시저(클라이언트 ID 기준)
 DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ONE_ID_RETURN(IN outbound_input VARCHAR(10))
 BEGIN
@@ -104,4 +104,44 @@ BEGIN
     WHERE client_id = input
       and status = 0;
 end $$
+DELIMITER ;
+
+#클라이언드 ID가 출고리스트 DB에 있는지 검색하는 프로시저
+DELIMITER $$
+CREATE PROCEDURE CLIENT_ID_VALIDATION(IN input VARCHAR(10))
+BEGIN
+    DECLARE client_exists INT;
+
+    -- client_id가 존재하는지 확인
+    SELECT COUNT(*) INTO client_exists
+    FROM outbound
+    WHERE outbound.client_id = input;
+
+    -- 결과 출력
+    IF client_exists > 0 THEN
+        SELECT 'TRUE' AS result;
+    ELSE
+        SELECT 'FALSE' AS result;
+    END IF;
+END $$
+DELIMITER ;
+
+#출고 Number 가 DB에 있는지 검증
+DELIMITER $$
+CREATE PROCEDURE OUTBOUND_NUMBER_VALIDATION(IN input VARCHAR(30))
+BEGIN
+    DECLARE number_exists INT;
+
+    -- client_id가 존재하는지 확인
+    SELECT COUNT(*) INTO number_exists
+    FROM outbound
+    WHERE outbound.outbound_number = input;
+
+    -- 결과 출력
+    IF number_exists > 0 THEN
+        SELECT 'TRUE' AS result;
+    ELSE
+        SELECT 'FALSE' AS result;
+    END IF;
+END $$
 DELIMITER ;
