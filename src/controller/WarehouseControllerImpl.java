@@ -1,21 +1,21 @@
 package controller;
 
 import common.ValidCheck;
-import domain.AccountManagement.User.controller.*;
-import domain.AccountManagement.User.repository.*;
-import domain.AccountManagement.User.service.*;
+import domain.DH_UserManagement.controller.*;
+import domain.DH_UserManagement.repository.*;
+import domain.DH_UserManagement.service.*;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
-import domain.AccountManagement.Admin.controller.*;
-import domain.AccountManagement.Admin.repository.LoginRepository;
-import domain.AccountManagement.Admin.repository.LoginRepositoryImpl;
-import domain.AccountManagement.Admin.repository.UserManagementRepository;
-import domain.AccountManagement.Admin.repository.UserManagementRepositoryImpl;
-import domain.AccountManagement.Admin.service.LoginService;
-import domain.AccountManagement.Admin.service.LoginServiceImpl;
-import domain.AccountManagement.Admin.service.UserManagementService;
-import domain.AccountManagement.Admin.service.UserManagementServiceImpl;
+import domain.UserManagement.controller.*;
+import domain.UserManagement.repository.LoginRepository;
+import domain.UserManagement.repository.LoginRepositoryImpl;
+import domain.UserManagement.repository.UserManagementRepository;
+import domain.UserManagement.repository.UserManagementRepositoryImpl;
+import domain.UserManagement.service.LoginService;
+import domain.UserManagement.service.LoginServiceImpl;
+import domain.UserManagement.service.UserManagementService;
+import domain.UserManagement.service.UserManagementServiceImpl;
 import dto.AdminDto;
 import dto.UserDto;
 
@@ -29,9 +29,8 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserManagementController userManagementController;
     private final ValidCheck validCheck;
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
-    private final UserController userController;
+    private final UserIntegratedController userIntegratedController;
     private final AdminController adminController;
-
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
@@ -40,16 +39,14 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserController userController, AdminController adminController
-
+            UserIntegratedController userIntegratedController, AdminController adminController
     ) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
         this.validCheck = validCheck;
         this.inventoryIntegratedController = inventoryIntegratedController;
-        this.userController = userController;
+        this.userIntegratedController = userIntegratedController;
         this.adminController = adminController;
-
     }
 
     @Override
@@ -118,14 +115,14 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void userStart() {
-        boolean isLogin = userController.userLogin();
+        boolean isLogin = userIntegratedController.userLogin();
 
         if(!isLogin) {
             start();
             return;
         }
 
-        UserDto userDto = userController.getUserInfo();
+        UserDto userDto = userIntegratedController.getUserInfo();
 
         while (true){
             System.out.println("1. 상품 정보 등록 2. 상품 정보 출력 3. 재고관리 4. 입고관리 5. 출고관리 6. 나의 정보 변경 7. 로그아웃");
@@ -134,21 +131,19 @@ public class WarehouseControllerImpl implements WarehouseController{
             switch (menu) {
                 case 1:
                     System.out.println("상품 정보 등록 기능 동작");
-                    boolean result = userController.requestProductRegist();
+                    boolean result = userIntegratedController.requestProductRegist();
                     if(result){
                         System.out.println("상품 정보 등록되었습니다.");
                     }
                     break;
                 case 2:
-                    userController.getAllProducts();
+                    userIntegratedController.getAllProducts();
                     break;
                 case 3:
                     System.out.println("재고 관리 기능 동작");
                     break;
                 case 4 :
                     System.out.println("입고 관리 기능 동작");
-
-
                     break;
                 case 5:
                     System.out.println("출고 관리 기능 동작");
@@ -157,7 +152,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     System.out.println("나의 정보 변경 동작");
                     break;
                 case 7:
-                    userController.userLogout();
+                    userIntegratedController.userLogout();
                     start();
                     break;
                 default:
@@ -169,7 +164,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void signUp() {
-        userController.userSignUp();
+        userIntegratedController.userSignUp();
         start();
     }
 
@@ -197,80 +192,5 @@ public class WarehouseControllerImpl implements WarehouseController{
         inventoryIntegratedController.inventoryRunForAdmin();
     }
 
-    // 관리자 테스트 코드
-    public static void main(String[] args) {
-        ValidCheck validCheck1 = new ValidCheck();
-
-        // Login
-        LoginRepository loginRepository = new LoginRepositoryImpl();
-        LoginService loginService = new LoginServiceImpl(loginRepository);
-        LoginController loginController1 = new LoginControllerImpl(validCheck1, loginService);
-
-        UserManagementRepository userManagementRepository = new UserManagementRepositoryImpl();
-        UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
-        UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService,validCheck1);
-
-        // User Management
-//        UserManagementRepository userManagementRepository = new UserManagementRepositoryImpl();
-//        UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
-//        UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService, validCheck1);
-
-        // Read (feature 브랜치에서 온 부분)
-        InventoryReadRepo readRepo = new InventoryReadRepoImp();
-        InventoryReadService readService = new InventoryReadServiceImp(readRepo);
-        InventoryReadController readController = new InventoryReadControllerImp(readService, validCheck1);
-
-        // Update
-        InventoryUpdateRepo updateRepo = new InventoryUpdateRepoImp();
-        InventoryUpdateService updateService = new InventoryUpdateServiceImp(updateRepo);
-        InventoryUpdateController updateController = new InventoryUpdateControllerImp(updateService, validCheck1);
-
-        // Delete
-        InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
-        InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
-        // 주의! 클래스 이름 오타 없게
-        InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService, validCheck1);
-
-        UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
-        UserLoginService userLoginService = new UserLoginServiceImpl(userLoginRepository);
-        UserLoginController userLoginController = new UserLoginControllerImpl(validCheck1,userLoginService);
-
-        ProductRepository productRepository = new ProductRepositoryImpl();
-        ProductService productService = new ProductServiceImpl(productRepository);
-        ProductController productController = new ProductControllerImpl(validCheck1, productService);
-
-        SignUpRepository signUpRepository = new SignUpRepositoryImpl();
-        SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
-        SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
-
-        UserController userController = new UserController(
-                userLoginController,
-                productController,
-                signUpController
-        );
-
-        // 통합 재고 컨트롤러
-        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedController(
-                readController,
-                updateController,
-                deleteController,
-                validCheck1
-        );
-
-        AdminController adminController1 = new AdminController(validCheck1,loginController1,userManagementController1);
-
-
-        // 최종 통합 컨트롤러
-        WarehouseController warehouseController = new WarehouseControllerImpl(
-                loginController1,
-                userManagementController1,
-                validCheck1,
-                inventoryIntegratedController,  // feature
-                userController,adminController1
-
-        );
-
-        warehouseController.start();
-    }
 }
 

@@ -1,11 +1,11 @@
-
+import config.Diconfig;
+import controller.WarehouseController;
 
 public class Main {
-
-    // 테스트용 메인
     public static void main(String[] args) {
-
-
-
+        Diconfig diconfig = new Diconfig();
+        WarehouseController warehouseController = diconfig.warehouseController();
+        warehouseController.start();
     }
+
 }
