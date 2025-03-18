@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+
+/**
+ * {@link InventoryReadRepo} 인터페이스의 구현 클래스.
+ * 데이터베이스와 연결하여 재고 데이터를 조회하는 기능을 수행한다.
+ * 프로시저 호출을 통해 제품명, 클라이언트 ID, 카테고리 등을 기준으로 재고 정보를 가져온다.
+ * 전체 재고 정보도 가져올 수 있다.
+ */
 public class InventoryReadRepoImp implements InventoryReadRepo {
 
     Connection connection = DBConnection.getConnection();
@@ -18,6 +26,13 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     ResultSet rs = null;
     PreparedStatement pstmt = null;
 
+    /**
+     * 전체 재고 정보를 조회하는 메서드.
+     * 데이터베이스에 저장된 모든 재고 데이터를 조회하며, 결과가 없더라도 빈 리스트를 포함한 Optional로 반환한다.
+     *
+     * @return 전체 재고 정보를 담은 Optional 리스트
+     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
+     */
     @Override
     public Optional<List<InventoryDto>> ReadAll() throws InventoryException {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
@@ -58,8 +73,14 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
     }
 
-    // 상품명을 입력받아 재고를 조회하는 메소드
 
+    /**
+     * 상품명을 기준으로 재고 정보를 조회하는 메서드.
+     *
+     * @param productName 조회할 상품명
+     * @return 해당 상품명과 일치하는 재고 정보 리스트
+     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
+     */
     @Override
     public List<InventoryDto> ReadByProductName(String productName) throws InventoryException {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
@@ -97,6 +118,13 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
     }
 
+    /**
+     * 클라이언트 ID를 기준으로 재고 정보를 조회하는 메서드.
+     *
+     * @param clientID 조회할 클라이언트 ID
+     * @return 해당 클라이언트 ID에 해당하는 재고 정보 리스트
+     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
+     */
     @Override
     public List<InventoryDto> ReadByClientID(String clientID) {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
@@ -129,7 +157,13 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
             throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
         }
     }
-
+    /**
+     * 상품 카테고리를 기준으로 재고 정보를 조회하는 메서드.
+     *
+     * @param category 조회할 카테고리명
+     * @return 해당 카테고리에 속하는 재고 정보 리스트
+     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
+     */
     @Override
     public List<InventoryDto> ReadByCategory(String category) {
         List<InventoryDto> list = new ArrayList<>();
