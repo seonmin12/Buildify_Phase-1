@@ -1,12 +1,8 @@
 package domain.AccountManagement.User.controller;
 
+import dto.UserDto;
+
 public interface UpdateUserinfoController {
-
-    boolean updatePassword(String newpassword, String confirmpassword);
-
-    boolean updateUserName(String newusername);
-
-    boolean updateUserEmail(String newemail);
-
-    boolean updateUserPhone(String newphone);
+    boolean updateUserinfo(UserDto userDto);
 }
+
