@@ -136,6 +136,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
                 case 3:
                     System.out.println("재고 관리 기능 동작");
+                    inventoryIntegratedController.inventoryRunForUser(userDto);
                     break;
                 case 4 :
                     System.out.println("입고 관리 기능 동작");
@@ -185,7 +186,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     public void adminInventoryStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
         // 관리자 재고 기능 → 통합 컨트롤러 실행
-        inventoryIntegratedController.inventoryRunForAdmin();
+        inventoryIntegratedController.inventoryRunForAdmin(adminDto);
     }
 
 }

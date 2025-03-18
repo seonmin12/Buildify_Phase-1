@@ -1,8 +1,8 @@
 use wmsdb;
 DELIMITER //
-
+drop procedure inventory_read_by_clientID;
 CREATE PROCEDURE inventory_read_by_clientID(
-    IN input_client_id varchar(20)
+    IN input_client_id varchar(100)
 )
 BEGIN
     select i.prod_id, prod_name, i.client_id, i.ware_id, i.quantity,
