@@ -4,13 +4,11 @@ import common.ValidCheck;
 import domain.Inventory.service.InventoryDeleteService;
 import dto.InventoryDto;
 
-import javax.xml.validation.Validator;
-
-public class InventoryDeleteContollerImp implements InventoryDeleteController {
+public class InventoryDeleteControllerImp implements InventoryDeleteController {
     private final InventoryDeleteService inventoryDeleteService;
     private final ValidCheck validCheck;
 
-    public InventoryDeleteContollerImp(InventoryDeleteService inventoryDeleteService, ValidCheck validCheck) {
+    public InventoryDeleteControllerImp(InventoryDeleteService inventoryDeleteService, ValidCheck validCheck) {
         this.inventoryDeleteService = inventoryDeleteService;
         this.validCheck = validCheck;
     }

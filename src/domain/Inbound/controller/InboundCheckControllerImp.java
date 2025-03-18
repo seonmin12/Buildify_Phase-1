@@ -35,6 +35,7 @@ public class InboundCheckControllerImp implements InboundCheckController {
         System.out.print("선택: ");
         int a = validCheck.inputNumRegex();
 
+
         switch (a) {
             case 1:
 

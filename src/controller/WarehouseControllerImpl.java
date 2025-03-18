@@ -4,6 +4,9 @@ import common.ValidCheck;
 import domain.DH_UserManagement.controller.*;
 import domain.DH_UserManagement.repository.*;
 import domain.DH_UserManagement.service.*;
+import domain.Inventory.controller.*;
+import domain.Inventory.repository.*;
+import domain.Inventory.service.*;
 import domain.UserManagement.controller.LoginController;
 import domain.UserManagement.controller.LoginControllerImpl;
 import domain.UserManagement.controller.UserManagementController;
@@ -24,20 +27,33 @@ import static common.Text.*;
 
 // 전체 통합 메인 컨트롤러
 public class WarehouseControllerImpl implements WarehouseController{
+
     private final LoginController loginController;
     private final UserManagementController userManagementController;
     private final UserLoginController userLoginController;
     private final SignUpController signUpController;
-    private final ReqProdRegitController  reqProdRegitController;
+    private final ReqProdRegitController reqProdRegitController;  // dev 브랜치 변경사항
     private final ValidCheck validCheck;
+    private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
 
-    public WarehouseControllerImpl(ReqProdRegitController reqProdRegitController, UserLoginController userLoginController, SignUpController signUpController, LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
-        this.loginController = loginController;
-        this.userManagementController = userManagementController;
+    // === 통합된 생성자 ===
+    // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
+    public WarehouseControllerImpl(
+            ReqProdRegitController reqProdRegitController,
+            UserLoginController userLoginController,
+            SignUpController signUpController,
+            LoginController loginController,
+            UserManagementController userManagementController,
+            ValidCheck validCheck,
+            InventoryIntegratedController inventoryIntegratedController
+    ) {
+        this.reqProdRegitController = reqProdRegitController;
         this.userLoginController = userLoginController;
         this.signUpController = signUpController;
-        this.reqProdRegitController = reqProdRegitController;
+        this.loginController = loginController;
+        this.userManagementController = userManagementController;
         this.validCheck = validCheck;
+        this.inventoryIntegratedController = inventoryIntegratedController;
     }
 
     @Override
@@ -78,8 +94,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             if (adminDto == null){
                 loginController.login();
                 adminDto = loginController.getAdminLoginStatus();
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -116,7 +131,6 @@ public class WarehouseControllerImpl implements WarehouseController{
 
         UserDto userDto = userLoginController.getUserInfo();
 
-
         while (true){
             System.out.println("1. 상품 정보 등록 2. 재고관리 3. 입고관리 4. 출고관리 5. 나의 정보 변경");
             int menu = validCheck.inputNumRegex();
@@ -146,12 +160,6 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
             }
         }
-
-        // 1. 상품 등록 요청
-        // 2.
-        //menu
-        //만약에 로그아웃 해서 최상위 메뉴로 간다면?
-        //start();
     }
 
     @Override
@@ -214,7 +222,6 @@ public class WarehouseControllerImpl implements WarehouseController{
                 System.out.println(ERROR_INPUT.getText());
                 return;
         }
-
     }
 
     @Override
@@ -226,38 +233,80 @@ public class WarehouseControllerImpl implements WarehouseController{
     @Override
     public void adminOutboundStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
-        System.out.println("출고관리 기능 추가 예정");
     }
 
     @Override
     public void adminInventoryStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
-        System.out.println("재고관리 기능 추가 예정");
+        // 관리자 재고 기능 → 통합 컨트롤러 실행
+        inventoryIntegratedController.inventoryRunForAdmin();
     }
 
-    //관리자 테스트 코드
+    // 관리자 테스트 코드
     public static void main(String[] args) {
         ValidCheck validCheck1 = new ValidCheck();
+
+        // Login
         LoginRepository loginRepository = new LoginRepositoryImpl();
         LoginService loginService = new LoginServiceImpl(loginRepository);
-        LoginController loginController1 =new LoginControllerImpl(validCheck1,loginService);
+        LoginController loginController1 = new LoginControllerImpl(validCheck1, loginService);
+
+        // User Management
         UserManagementRepository userManagementRepository = new UserManagementRepositoryImpl();
         UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
-        UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService,validCheck1);
+        UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService, validCheck1);
 
+        // User Login
         UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
         UserLoginService userLoginService = new UserLoginServiceImpl(userLoginRepository);
-        UserLoginController userLoginController = new UserLoginControllerImpl(validCheck1,userLoginService);
+        UserLoginController userLoginController = new UserLoginControllerImpl(validCheck1, userLoginService);
 
+        // SignUp
         SignUpRepository signUpRepository = new SignUpRepositoryImpl();
         SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
         SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
 
+        // ReqProdRegit (dev 브랜치에서 온 부분)
         ReqProdRegitRepository reqProdRegitRepository = new ReqProdRegitRepositoryImpl();
         ReqProdRegitService reqProdRegitService = new ReqProdRegitServiceImpl(reqProdRegitRepository);
         ReqProdRegitController reqProdRegitController = new ReqProdRegitControllerImpl(validCheck1, reqProdRegitService);
 
-        WarehouseController warehouseController = new WarehouseControllerImpl(reqProdRegitController, userLoginController, signUpController, loginController1, userManagementController1,validCheck1);
+        // Read (feature 브랜치에서 온 부분)
+        InventoryReadRepo readRepo = new InventoryReadRepoImp();
+        InventoryReadService readService = new InventoryReadServiceImp(readRepo);
+        InventoryReadController readController = new InventoryReadControllerImp(readService, validCheck1);
+
+        // Update
+        InventoryUpdateRepo updateRepo = new InventoryUpdateRepoImp();
+        InventoryUpdateService updateService = new InventoryUpdateServiceImp(updateRepo);
+        InventoryUpdateController updateController = new InventoryUpdateControllerImp(updateService, validCheck1);
+
+        // Delete
+        InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
+        InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
+        // 주의! 클래스 이름 오타 없게
+        InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService, validCheck1);
+
+        // 통합 재고 컨트롤러
+        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(
+                readController,
+                updateController,
+                deleteController,
+                validCheck1
+        );
+
+        // 최종 통합 컨트롤러
+        WarehouseController warehouseController = new WarehouseControllerImpl(
+                reqProdRegitController,     // dev
+                userLoginController,
+                signUpController,
+                loginController1,
+                userManagementController1,
+                validCheck1,
+                inventoryIntegratedController  // feature
+        );
+
         warehouseController.start();
     }
 }
+

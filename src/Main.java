@@ -23,8 +23,6 @@ import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
 
-import dto.WarehouseDto;
-
 public class Main {
 
     // 테스트용 메인
@@ -34,14 +32,33 @@ public class Main {
         InventoryReadRepo repo = new InventoryReadRepoImp();
         InventoryReadService service = new InventoryReadServiceImp(repo);
         ValidCheck validCheck = new ValidCheck();
-        InventoryReadController controller = new InventoryReadControllerImp(service,validCheck);
+        InventoryReadController readcontroller = new InventoryReadControllerImp(service,validCheck);
         InventoryUpdateRepo updateRepo = new InventoryUpdateRepoImp();
         InventoryUpdateService updateService = new InventoryUpdateServiceImp(updateRepo);
-        InventoryUpdateController updateController = new InventoryUpdateCotrollerImp(updateService,validCheck);
+        InventoryUpdateController updateController = new InventoryUpdateControllerImp(updateService,validCheck);
         InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
         InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
+
+        InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService,validCheck);
+
+
+
+        // 통합 컨트롤러에 주입
+        InventoryIntegratedController integratedController = new InventoryIntegratedControllerImp(
+                readcontroller,
+                updateController,
+                deleteController,
+                validCheck
+        );
+
+        // 실행
+        integratedController.inventoryRunForUser();
+
+
+
         InventoryDeleteController deleteController = new InventoryDeleteContollerImp(deleteService,validCheck);
 //        deleteController.deleteInventory();
+
 
 
 
