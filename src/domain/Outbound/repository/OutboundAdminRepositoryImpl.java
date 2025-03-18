@@ -10,6 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static common.Text.*;
+
 /**
  * (관리자용) 출고관리 Repository 구현체입니다.
  */
@@ -99,7 +101,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
-            System.out.println("전체 승인 성공!");
+            System.out.println(OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,7 +124,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
-            System.out.println(Client_id+ "고객 전체 승인 성공!");
+            System.out.println(Client_id+ USER_OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -144,7 +146,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
-            System.out.println(outbound_number+ " 출고 승인 성공!");
+            System.out.println(outbound_number+ OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,7 +168,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
-            System.out.println(outbound_number+ " 출고 승인 성공!");
+            System.out.println(outbound_number+ OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();

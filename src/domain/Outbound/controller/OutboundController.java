@@ -2,6 +2,9 @@ package domain.Outbound.controller;
 
 import common.ValidCheck;
 
+import static common.ErrorCode.*;
+import static common.Text.*;
+
 /**
  * Outbound 통합 컨트롤러입니다.
  */
@@ -21,12 +24,12 @@ public class OutboundController {
      */
     public void outboundAdmin(){
         while (true) {
-            System.out.println("출고관리 관리자 메뉴 입니다.");
-            System.out.println("1.출고 리스트 조회 2. 승인 3. 이전 메뉴");
+            System.out.println(OUTBOUND_ADMIN_MENU.getText());
+            System.out.println(OUTBOUND_ADMIN_SELECT.getText());
             int choice = validCheck.inputNumRegex();
             switch (choice) {
                 case 1:
-                    System.out.println("1.전체 조회 \t\t2.업체별 조회");
+                    System.out.println(OUTBOUND_SELECT_MENU.getText());
                     choice = validCheck.inputNumRegex();
                     switch (choice) {
                         case 1 -> outboundAdminController.searchOutboundList();
@@ -34,7 +37,7 @@ public class OutboundController {
                     }
                     break;
                 case 2:
-                    System.out.println("1. 전체 승인 2. 업체별 승인 3. 출고 아이디 승인 4. 반려(출고Number)");
+                    System.out.println(OUTBOUND_APPROVE_MENU.getText());
                     choice = validCheck.inputNumRegex();
                     switch (choice) {
                         case 1 -> outboundAdminController.approveAllList();
@@ -46,7 +49,7 @@ public class OutboundController {
                 case 3:
                     return;
                 default:
-                    System.out.println("올바른 번호를 선택하세요.");
+                    System.out.println(ERROR_INPUT.getText());
                     return;
             }
         }

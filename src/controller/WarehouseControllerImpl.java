@@ -9,6 +9,7 @@ import domain.Inbound.controller.InboundController;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
+import domain.Outbound.controller.OutboundController;
 import dto.AdminDto;
 import dto.UserDto;
 
@@ -25,6 +26,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserController userController;
     private final AdminController adminController;
     private final InboundController inboundController;
+    private final OutboundController outboundController;
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
@@ -33,7 +35,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserController userController, AdminController adminController, InboundController inboundController
+            UserController userController, AdminController adminController, InboundController inboundController, OutboundController outboundController
     ) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
@@ -42,6 +44,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         this.userController = userController;
         this.adminController = adminController;
         this.inboundController = inboundController;
+        this.outboundController = outboundController;
     }
 
     @Override
@@ -180,6 +183,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     @Override
     public void adminOutboundStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
+        outboundController.outboundAdmin();
     }
 
     @Override

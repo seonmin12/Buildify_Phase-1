@@ -49,7 +49,19 @@ public enum Text {
     NOT_FIND_USER("고객님을 찾을 수 없습니다."),
     ADMIN_LIST_MENU(String.format("%-12s %-10s %-8s %-25s %-12s %-20s %-15s\n",
             "관리자번호", "직급", "이름", "이메일", "입사일", "주소", "연락처")),
-    USER_APPROVE_SUCCESS("고객이 승인되었습니다.");
+    USER_APPROVE_SUCCESS("고객이 승인되었습니다."),
+    NOT_FOUND_OUNTBOUND("출고리스트가 없습니다."),
+    NOT_FOUND_USER_OUTBOUND("해당 고객의 출고리스트가 없습니다."),
+    OUTBOUND_APPROVE_CLIENT("승인할 Client ID 를 입력하세요."),
+    OUTBOUND_APPROVE_NUMBER("승인할 출고 번호를 입력하세요."),
+    REJECT_OUTBOUND("반려할 출고 번호를 입력하세요."),
+    OUTBOUND_ADMIN_MENU("출고관리 관리자 메뉴 입니다."),
+    OUTBOUND_ADMIN_SELECT("1.출고 리스트 조회 2. 승인 3. 이전 메뉴"),
+    OUTBOUND_SELECT_MENU("1.전체 조회 \t2.업체별 조회"),
+    OUTBOUND_APPROVE_MENU("1. 전체 승인 2. 업체별 승인 3. 출고 아이디 승인 4. 반려(출고Number)"),
+    OUTBOUND_APPROVE_SUCCESS("출고 승인 성공!"),
+    USER_OUTBOUND_APPROVE_SUCCESS("고객 전체 승인 성공!"),
+    SEARCH_CLIENT_INPUT("조회할 고객의 Client ID 를 입력하세요.");
 
     private final String text;
       Text(String text) {

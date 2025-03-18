@@ -6,6 +6,8 @@ import dto.OutboundDto;
 
 import java.util.List;
 
+import static common.Text.*;
+
 /**
  * (관리자용) 출고관리 컨트롤러 구현체입니다.
  */
@@ -25,15 +27,23 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
     public void searchOutboundList() {
         List<OutboundDto> outboundDtoList = outboundAdminService.searchOutboundList();
         if (outboundDtoList.isEmpty()){
-            System.out.println("출고리스트가 없습니다.");
+            System.out.println(NOT_FOUND_OUNTBOUND.getText());
             return;
         }
-        System.out.println("출고번호 상품번호 고객번호 수량 출고상태 촐고요청일 창고ID");
-        for (OutboundDto list : outboundDtoList){
-            System.out.printf("%s %s %s %d %d %s %s",
-                    list.getOutbound_number(),list.getProd_id(),
-                    list.getClient_id(),list.getQuantity(),
-                    list.getOutbound_status(),list.getReq_outbound_day(),
+        String status;
+        System.out.printf("%-20s %-15s %-12s %4s %10s %10s %10s\n",
+                "출고번호", "상품번호", "고객번호", "수량", "출고상태", "출고요청일", "창고ID");
+        System.out.println(ROUND_BAR.getText());
+        for (OutboundDto list : outboundDtoList) {
+            if (list.getOutbound_status() == 0){
+                status = "대기";
+            }else if (list.getOutbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
+                    list.getOutbound_number(), list.getProd_id(),
+                    list.getClient_id(), list.getQuantity(),
+                    status, list.getReq_outbound_day(),
                     list.getWare_id());
         }
     }
@@ -44,20 +54,28 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
     @Override
     public void searchOutboundByUser() {
         String client_id;
-        System.out.println("조회할 고객의 Client ID 를 입력하세요.");
-        System.out.printf("입력 : ");
+        System.out.println(SEARCH_USER_INPUT.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         client_id = validCheck.inputAnyString();
         List<OutboundDto> outboundDtoList = outboundAdminService.searchOutboundByUser(client_id);
         if (outboundDtoList.isEmpty()){
-            System.out.println("해당 고객의 출고리스트가 없습니다.");
+            System.out.println(NOT_FOUND_USER_OUTBOUND.getText());
             return;
         }
-        System.out.println("출고번호 상품번호 고객번호 수량 출고상태 촐고요청일 창고ID");
-        for (OutboundDto list : outboundDtoList){
-            System.out.printf("%s %s %s %d %d %s %s",
-                    list.getOutbound_number(),list.getProd_id(),
-                    list.getClient_id(),list.getQuantity(),
-                    list.getOutbound_status(),list.getReq_outbound_day(),
+        String status;
+        System.out.printf("%-20s %-15s %-12s %4s %10s %10s %10s\n",
+                "출고번호", "상품번호", "고객번호", "수량", "출고상태", "출고요청일", "창고ID");
+        System.out.println(ROUND_BAR.getText());
+        for (OutboundDto list : outboundDtoList) {
+            if (list.getOutbound_status() == 0){
+                status = "대기";
+            }else if (list.getOutbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
+                    list.getOutbound_number(), list.getProd_id(),
+                    list.getClient_id(), list.getQuantity(),
+                    status, list.getReq_outbound_day(),
                     list.getWare_id());
         }
     }
@@ -77,8 +95,8 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
     @Override
     public void approveById() {
         String Client_id;
-        System.out.println("승인할 Client ID 를 입력하세요.");
-        System.out.printf("입력 : ");
+        System.out.println(OUTBOUND_APPROVE_CLIENT.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         Client_id = validCheck.inputAnyString();
         outboundAdminService.approveOneId(Client_id);
     }
@@ -89,8 +107,8 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
     @Override
     public void approveOneNumber() {
         String outbound_number;
-        System.out.println("승인할 출고 번호를 입력하세요.");
-        System.out.printf("입력 : ");
+        System.out.println(OUTBOUND_APPROVE_NUMBER.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         outbound_number = validCheck.inputAnyString();
         outboundAdminService.approveOneNumber(outbound_number);
     }
@@ -101,8 +119,8 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
     @Override
     public void returnOneNumber() {
         String outbound_number;
-        System.out.println("반려할 출고 번호를 입력하세요.");
-        System.out.printf("입력 : ");
+        System.out.println(REJECT_OUTBOUND.getText());
+        System.out.printf(INPUT_CHOICE.getText());
         outbound_number = validCheck.inputAnyString();
         outboundAdminService.returnOneNumber(outbound_number);
     }
