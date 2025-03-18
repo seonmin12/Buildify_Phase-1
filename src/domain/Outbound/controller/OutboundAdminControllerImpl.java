@@ -41,7 +41,7 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
                 status = "승인";
             }else status = "반려";
             System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
-                    list.getOutbound_number(), list.getProd_id(),
+                    list.getOutbound_id(), list.getProd_id(),
                     list.getClient_id(), list.getQuantity(),
                     status, list.getReq_outbound_day(),
                     list.getWare_id());
@@ -73,7 +73,7 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
                 status = "승인";
             }else status = "반려";
             System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
-                    list.getOutbound_number(), list.getProd_id(),
+                    list.getOutbound_id(), list.getProd_id(),
                     list.getClient_id(), list.getQuantity(),
                     status, list.getReq_outbound_day(),
                     list.getWare_id());

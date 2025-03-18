@@ -1,6 +1,7 @@
 package domain.Outbound.repository;
 
 import dto.OutboundDto;
+import dto.ReqOutboundDto;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface OutboundUserRepository {
     int deleteOutboundUser(String outboundNumber, String clientID);
 
     List<OutboundDto> getOutboundUserRequest(String clientID);
+
+    List<ReqOutboundDto> requestOutbound(String clientID);
 }

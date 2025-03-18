@@ -59,4 +59,8 @@ public class OutboundController {
      * 고객용 출고 메뉴 통합 컨트롤러 메소드입니다.
      */
     public void outboundUser(){}
+
+    public void outboundRequest(String clientId){
+        outboundUserController.requestOutbound(clientId);
+    }
 }

@@ -1,6 +1,7 @@
 package domain.Outbound.service;
 
 import dto.OutboundDto;
+import dto.ReqOutboundDto;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface OutboundUserService {
     boolean outboundUserDelete(String outboundNumber, String clientID);
 
     List<OutboundDto> getOutboundRequests(String clientId);
+
+    List<ReqOutboundDto> requestOutbound(String clientID);
 
 }
