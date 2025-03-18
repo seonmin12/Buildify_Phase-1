@@ -1,4 +1,184 @@
 package domain.Inbound.repository;
 
-public class InboundCheckRepoImp {
+import common.ErrorCode;
+import config.DBConnection;
+import dto.InboundDto;
+import exception.InboundException;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class InboundCheckRepoImp implements InboundCheckRepo {
+
+    Connection connection = DBConnection.getConnection();
+    CallableStatement cs = null;
+    ResultSet rs = null;
+
+    @Override
+    public List<InboundDto> allCheckRead() {
+        List<InboundDto> list = new ArrayList<>();
+
+        try {
+            cs = connection.prepareCall("{ CALl DB_inbound_allcheck_read() }");
+            ResultSet rs = cs.executeQuery();
+
+            while (rs.next()){
+                InboundDto dto = InboundDto.builder()
+                        .inbound_number(rs.getString("inbound_number"))
+                        .prod_id(rs.getString("prod_id"))
+                        .client_id(rs.getString("client_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .inbound_status(rs.getInt("inbound_status"))
+                        .req_inbound_day(rs.getDate("req_inbound_day"))
+                        .ware_id(rs.getString("ware_id"))
+                        .build();
+                list.add(dto);
+            }
+            rs.close();
+            cs.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
+    public void allCheckUpdate() {
+        try {
+            cs = connection.prepareCall("{ CALL DB_inbound_allcheck_update() }");
+            cs.executeUpdate();
+
+            System.out.println("인바운드 올체크 업데이트");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
+    public void allCheckReturn() {
+        try{
+            cs = connection.prepareCall("{ CALL DB_inbound_allcheck_return() }");
+            cs.executeQuery();
+            System.out.println("인바운드 올체크 리");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
+    public List<InboundDto> prodCheckRead() {
+        List<InboundDto> list = new ArrayList<>();
+        try {
+            cs = connection.prepareCall("{ CALl DB_inbound_check_prod_read() }");
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()){
+                InboundDto dto = InboundDto.builder()
+                        .inbound_number(rs.getString("inbound_number"))
+                        .prod_id(rs.getString("prod_id"))
+                        .client_id(rs.getString("client_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .inbound_status(rs.getInt("inbound_status"))
+                        .req_inbound_day(rs.getDate("req_inbound_day"))
+                        .ware_id(rs.getString("wqre_id"))
+                        .build();
+                list.add(dto);
+            }
+            rs.close();
+            cs.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
+    public void prodCheckUpdate() {
+        try{
+            cs = connection.prepareCall("{ CALL DB_inbound_check_prod_update() }");
+            cs.executeQuery();
+            System.out.println("인바운드 프로드체크 업데이트");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
+    public void prodCheckReturn() {
+        try{
+            cs = connection.prepareCall("{ CALL DB_inbound_check_prod_return() }");
+            cs.executeQuery();
+            System.out.println("임바운드 프로드체크 리");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
+    public List<InboundDto> clientCheckRead(String a) {
+        List<InboundDto> list = new ArrayList<>();
+        try {
+            cs = connection.prepareCall("{ CALl DB_inbound_check_client_read(?) }");
+            cs.setString(1,a);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()){
+                InboundDto dto = InboundDto.builder()
+                        .inbound_number(rs.getString("inbound_number"))
+                        .prod_id(rs.getString("prod_id"))
+                        .client_id(rs.getString("client_id"))
+                        .quantity(rs.getInt("quantity"))
+                        .inbound_status(rs.getInt("inbound_status"))
+                        .req_inbound_day(rs.getDate("req_inbound_day"))
+                        .ware_id(rs.getString("wqre_id"))
+                        .build();
+                list.add(dto);
+            }
+            rs.close();
+            cs.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
+    public void clientCheckUpdate(String a) {
+        try {
+            cs = connection.prepareCall("{ CALL DB_inbound_check_client_update(?) }");
+            cs.executeQuery();
+            System.out.println("인바운드 클라이언트체크 업데이트");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
+
+    @Override
+    public void clientCheckReturn(String a) {
+        try {
+            cs = connection.prepareCall("{ CALL DB_inbound_check_client_return(?) }");
+            cs.executeQuery();
+            System.out.println("인바운드 클라이언트체크 리턴");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+
+    }
 }
