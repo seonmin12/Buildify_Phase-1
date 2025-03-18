@@ -3,6 +3,7 @@ package domain.Inventory.controller;
 import common.ValidCheck;
 import domain.Inventory.service.InventoryReadService;
 import dto.InventoryDto;
+import dto.UserDto;
 import dto.WarehouseDto;
 
 import java.util.*;
@@ -89,6 +90,13 @@ public class InventoryReadControllerImp implements InventoryReadController {
             return null;
         }
 
+    @Override
+    public List<InventoryDto> ReadByClientID() {
+        System.out.print("조회할 입점사 ID(Client_id)를 입력하세요: ");
+        String client_id = validCheck.inputAnyString();
+        return processInventoryRead(client_id);
+    }
+
 
     /**
      * 사용자로부터 클라이언트 ID를 입력받아 재고 정보를 조회하고 출력한다.
@@ -96,25 +104,11 @@ public class InventoryReadControllerImp implements InventoryReadController {
      * @return 조회된 재고 정보 리스트, 없을 경우 null 반환
      */
         @Override
-        public List<InventoryDto> ReadByClientID () {
+        public List<InventoryDto> ReadByClientID (UserDto userDto) {
 
-            System.out.print("고객 ID(client_id)를 입력하세요: ");
-            String clientId = validCheck.inputAnyString();
+            String clientId = userDto.getClient_id();
 
-            List<InventoryDto> inventoryDtoList = inventoryReadService.ReadByClientID(clientId);
-
-
-            if (inventoryDtoList == null || inventoryDtoList.isEmpty()) {
-                System.out.println("해당 카테고리의 재고가 없습니다.");
-                return null;
-            }
-
-            for (InventoryDto dto : inventoryDtoList) {
-                System.out.printf("상품명:%-8s | 창고ID:%-6s | 입점사ID:%-6s | 상품ID:%-8s | 수량:%4d | 최종출고일:%s | 최종입고일:%s\n",
-                        dto.getProd_name(), dto.getWare_id(), dto.getClient_id(),
-                        dto.getProd_id(), dto.getQuantity(), dto.getLast_outbount_day(), dto.getLast_inbound_day());
-            }
-            return inventoryDtoList;
+           return processInventoryRead(clientId);
 
         }
 
@@ -165,5 +159,23 @@ public class InventoryReadControllerImp implements InventoryReadController {
 
 
         }
+
+    @Override
+    public List<InventoryDto> processInventoryRead(String clientId) {
+        List<InventoryDto> inventoryDtoList = inventoryReadService.ReadByClientID(clientId);
+
+        if (inventoryDtoList == null || inventoryDtoList.isEmpty()) {
+            System.out.println("해당 카테고리의 재고가 없습니다.");
+            return null;
+        }
+
+        for (InventoryDto dto : inventoryDtoList) {
+            System.out.printf("상품명:%-8s | 창고ID:%-6s | 입점사ID:%-6s | 상품ID:%-8s | 수량:%4d | 최종출고일:%s | 최종입고일:%s\n",
+                    dto.getProd_name(), dto.getWare_id(), dto.getClient_id(),
+                    dto.getProd_id(), dto.getQuantity(), dto.getLast_outbount_day(), dto.getLast_inbound_day());
+        }
+
+        return inventoryDtoList;
     }
+}
 

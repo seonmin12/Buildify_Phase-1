@@ -141,8 +141,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_day"))
-                        .last_outbount_day(rs.getDate("last_outbount_day"))
+                        .last_inbound_day(rs.getDate("last_inbound_date"))
+                        .last_outbount_day(rs.getDate("last_outbound_date"))
 
                         .build();
 
@@ -181,8 +181,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_day"))
-                        .last_outbount_day(rs.getDate("last_outbount_day"))
+                        .last_inbound_day(rs.getDate("last_inbound_date"))
+                        .last_outbount_day(rs.getDate("last_outbount_date"))
 
                         .build();
                 list.add(inventoryDto);

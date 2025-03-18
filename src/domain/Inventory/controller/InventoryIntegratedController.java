@@ -1,6 +1,8 @@
 package domain.Inventory.controller;
 
 import common.ValidCheck;
+import dto.AdminDto;
+import dto.UserDto;
 
 public class InventoryIntegratedController {
 
@@ -20,7 +22,7 @@ public class InventoryIntegratedController {
 
 
 
-    public void inventoryRunForAdmin() {
+    public void inventoryRunForAdmin(AdminDto adminDto) {
 
         while(true){
             System.out.println("\n=== 재고 통합 관리 메뉴 ===");
@@ -33,7 +35,7 @@ public class InventoryIntegratedController {
 
             switch (choice) {
                 case 1:
-                    inventoryReadMenu();
+                    inventoryReadMenu(adminDto);
                     break;
 
                     case 2:
@@ -62,7 +64,7 @@ public class InventoryIntegratedController {
     }
 
 
-    public void inventoryRunForUser() {
+    public void inventoryRunForUser(UserDto userDto) {
         System.out.println("\n=== 회원 재고 조회 메뉴 ===");
         System.out.println("1. 내 회사 재고 조회");
         System.out.println("0. 종료");
@@ -70,7 +72,7 @@ public class InventoryIntegratedController {
         int choice = validCheck.inputNumRegex();
 
         switch (choice) {
-            case 1 -> inventoryReadController.ReadByClientID();
+            case 1 -> inventoryReadController.ReadByClientID(userDto);
             case 0 -> {
                 System.out.println("프로그램 종료");
                 return;
@@ -89,7 +91,7 @@ public class InventoryIntegratedController {
 
 
     // 관리자용 재고조회 메뉴 세분화
-    private void inventoryReadMenu(){
+    private void inventoryReadMenu(AdminDto adminDto){
         System.out.println("\n--- 재고 조회 메뉴 ---");
         System.out.println("1. 상품명으로 조회");
         System.out.println("2. 카테고리별 조회");
