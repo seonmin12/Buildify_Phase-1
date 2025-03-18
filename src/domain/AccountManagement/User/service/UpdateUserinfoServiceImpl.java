@@ -1,23 +1,18 @@
 package domain.AccountManagement.User.service;
 
+import domain.AccountManagement.User.repository.UpdateUserinfoRepository;
+import dto.UserDto;
+
 public class UpdateUserinfoServiceImpl implements UpdateUserinfoService {
-    @Override
-    public boolean updatePassword(String newpassword, String confirmpassword) {
-        return false;
+
+    private final UpdateUserinfoRepository updateUserinfoRepository;
+
+    public UpdateUserinfoServiceImpl(UpdateUserinfoRepository updateUserinfoRepository) {
+        this.updateUserinfoRepository = updateUserinfoRepository;
     }
 
     @Override
-    public boolean updateUserName(String newusername) {
-        return false;
-    }
-
-    @Override
-    public boolean updateUserEmail(String newemail) {
-        return false;
-    }
-
-    @Override
-    public boolean updateUserPhone(String newphone) {
-        return false;
+    public boolean updateUserinfo(String clientId, int updateOption, String newValue) {
+        return updateUserinfoRepository.updateUserinfo(clientId, updateOption, newValue);
     }
 }

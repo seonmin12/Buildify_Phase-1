@@ -49,10 +49,14 @@ public class Diconfig {
     private final SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
     private final SignUpController signUpController = new SignUpControllerImpl(validCheck,signUpService);
 
+    private final UpdateUserinfoRepository updateUserinfoRepository = new UpdateUserinfoRepositoryImpl();
+    private final UpdateUserinfoService updateUserinfoService = new UpdateUserinfoServiceImpl(updateUserinfoRepository);
+    private final UpdateUserinfoController updateUserinfoController = new UpdateUserinfoControllerImpl(validCheck,updateUserinfoService);
+
     private final LoginController loginController = new LoginControllerImpl(validCheck,loginService);
     private final UserManagementController userManagementController = new UserManagementControllerImpl(userManagementService,validCheck);
     private final InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedController(inventoryReadController,inventoryUpdateController,inventoryDeleteController,validCheck);
-    private final UserController userController = new UserController(userLoginController,productController,signUpController);
+    private final UserController userController = new UserController(userLoginController,productController,signUpController, updateUserinfoController);
     private final AdminController adminController = new AdminController(validCheck, loginController, userManagementController);
 
 
