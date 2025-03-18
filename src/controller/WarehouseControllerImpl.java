@@ -141,7 +141,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     System.out.println("출고 관리 기능 동작");
                     break;
                 case 6:
-                    System.out.println("나의 정보 변경 동작");
+                    userController.updateUserInfo();
                     break;
                 case 7:
                     userController.userLogout();

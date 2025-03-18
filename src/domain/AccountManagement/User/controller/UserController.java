@@ -6,11 +6,13 @@ public class UserController {
     private final UserLoginController userLoginController;
     private final ProductController productController;
     private final SignUpController signUpController;
+    private final UpdateUserinfoController updateUserinfoController;
 
-    public UserController(UserLoginController userLoginController, ProductController productController, SignUpController signUpController) {
+    public UserController(UserLoginController userLoginController, ProductController productController, SignUpController signUpController, UpdateUserinfoController  updateUserinfoController) {
         this.userLoginController = userLoginController;
         this.productController = productController;
         this.signUpController = signUpController;
+        this.updateUserinfoController = updateUserinfoController;
     }
 
     public boolean userSignUp() {
@@ -34,4 +36,6 @@ public class UserController {
     public boolean getAllProducts() {
         return productController.getAllProduct();
     }
+
+    public boolean updateUserInfo() { return updateUserinfoController.updateUserinfo(userLoginController.getUserInfo());}
 }

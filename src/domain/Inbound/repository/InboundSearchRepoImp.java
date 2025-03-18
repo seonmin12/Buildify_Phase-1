@@ -21,7 +21,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     @Override
     public List<InboundDto> userSearch() {
         List<InboundDto> list = new ArrayList<>();
-
+        return null;
     }
 
     @Override
