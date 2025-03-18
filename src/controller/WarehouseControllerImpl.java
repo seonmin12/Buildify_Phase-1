@@ -13,6 +13,9 @@ import domain.DH_UserManagement.service.SignUpService;
 import domain.DH_UserManagement.service.SignUpServiceImpl;
 import domain.DH_UserManagement.service.UserLoginService;
 import domain.DH_UserManagement.service.UserLoginServiceImpl;
+import domain.Inventory.controller.*;
+import domain.Inventory.repository.*;
+import domain.Inventory.service.*;
 import domain.UserManagement.controller.LoginController;
 import domain.UserManagement.controller.LoginControllerImpl;
 import domain.UserManagement.controller.UserManagementController;
@@ -30,6 +33,11 @@ import dto.UserDto;
 
 import static common.ErrorCode.*;
 import static common.Text.*;
+import domain.Inventory.controller.InventoryIntegratedControllerImp;
+import domain.Inventory.controller.InventoryUpdateController;
+import domain.Inventory.controller.InventoryUpdateControllerImp;
+
+
 
 // 전체 통합 메인 컨트롤러
 public class WarehouseControllerImpl implements WarehouseController{
@@ -38,13 +46,16 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserLoginController userLoginController;
     private final SignUpController signUpController;
     private final ValidCheck validCheck;
+    private final InventoryIntegratedController inventoryIntegratedController;
 
-    public WarehouseControllerImpl(UserLoginController userLoginController, SignUpController signUpController, LoginController loginController, UserManagementController userManagementController, ValidCheck validCheck) {
+    public WarehouseControllerImpl(UserLoginController userLoginController, SignUpController signUpController, LoginController loginController,
+                                   UserManagementController userManagementController, ValidCheck validCheck, InventoryIntegratedController inventoryIntegratedController) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
         this.userLoginController = userLoginController;
         this.signUpController = signUpController;
         this.validCheck = validCheck;
+        this.inventoryIntegratedController = inventoryIntegratedController;
     }
 
     @Override
@@ -196,13 +207,13 @@ public class WarehouseControllerImpl implements WarehouseController{
     @Override
     public void adminOutboundStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
-        System.out.println("출고관리 기능 추가 예정");
+
     }
 
     @Override
     public void adminInventoryStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
-        System.out.println("재고관리 기능 추가 예정");
+        inventoryIntegratedController.inventoryRunForAdmin();
     }
 
     //관리자 테스트 코드
@@ -215,6 +226,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
         UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService,validCheck1);
 
+
         UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
         UserLoginService userLoginService = new UserLoginServiceImpl(userLoginRepository);
         UserLoginController userLoginController = new UserLoginControllerImpl(validCheck1,userLoginService);
@@ -223,7 +235,37 @@ public class WarehouseControllerImpl implements WarehouseController{
         SignUpService signUpService = new SignUpServiceImpl(signUpRepository);
         SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
 
-        WarehouseController warehouseController = new WarehouseControllerImpl(userLoginController, signUpController, loginController1, userManagementController1,validCheck1);
+
+
+// Read 의존성
+        InventoryReadRepo readRepo = new InventoryReadRepoImp();
+        InventoryReadService readService = new InventoryReadServiceImp(readRepo);
+        InventoryReadController readController = new InventoryReadControllerImp(readService, validCheck1);
+
+// Update 의존성
+        InventoryUpdateRepo updateRepo = new InventoryUpdateRepoImp();
+        InventoryUpdateService updateService = new InventoryUpdateServiceImp(updateRepo);
+        InventoryUpdateController updateController = new InventoryUpdateControllerImp(updateService, validCheck1);
+
+// Delete 의존성
+        InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
+        InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
+        InventoryDeleteController deleteController = new InventoryDeleteContollerImp(deleteService, validCheck1);
+
+        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(
+                readController,
+                updateController,
+                deleteController,
+                validCheck1
+        );
+
+
+
+
+        WarehouseController warehouseController = new WarehouseControllerImpl(userLoginController, signUpController, loginController1,
+                userManagementController1,validCheck1,inventoryIntegratedController);
         warehouseController.start();
+
+
     }
 }

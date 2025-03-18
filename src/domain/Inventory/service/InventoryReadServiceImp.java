@@ -38,7 +38,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
 
     @Override
     public List <InventoryDto> ReadByClientID(String clientID) {
-        List<InventoryDto> inventoryList = inventoryReadRepo.ReadByCategory(clientID);
+        List<InventoryDto> inventoryList = inventoryReadRepo.ReadByClientID(clientID);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
             throw new InventoryException(ErrorCode.ERROR_INPUT);

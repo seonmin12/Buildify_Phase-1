@@ -18,30 +18,30 @@ public class InboundCheckControllerImp implements InboundCheckController {
         System.out.print("선택: ");
         int a = validCheck.inputNumRegex();
 
-        switch (a) {
-
-            case 1:
-                System.out.println("1.전체승인 2.개별승인");
-                a = validCheck.inputNumRegex();
-                switch (a) {
-                    case 1 -> inboundCheckService.allCheckOk(a);
-                    case 2:
-                        System.out.println("1.클라이언트별 2.상품별");
-                        a = validCheck.inputNumRegex();
-                        switch (a) {
-                            case 1 -> inboundCheckService.checkClient(a) ;
-//                                System.out.println("조회할 클라이언트 입력");
-
-
-
-
-//                            case 2 -> inboundCheckService.checkProd(a); {
-//                            }
-                        }
-                }
-
-
-        }
+//        switch (a) {
+//
+//            case 1:
+//                System.out.println("1.전체승인 2.개별승인");
+//                a = validCheck.inputNumRegex();
+//                switch (a) {
+//                    case 1 -> inboundCheckService.allCheckOk(a);
+//                    case 2:
+//                        System.out.println("1.클라이언트별 2.상품별");
+//                        a = validCheck.inputNumRegex();
+//                        switch (a) {
+//                            case 1 -> inboundCheckService.checkClient(a) ;
+////                                System.out.println("조회할 클라이언트 입력");
+//
+//
+//
+//
+////                            case 2 -> inboundCheckService.checkProd(a); {
+////                            }
+//                        }
+//                }
+//
+//
+//        }
 
 
     }

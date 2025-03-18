@@ -1,17 +1,14 @@
 package domain.Inventory.controller;
 
 import common.ValidCheck;
-import domain.Inventory.repository.InventoryUpdateRepo;
 import domain.Inventory.service.InventoryUpdateService;
 import dto.InventoryDto;
 
-import java.util.Optional;
-
-public class InventoryUpdateCotrollerImp implements InventoryUpdateController {
+public class InventoryUpdateControllerImp implements InventoryUpdateController {
     private final InventoryUpdateService inventoryUpdateService;
     private final ValidCheck validCheck;
 
-    public InventoryUpdateCotrollerImp(InventoryUpdateService inventoryUpdateService, ValidCheck validCheck) {
+    public InventoryUpdateControllerImp(InventoryUpdateService inventoryUpdateService, ValidCheck validCheck) {
         this.inventoryUpdateService = inventoryUpdateService;
         this.validCheck = validCheck;
     }
