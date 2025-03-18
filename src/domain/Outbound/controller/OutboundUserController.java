@@ -11,4 +11,6 @@ public interface OutboundUserController {
     List<OutboundDto> outboundUserRead();
 
     void outboundUserDelete();
+
+    boolean requestOutbound(String clientId);
 }

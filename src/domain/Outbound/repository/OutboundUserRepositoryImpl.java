@@ -3,6 +3,7 @@ package domain.Outbound.repository;
 import common.ErrorCode;
 import config.DBConnection;
 import dto.OutboundDto;
+import dto.ReqOutboundDto;
 import exception.OutboundException;
 
 import java.sql.*;
@@ -31,7 +32,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto outboundDto = OutboundDto.builder()
-                        .outbound_number(rs.getString("key"))
+                        .outbound_id(rs.getString("key"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -95,7 +96,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto dto = OutboundDto.builder()
-                        .outbound_number(rs.getString("key"))
+                        .outbound_id(rs.getString("key"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -115,5 +116,43 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
             throw new OutboundException(ErrorCode.ERROR_INPUT);
         }
         return outboundDtos;
+    }
+
+    @Override
+    public List<ReqOutboundDto> requestOutbound(String clientID) throws OutboundException {
+       List<ReqOutboundDto> outboundList = new ArrayList<>();
+
+        String sql = "SELECT " +
+                "p.prod_id, p.brand, p.prod_name, p.prod_price, p.prod_code, " +
+                "p.prod_category, p.prod_size, s.quantity, s.client_id, s.ware_id " +
+                "FROM inventory s " +
+                "JOIN product p ON s.prod_id = p.prod_id " +
+                "WHERE s.client_id = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, clientID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ReqOutboundDto dto = new ReqOutboundDto(
+                        rs.getString("prod_id"),
+                        rs.getString("brand"),
+                        rs.getString("prod_name"),
+                        rs.getInt("prod_price"),
+                        rs.getInt("prod_code"),
+                        rs.getString("prod_category"),
+                        rs.getBigDecimal("prod_size"),
+                        rs.getInt("quantity"),
+                        rs.getString("client_id"),
+                        rs.getString("ware_id")
+                );
+                outboundList.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return  outboundList;
     }
 }

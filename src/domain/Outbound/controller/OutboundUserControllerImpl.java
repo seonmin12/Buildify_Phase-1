@@ -4,6 +4,7 @@ import common.ValidCheck;
 import domain.Outbound.service.OutboundUserService;
 import dto.InventoryDto;
 import dto.OutboundDto;
+import dto.ReqOutboundDto;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class OutboundUserControllerImpl implements OutboundUserController{
 
         for (OutboundDto dto : outboundDtoList) {
             System.out.printf("출고번호:%-8s | 상품ID:%-6s | 입점사ID:%-6s | 출고수량:%-8d | 출고상태:%4d | 출고요청일:%s | 창고ID:%s\n",
-                    dto.getOutbound_number(), dto.getProd_id(), dto.getClient_id(),dto.getQuantity(),
+                    dto.getOutbound_id(), dto.getProd_id(), dto.getClient_id(),dto.getQuantity(),
                     dto.getOutbound_status(),dto.getReq_outbound_day(),dto.getWare_id());
         }
         return outboundDtoList;
@@ -58,7 +59,7 @@ public class OutboundUserControllerImpl implements OutboundUserController{
         System.out.println("\n[미승인 출고 요청 목록]");
         for (OutboundDto dto : pendinglist) {
             System.out.printf("출고번호:%-8s | 상품ID:%-6s | 입점사ID:%-6s | 출고수량:%-8d | 출고상태:%4d | 출고요청일:%s | 창고ID:%s\n",
-                    dto.getOutbound_number(), dto.getProd_id(), dto.getClient_id(),dto.getQuantity(),
+                    dto.getOutbound_id(), dto.getProd_id(), dto.getClient_id(),dto.getQuantity(),
                     dto.getOutbound_status(),dto.getReq_outbound_day(),dto.getWare_id());
         }
 
@@ -75,6 +76,12 @@ public class OutboundUserControllerImpl implements OutboundUserController{
 
     }
 
+    @Override
+    public boolean requestOutbound(String clientId) {
+        List<ReqOutboundDto> outboundList = outboundUserService.requestOutbound(clientId);
+        System.out.println(outboundList);
+        return false;
+    }
 
 
 }

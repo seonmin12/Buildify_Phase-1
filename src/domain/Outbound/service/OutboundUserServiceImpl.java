@@ -4,6 +4,7 @@ import common.ErrorCode;
 import domain.Outbound.repository.OutboundUserRepository;
 import domain.Outbound.repository.OutboundUserRepositoryImpl;
 import dto.OutboundDto;
+import dto.ReqOutboundDto;
 import exception.OutboundException;
 
 import java.util.ArrayList;
@@ -41,5 +42,10 @@ public class OutboundUserServiceImpl implements OutboundUserService {
        return outboundUserRepository.getOutboundUserRequest(clientId);
 
 
+    }
+
+    @Override
+    public List<ReqOutboundDto> requestOutbound(String clientID) {
+        return outboundUserRepository.requestOutbound(clientID);
     }
 }

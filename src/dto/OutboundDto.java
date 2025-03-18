@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class OutboundDto {
-    private String outbound_number;
+    private String outbound_id;
     private String prod_id;
     private String client_id;
     private int quantity;
