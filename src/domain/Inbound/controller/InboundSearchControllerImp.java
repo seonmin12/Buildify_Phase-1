@@ -44,6 +44,10 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     @Override
     public void SearchOne() {
+        System.out.println("조회할 업체 입력: ");
+        String a = validCheck.inputAnyString();
+        List<InboundDto> inboundDtoList = inboundSearchService.SearchOne(a);
+
 
 
     }
