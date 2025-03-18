@@ -4,8 +4,10 @@ import config.DBConnection;
 import dto.ProductDto;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ReqProdRegitRepositoryImpl implements ReqProdRegitRepository {
+public class ProductRepositoryImpl implements ProductRepository {
     Connection connection = DBConnection.getConnection();
     CallableStatement cs = null;
     ResultSet rs = null;
@@ -42,5 +44,41 @@ public class ReqProdRegitRepositoryImpl implements ReqProdRegitRepository {
         }
 
         return isSuccess;
+    }
+
+    @Override
+    public List<ProductDto> getAllProduct() {
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        Connection connection = DBConnection.getConnection();
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+
+        String sql = "SELECT * FROM  product";
+
+        try {
+            pstmt = connection.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ProductDto productDto = new ProductDto(
+                        rs.getString("prod_id"),
+                        rs.getString("brand"),
+                        rs.getString("prod_name"),
+                        rs.getInt("prod_price"),
+                        rs.getInt("prod_code"),
+                        rs.getString("prod_category"),
+                        rs.getBigDecimal("prod_size"));
+
+                productDtoList.add(productDto);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return productDtoList;
+
     }
 }
