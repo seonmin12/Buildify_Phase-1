@@ -15,6 +15,15 @@ import domain.Inventory.service.*;
 import domain.AccountManagement.Admin.controller.*;
 import domain.AccountManagement.Admin.service.*;
 import domain.AccountManagement.Admin.repository.*;
+import domain.Outbound.controller.*;
+import domain.Outbound.repository.OutboundAdminRepository;
+import domain.Outbound.repository.OutboundAdminRepositoryImpl;
+import domain.Outbound.repository.OutboundUserRepository;
+import domain.Outbound.repository.OutboundUserRepositoryImpl;
+import domain.Outbound.service.OutboundAdminService;
+import domain.Outbound.service.OutboundAdminServiceImpl;
+import domain.Outbound.service.OutboundUserService;
+import domain.Outbound.service.OutboundUserServiceImpl;
 
 public class Diconfig {
     private final ValidCheck validCheck = new ValidCheck();
@@ -78,7 +87,14 @@ public class Diconfig {
 
     private final InboundController inboundController=new InboundController(validCheck,inboundCheckController,inboundSearchController, inboundInsertController, inboundDeleteController);
 
+    private final OutboundAdminRepository outboundAdminRepository = new OutboundAdminRepositoryImpl();
+    private final OutboundAdminService outboundAdminService = new OutboundAdminServiceImpl(outboundAdminRepository);
+    private final OutboundAdminController outboundAdminController = new OutboundAdminControllerImpl(validCheck,outboundAdminService);
 
+    private final OutboundUserRepository outboundUserRepository = new OutboundUserRepositoryImpl();
+    private final OutboundUserService outboundUserService = new OutboundUserServiceImpl(outboundUserRepository);
+    private final OutboundUserController outboundUserController = new OutboundUserControllerImpl(outboundUserService,validCheck);
+    private final OutboundController outboundController = new OutboundController(validCheck,outboundAdminController,outboundUserController);
 
 
     public WarehouseController warehouseController(){
@@ -88,6 +104,7 @@ public class Diconfig {
                 inventoryIntegratedController,
                 userController,
                 adminController,
-                inboundController);
+                inboundController,
+                outboundController);
     }
 }
