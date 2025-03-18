@@ -16,10 +16,11 @@ public class InboundSearchControllerImp implements InboundSearchController{
     }
 
 
-    @Override
-    public InboundDto SearchOne(String s) {
 
-        return null;
+    @Override
+    public void userSearchAll() {
+
+
     }
 
     @Override
@@ -35,19 +36,17 @@ public class InboundSearchControllerImp implements InboundSearchController{
         System.out.println("프린트라운드");
 
         for(InboundDto inboundDto : inboundDtoList){
-            System.out.printf("%s %s  %s %d %d %s %s",inboundDto.getInbound_number(),inboundDto.getProd_id(),
-                    inboundDto.getClient_id(),inboundDto.getQuantity(),inboundDto.getInbound_status(),
-                    inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
-
+            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
+                    inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
+                    inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
         }
-
     }
 
     @Override
-    public void Search() {
+    public void SearchOne() {
+
 
     }
-
 
 
 }

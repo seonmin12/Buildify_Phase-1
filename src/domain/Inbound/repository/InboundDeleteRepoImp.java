@@ -15,14 +15,12 @@ public class InboundDeleteRepoImp implements InboundDeleteRepo{
     CallableStatement cs = null;
 
     @Override
-    public void Delete(InboundDto inboundDto) throws InboundException {
+    public void Delete(String  inboundDto) throws InboundException {
 
         String sql = "{ CALL DB_INBOUND_DELETE(?) } ";
-
         try{
             cs = connection.prepareCall(sql);
-            cs.setString(1,inboundDto.getInbound_number());
-
+            cs.setString(1,inboundDto);
             cs.execute();
         } catch (SQLException e) {
             e.printStackTrace();

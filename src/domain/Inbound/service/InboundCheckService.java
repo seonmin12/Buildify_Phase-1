@@ -17,6 +17,9 @@ public interface InboundCheckService {
     void clientCheckUpdate(String ci);
     void clientCheckReturn(String ci);
 
+    void numCheckUpdate(String ci);
+    void numCheckReturn(String ci);
+
 
 
 
