@@ -250,7 +250,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         );
 
         // 통합 재고 컨트롤러
-        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(
+        InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedController(
                 readController,
                 updateController,
                 deleteController,
