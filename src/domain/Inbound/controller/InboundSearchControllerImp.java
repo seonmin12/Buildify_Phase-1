@@ -19,6 +19,12 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     @Override
     public void userSearchAll() {
+        List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll();
+        for(InboundDto inboundDto : inboundDtoList){
+            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
+                    inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
+                    inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
+        }
 
 
     }
@@ -26,14 +32,6 @@ public class InboundSearchControllerImp implements InboundSearchController{
     @Override
     public void SearchAll() {
         List<InboundDto> inboundDtoList = inboundSearchService.SearchAll();
-
-        if(inboundDtoList.isEmpty()){
-            System.out.println("서치올테스트");
-            return;
-        }
-        System.out.println("서치올");
-        System.out.println("프린트타이틀");
-        System.out.println("프린트라운드");
 
         for(InboundDto inboundDto : inboundDtoList){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
@@ -47,6 +45,11 @@ public class InboundSearchControllerImp implements InboundSearchController{
         System.out.println("조회할 업체 입력: ");
         String a = validCheck.inputAnyString();
         List<InboundDto> inboundDtoList = inboundSearchService.SearchOne(a);
+        for(InboundDto inboundDto : inboundDtoList){
+            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
+                    inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
+                    inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
+        }
 
 
 

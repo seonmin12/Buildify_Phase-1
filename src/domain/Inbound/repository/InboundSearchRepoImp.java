@@ -19,6 +19,12 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
 
 
     @Override
+    public List<InboundDto> userSearch() {
+        List<InboundDto> list = new ArrayList<>();
+
+    }
+
+    @Override
     public List<InboundDto> SearchOne(String inbound_number) {
         List<InboundDto> list = new ArrayList<>();
         try {

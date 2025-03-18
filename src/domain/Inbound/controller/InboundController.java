@@ -5,6 +5,7 @@ import common.ValidCheck;
 import java.util.Scanner;
 
 public class InboundController {
+
     private final ValidCheck validCheck;
     private final InboundCheckController inboundCheckController;
     private final InboundSearchController inboundSearchController;
@@ -22,6 +23,8 @@ public class InboundController {
     }
 
 
+
+
     public void inboundAdminMain() {
         System.out.println("관리자 입고관리입니다.");
         System.out.println("1.입고요청확인 2.현황조회 3.나가기");
@@ -30,7 +33,7 @@ public class InboundController {
         switch (a){
             case 1: inboundCheckController.check();
             case 2:
-                System.out.println("1.전체조회 2. 업체별조회 ");
+                System.out.println("1.전체조회 2. 업체별조회 3.나가기 ");
                 a = validCheck.inputNumRegex();
                 switch (a){
                     case 1:inboundSearchController.SearchAll();
@@ -52,7 +55,7 @@ public class InboundController {
             case 1:inboundInsertController.insertrun();
             case 2:inboundDeleteController.delete();
         }
-
-
     }
+
+
 }

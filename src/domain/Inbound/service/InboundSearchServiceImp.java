@@ -19,6 +19,11 @@ public class InboundSearchServiceImp implements InboundSearchService{
 
 
     @Override
+    public List<InboundDto> userSearchAll() {
+        return null;
+    }
+
+    @Override
     public List<InboundDto> SearchOne(String inbound_number) {
         try{
             return inboundSearchRepo.SearchOne(inbound_number);
