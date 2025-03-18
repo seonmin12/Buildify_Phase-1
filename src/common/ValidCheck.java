@@ -50,6 +50,8 @@ public class ValidCheck {
     // 사이즈 (DECIMAL(10,2), 정수 또는 소수점 이하 2자리까지 허용)
     public final String PRODUCT_SIZE_REGEX = "^[0-9]{1,8}(\\.[0-9]{1,2})?$";
 
+    public final String AMOUNT_REGEX = "^[1-999]*$";
+
 
 
 
