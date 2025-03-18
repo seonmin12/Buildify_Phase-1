@@ -139,7 +139,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
                 case 4 :
                     System.out.println("입고 관리 기능 동작");
-
+                    inboundController.inboundUserMain(userDto);
                     break;
                 case 5:
                     System.out.println("출고 관리 기능 동작");
@@ -173,7 +173,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     @Override
     public void adminInboundStart(AdminDto adminDto) {
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
-        System.out.println("입고관리 기능 추가 예정");
+        inboundController.inboundAdminMain();
     }
 
     @Override

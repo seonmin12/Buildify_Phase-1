@@ -37,10 +37,8 @@ public class InboundCheckControllerImp implements InboundCheckController {
         System.out.print("선택: ");
         int a = validCheck.inputNumRegex();
 
-
         switch (a) {
             case 1:
-
                 System.out.println("1.전체확인 2.업체별확인 3.개별확인");
                 a = validCheck.inputNumRegex();
                 switch (a) {
@@ -62,7 +60,7 @@ public class InboundCheckControllerImp implements InboundCheckController {
                                 inboundCheckService.allCheckReturn();
                                 break;
                         }
-                        break;
+
 
 
                     case 2:
@@ -81,6 +79,7 @@ public class InboundCheckControllerImp implements InboundCheckController {
                             switch (b){
                                 case 1: inboundCheckService.clientCheckUpdate(ci); break;
                                 case 2: inboundCheckService.clientCheckReturn(ci); break;
+                                case 3: break;
                             }
 
                     case 3:

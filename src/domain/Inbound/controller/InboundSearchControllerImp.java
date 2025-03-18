@@ -1,14 +1,17 @@
 package domain.Inbound.controller;
 
 import common.ValidCheck;
+import domain.AccountManagement.User.controller.UserLoginController;
 import domain.Inbound.service.InboundSearchService;
 import dto.InboundDto;
+import dto.UserDto;
 
 import java.util.List;
 
 public class InboundSearchControllerImp implements InboundSearchController{
     private final InboundSearchService inboundSearchService;
     private final ValidCheck validCheck;
+
 
     public InboundSearchControllerImp(InboundSearchService inboundSearchServicem, ValidCheck validCheck){
         this.inboundSearchService = inboundSearchServicem;
@@ -18,9 +21,9 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
 
     @Override
-    public void userSearchAll() {
-
-        List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll();
+    public void userSearchAll(UserDto userDto) {
+        String a = userDto.getClient_id();
+        List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll(a);
         for(InboundDto inboundDto : inboundDtoList){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
                     inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),

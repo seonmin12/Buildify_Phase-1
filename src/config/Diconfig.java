@@ -70,7 +70,7 @@ public class Diconfig {
 
     private final InboundDeleteRepo inboundDeleteRepo = new InboundDeleteRepoImp();
     private final InboundDeleteService inboundDeleteService = new InboundDeleteServiceImp(inboundDeleteRepo, inboundSearchRepo);
-    private final InboundDeleteController inboundDeleteController = new InboundDeleteControllerImp(inboundDeleteService);
+    private final InboundDeleteController inboundDeleteController = new InboundDeleteControllerImp(inboundDeleteService, validCheck);
     private final InboundCheckRepo inboundCheckRepo = new InboundCheckRepoImp();
     private final InboundCheckService inboundCheckService = new InboundCheckServiceImp(inboundCheckRepo);
     private final InboundCheckController inboundCheckController = new InboundCheckControllerImp(inboundCheckService,validCheck);

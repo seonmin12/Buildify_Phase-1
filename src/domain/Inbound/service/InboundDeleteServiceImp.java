@@ -7,6 +7,8 @@ import domain.Inbound.repository.InboundSearchRepo;
 import dto.InboundDto;
 import exception.InboundException;
 
+import java.util.List;
+
 public class InboundDeleteServiceImp implements InboundDeleteService{
     private final InboundDeleteRepo inboundDeleteRepo;
     private final InboundSearchRepo inboundSearchRepo;
@@ -14,6 +16,11 @@ public class InboundDeleteServiceImp implements InboundDeleteService{
     public InboundDeleteServiceImp(InboundDeleteRepo inboundDeleteRepo, InboundSearchRepo inboundSearchRepo) {
         this.inboundDeleteRepo = inboundDeleteRepo;
         this.inboundSearchRepo = inboundSearchRepo;
+    }
+
+    @Override
+    public List<InboundDto> deletesearch(String a) {
+        return inboundDeleteRepo.deleteSearch(a);
     }
 
     @Override
