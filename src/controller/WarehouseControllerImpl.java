@@ -250,7 +250,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 // Delete 의존성
         InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
         InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
-        InventoryDeleteController deleteController = new InventoryDeleteContollerImp(deleteService, validCheck1);
+        InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService, validCheck1);
 
         InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(
                 readController,

@@ -19,7 +19,7 @@ public class Main {
         InventoryUpdateController updateController = new InventoryUpdateControllerImp(updateService,validCheck);
         InventoryDeleteRepo deleteRepo = new InventoryDeleteRepoImp();
         InventoryDeleteService deleteService = new InventoryDeleteServiceImp(deleteRepo);
-        InventoryDeleteController deleteController = new InventoryDeleteContollerImp(deleteService,validCheck);
+        InventoryDeleteController deleteController = new InventoryDeleteControllerImp(deleteService,validCheck);
 
 
 
