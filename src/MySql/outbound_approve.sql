@@ -10,7 +10,7 @@ BEGIN
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
-            AND i.ware_id = o.ware_id
+            AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0;  -- 아직 승인 안 된 애들만 반영
 
@@ -18,6 +18,12 @@ BEGIN
     UPDATE outbound
     SET status = 1
     WHERE status = 0;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+    and ware_id IS NULL;
+
 END $$
 DELIMITER ;
 
@@ -29,7 +35,7 @@ BEGIN
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
-            AND i.ware_id = o.ware_id
+            AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0
       AND o.outbound_number = outbound_input;  -- 특정 출고번호만 반영
@@ -39,6 +45,12 @@ BEGIN
     SET status = 1
     WHERE status = 0
       AND outbound_number = outbound_input;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+      and ware_id IS NULL;
+
 END $$
 DELIMITER ;
 
@@ -49,7 +61,7 @@ BEGIN
     UPDATE inventory i
     JOIN outbound o ON i.prod_id = o.prod_id
                    AND i.client_id = o.client_id
-                   AND i.ware_id = o.ware_id
+                  AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0
       AND o.client_id = outbound_input;
@@ -58,8 +70,15 @@ BEGIN
     SET status = 1
     WHERE status = 0
       AND client_id = outbound_input;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+      and ware_id IS NULL;
+
 END $$
 DELIMITER ;
+
 
 #출고 요청 1개 거절 프로시저(출고아이디기준)
 DELIMITER $$
