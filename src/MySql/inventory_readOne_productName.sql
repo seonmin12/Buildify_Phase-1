@@ -1,4 +1,5 @@
 use wmsdb;
+drop procedure if exists inventory_readOne_productName;
 DELIMITER //
 
 CREATE PROCEDURE inventory_readOne_productName(
@@ -6,12 +7,10 @@ CREATE PROCEDURE inventory_readOne_productName(
 )
 BEGIN
     select i.prod_id, prod_name, i.client_id, i.ware_id, i.quantity,
-           w.last_inbound_day, w.last_outbount_day
+           i.last_inbound_date, i.last_outbound_date
     from inventory i
              join product p on i.prod_id = p.prod_id
-             join warehouse w on i.prod_id = w.prod_id
-        AND i.ware_id = w.ware_id
-        AND i.client_id = w.client_id
+
     where p.prod_name = input_prod_name
     order by i.prod_id, i.ware_id;
 end;

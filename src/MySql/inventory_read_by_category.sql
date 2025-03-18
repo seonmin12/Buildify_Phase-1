@@ -1,17 +1,17 @@
 use wmsdb;
 DELIMITER //
 
+drop procedure if exists inventory_read_by_category;
+
 CREATE PROCEDURE inventory_read_by_category(
     IN input_category varchar(50)
 )
 BEGIN
     select i.prod_id, p.prod_name, p.prod_category, i.client_id, i.ware_id, i.quantity,
-           w.last_inbound_day, w.last_outbount_day
+           i.last_inbound_date, i.last_outbound_date
     from inventory i
              join product p on i.prod_id = p.prod_id
-             join warehouse w on i.prod_id = w.prod_id
-        AND i.ware_id = w.ware_id
-        AND i.client_id = w.client_id
+
     where p.prod_category = input_category
     order by i.prod_id, i.ware_id;
 end;
