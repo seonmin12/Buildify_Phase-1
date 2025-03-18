@@ -1,11 +1,24 @@
 package domain.Inbound.service;
 
+import dto.InboundDto;
+
+import java.util.List;
+
 public interface InboundCheckService {
-    void allCheckOk(int a);
 
-    void checkProd(int a);
-    void checkClient(int a );
+    List<InboundDto> allCheckRead();
 
-    void check(int a);
+    void allCheckUpdate();
+    void allCheckReturn();
+    List<InboundDto> prodCheckRead(String prod);
+    void prodCheckUpdate(String ci);
+    void prodCheckReturn(String ci);
+    List<InboundDto> clientCheckRead(String ci);
+    void clientCheckUpdate(String ci);
+    void clientCheckReturn(String ci);
+
+
+
+
 
 }
