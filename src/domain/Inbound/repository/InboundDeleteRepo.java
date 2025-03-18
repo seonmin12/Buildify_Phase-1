@@ -4,5 +4,5 @@ import dto.InboundDto;
 
 public interface InboundDeleteRepo {
 
-    void Delete(InboundDto inboundDto);
+    void Delete(String  inboundDto);
 }

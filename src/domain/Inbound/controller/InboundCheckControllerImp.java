@@ -31,6 +31,7 @@ public class InboundCheckControllerImp implements InboundCheckController {
 
     @Override
     public void check() {
+
         System.out.println("1.요청건확인 2.나가기");
         System.out.print("선택: ");
         int a = validCheck.inputNumRegex();
@@ -39,7 +40,7 @@ public class InboundCheckControllerImp implements InboundCheckController {
         switch (a) {
             case 1:
 
-                System.out.println("1.전체확인 2.업체별확인 3.상품별확인 4.개별확인");
+                System.out.println("1.전체확인 2.업체별확인 3.개별확인");
                 a = validCheck.inputNumRegex();
                 switch (a) {
                     case 1:
@@ -67,38 +68,39 @@ public class InboundCheckControllerImp implements InboundCheckController {
 
                         System.out.print("업체 이름 입력: ");
                         String ci = validCheck.inputAnyString();
-                        dto = inboundCheckService.prodCheckRead(ci);
+                        dto = inboundCheckService.clientCheckRead(ci);
                         for (InboundDto inboundDto : dto) {
                             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
                                     inboundDto.getInbound_number(), inboundDto.getProd_id(), inboundDto.getClient_id(), inboundDto.getQuantity()
                                     , inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(), inboundDto.getWare_id());
+                        }
                             System.out.println("1.승인 2.반려 3.나가기");
                             int b = validCheck.inputNumRegex();
 //
                             switch (b){
-                                case 1: inboundCheckService.clientCheckUpdate(ci);
+                                case 1: inboundCheckService.clientCheckUpdate(ci); break;
+                                case 2: inboundCheckService.clientCheckReturn(ci); break;
                             }
+
+                    case 3:
+                        dto = inboundCheckService.allCheckRead();
+                        for (InboundDto inboundDto : dto) {
+                            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
+                                    inboundDto.getInbound_number(), inboundDto.getProd_id(), inboundDto.getClient_id(), inboundDto.getQuantity()
+                                    , inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(), inboundDto.getWare_id());
                         }
-
-//
-//                    case 1:
-//                        System.out.print("조회할 클라이언트 입력: ");
-//                        String client = validCheck.inputAnyString();
-//                        inboundCheckService.(client);
-
-
-//                    case 2:
-//                        System.out.print("조회할 상품명 입력: ");
-//                        String prod = validCheck.inputAnyString();
-//                        inboundCheckService.checkProd(prod);
-//
-//                    default:
+                        System.out.print("입고번호 입력: ");
+                        String in = validCheck.inputAnyString();
+                        System.out.println("1.승인 2.반려");
+                        int c = validCheck.inputNumRegex();
+                        switch (c){
+                            case 1: inboundCheckService.numCheckUpdate(in);
+                            case 2: inboundCheckService.numCheckReturn(in);
+                        }
 
                 }}
                 }
-//            case 2 : //반려
-//
-//            case 3 : //나가기
+
 
 
         }

@@ -143,7 +143,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
                         .quantity(rs.getInt("quantity"))
                         .inbound_status(rs.getInt("inbound_status"))
                         .req_inbound_day(rs.getDate("req_inbound_day"))
-                        .ware_id(rs.getString("wqre_id"))
+                        .ware_id(rs.getString("ware_id"))
                         .build();
                 list.add(dto);
             }
@@ -160,6 +160,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     public void clientCheckUpdate(String a) {
         try {
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_update(?) }");
+            cs.setString(1,a);
             cs.executeQuery();
             System.out.println("인바운드 클라이언트체크 업데이트");
         } catch (SQLException e) {
@@ -173,6 +174,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     public void clientCheckReturn(String a) {
         try {
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_return(?) }");
+            cs.setString(1,a);
             cs.executeQuery();
             System.out.println("인바운드 클라이언트체크 리턴");
         } catch (SQLException e) {
@@ -180,5 +182,31 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
             throw new InboundException(ErrorCode.ERROR_INPUT);
         }
 
+    }
+
+    @Override
+    public void inbound_number_check_update(String ci) {
+        try {
+            cs = connection.prepareCall("{ CALL DB_inbound_check_inbound_number_update(?) }");
+            cs.setString(1,ci);
+            cs.executeQuery();
+            System.out.println("인바운드 입고번호 업데이트");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
+    }
+
+    @Override
+    public void inbound_number_check_return(String ci) {
+        try {
+            cs = connection.prepareCall("{ CALL DB_inbound_check_inbound_number_return(?) }");
+            cs.setString(1, ci);
+            cs.executeQuery();
+            System.out.println("인바운드 입고번호 리턴");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InboundException(ErrorCode.ERROR_INPUT);
+        }
     }
 }

@@ -55,11 +55,26 @@ public class InboundCheckServiceImp implements InboundCheckService{
 
     @Override
     public void clientCheckUpdate(String ci) {
+        inboundCheckRepo.clientCheckUpdate(ci);
 
     }
 
     @Override
     public void clientCheckReturn(String ci) {
+        inboundCheckRepo.clientCheckReturn(ci);
+
+    }
+
+    @Override
+    public void numCheckUpdate(String ci) {
+        inboundCheckRepo.inbound_number_check_update(ci);
+
+
+    }
+
+    @Override
+    public void numCheckReturn(String ci) {
+        inboundCheckRepo.inbound_number_check_return(ci);
 
     }
 
