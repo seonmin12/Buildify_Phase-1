@@ -1,5 +1,6 @@
 package common;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 import static common.ErrorCode.*;
@@ -30,6 +31,24 @@ public class ValidCheck {
     public final String SIGN_UP_ADDRESS_REGEX = "^[가-힣A-Za-z0-9\\s,.-]{5,100}$";
     // 사업자 등록번호 (한국 기준: 000-00-00000)
     public final String SIGN_UP_BUSINESS_NUMBER_REGEX = "^\\d{3}-\\d{2}-\\d{5}$";
+
+    // 브랜드명 (VARCHAR(20), 한글/영문 공백 포함, 2~20자)
+    public final String PRODUCT_BRAND_REGEX = "^[가-힣a-zA-Z\\s]{2,20}$";
+
+    // 상품명 (VARCHAR(30), 한글/영문/숫자/공백 포함, 2~30자)
+    public final String PRODUCT_NAME_REGEX = "^[가-힣a-zA-Z0-9\\s]{2,30}$";
+
+    // 상품 가격 (INT, 숫자만 허용, 1~10자리)
+    public final String PRODUCT_PRICE_REGEX = "^[0-9]{1,10}$";
+
+    // 상품 코드 (INT, 숫자만 허용, 1~10자리)
+    public final String PRODUCT_CODE_REGEX = "^[0-9]{1,10}$";
+
+    // 카테고리 (VARCHAR(20), 한글/영문 2~20자)
+    public final String PRODUCT_CATEGORY_REGEX = "^[가-힣a-zA-Z]{2,20}$";
+
+    // 사이즈 (DECIMAL(10,2), 정수 또는 소수점 이하 2자리까지 허용)
+    public final String PRODUCT_SIZE_REGEX = "^[0-9]{1,8}(\\.[0-9]{1,2})?$";
 
 
 
@@ -69,8 +88,55 @@ public class ValidCheck {
         return input;
     }
 
+    /**
+     * 정규표현식 검증하여 정수 입력하는 메소드
+     * @param regex 정규식 패턴
+     * @return 검증된 정수값
+     */
+    public int inputIntRegex(String regex) {
+        String str;
+        int input = 0;
+        do {
+            str = scanner.nextLine().trim();
+            if (str.matches(regex)) {
+                try {
+                    input = Integer.parseInt(str);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(ERROR_NUM.getText());
+                }
+            }
+            System.out.println(ERROR_NUM.getText());
+        } while (!str.matches(regex) || str.isEmpty());
+        return input;
+    }
+
+    /**
+     * 정규표현식 검증하여 소수 포함 숫자 입력하는 메소드 (DECIMAL 타입 지원)
+     * @param regex 정규식 패턴
+     * @return 검증된 BigDecimal 값
+     */
+    public BigDecimal inputDecimalRegex(String regex) {
+        String str;
+        BigDecimal input = null;
+        do {
+            str = scanner.nextLine().trim();
+            if (str.matches(regex)) {
+                try {
+                    input = new BigDecimal(str);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(ERROR_NUM.getText());
+                }
+            }
+            System.out.println(ERROR_NUM.getText());
+        } while (!str.matches(regex) || str.isEmpty());
+        return input;
+    }
+
     // 입력 값 제한 없는 입력 메소드
     public String inputAnyString(){
         return scanner.nextLine();
     }
+
 }

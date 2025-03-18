@@ -63,7 +63,11 @@ public class UserManagementServiceImpl implements UserManagementService{
      */
     @Override
     public void updateUser(String Client_id, Integer choice, String newValue) {
-        userManagementRepository.updateUser(Client_id,choice,newValue);
+        switch (choice){
+            case 1 -> userManagementRepository.updateUserPhone(Client_id,newValue);
+            case 2 -> userManagementRepository.updateUserEmail(Client_id,newValue);
+            case 3 -> userManagementRepository.updateUserAddress(Client_id,newValue);
+        }
     }
     /**
      * 특정 관리자의 정보를 업데이트한다.
@@ -73,7 +77,11 @@ public class UserManagementServiceImpl implements UserManagementService{
      */
     @Override
     public void updateSelfAdmin(String Admin_id, Integer choice, String newValue) {
-        userManagementRepository.updateSelfAdmin(Admin_id,choice,newValue);
+        switch (choice){
+            case 1 -> userManagementRepository.updateSelfAdminPhone(Admin_id,newValue);
+            case 2 -> userManagementRepository.updateSelfAdminEmail(Admin_id,newValue);
+            case 3 -> userManagementRepository.updateSelfAdminAddress(Admin_id,newValue);
+        }
     }
     /**
      * 현재 사용 가능한 웨어하우스(저장소) 크기를 반환한다.

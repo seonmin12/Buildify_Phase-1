@@ -83,6 +83,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                         .build();
                 list.add(dto);
             }
+            rs.close();
             pstmt.close();
             return list;
         } catch (SQLException e) {
@@ -115,9 +116,11 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                         .user_adress(rs.getString("user_adress"))
                         .user_enterday(rs.getDate("user_enterday"))
                         .user_status(rs.getInt("user_status"))
+                        .user_ware_size(rs.getBigDecimal("user_ware_size"))
                         .build();
                 pendinglist.add(dto);
             }
+            rs.close();
             pstmt.close();
 
             return pendinglist;
@@ -133,20 +136,11 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
      */
     @Override
     public void approveUser(String Client_id) throws BuildifyException {
-        String sql = new StringBuilder()
-                .append("UPDATE user SET user_status = 1 WHERE client_id = ? ").toString();
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, Client_id);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println(Client_id + " 회원이 승인되었습니다.");
-            } else {
-                System.out.println("회원 승인 실패: 존재하지 않는 회원 ID");
-            }
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_USER_APPROVE(?)}");
+            cs.setString(1, Client_id);
+            rs = cs.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,10 +158,11 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         UserDto dto = null;
 
         try {
-            connection.setAutoCommit(false);
+            connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_READONE(?)}");
             cs.setString(1, Client_id);
             rs = cs.executeQuery();
+
 
             if (rs.next()) {
                 dto = UserDto.builder()
@@ -180,6 +175,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                         .user_status(rs.getInt("user_status"))
                         .build();
             }
+            rs.close();
             cs.close();
 
             return dto;
@@ -191,43 +187,68 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     }
 
     /**
-     * 업데이트할 정보를 선택하여 고객정보를 업데이트하는 메소드입니다.
+     * 고객의 연락처를 업데이트하는 메소드 입니다.
      * @param Client_id
-     * @param choice
      * @param newValue
      */
     @Override
-    public void updateUser(String Client_id, Integer choice, String newValue) {
-        String sql = "";
+    public void updateUserPhone(String Client_id,String newValue){
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_USER_UPDATE_PHONE(?,?)}");
+            cs.setInt(1,Integer.parseInt(newValue));
+            cs.setString(2, Client_id);
+            rs = cs.executeQuery();
 
-        switch (choice) {
-            case 1:
-                sql = new StringBuilder()
-                        .append("UPDATE user SET user_phone = ? WHERE client_id = ? ").toString();
-                break;
-            case 2:
-                sql = new StringBuilder()
-                        .append("UPDATE user SET user_email = ? WHERE client_id = ? ").toString();
-                break;
-            case 3:
-                sql = new StringBuilder()
-                        .append("UPDATE user SET user_adress = ? WHERE client_id = ? ").toString();
-                break;
+            rs.close();
+            cs.close();
+            System.out.println(Client_id + CHANGE_SUCCESS.getText());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BuildifyException(ErrorCode.DB_READ_ALL_ERROR);
         }
+    }
+    /**
+     * 고객의 이메일을 업데이트하는 메소드 입니다.
+     * @param Client_id
+     * @param newValue
+     */
+    @Override
+    public void updateUserEmail(String Client_id,String newValue){
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_USER_UPDATE_EMAIL(?,?)}");
+            cs.setString(1,newValue);
+            cs.setString(2, Client_id);
+            rs = cs.executeQuery();
 
+            rs.close();
+            cs.close();
+            System.out.println(Client_id + CHANGE_SUCCESS.getText());
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BuildifyException(ErrorCode.DB_READ_ALL_ERROR);
+        }
+    }
+    /**
+     * 고객의 주소를 업데이트하는 메소드 입니다.
+     * @param Client_id
+     * @param newValue
+     */
+    @Override
+    public void updateUserAddress(String Client_id,String newValue){
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_USER_UPDATE_ADDRESS(?,?)}");
+            cs.setString(1,newValue);
+            cs.setString(2, Client_id);
+            rs = cs.executeQuery();
 
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, Client_id);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println(Client_id + CHANGE_SUCCESS.getText());
-            } else {
-                System.out.println(USER_CHANGE_FAIL.getText());
-            }
+            rs.close();
+            cs.close();
+            System.out.println(Client_id + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -236,45 +257,70 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     }
 
     /**
-     * 관리자 본인 정보 업데이트하는 메소드입니다.
-     * @param Admin_id
-     * @param choice
+     * 관리자 본인의 연락처를 수정하는 메소드입니다.
+     * @param Admin_number
      * @param newValue
      */
     @Override
-    public void updateSelfAdmin(String Admin_id, Integer choice, String newValue) {
-        String sql = "";
+    public void updateSelfAdminPhone(String Admin_number, String newValue) {
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_ADMIN_UPDATE_PHONE(?,?)}");
+            cs.setInt(1,Integer.parseInt(newValue));
+            cs.setString(2, Admin_number);
+            rs = cs.executeQuery();
 
-        switch (choice) {
-            case 1:
-                sql = new StringBuilder()
-                        .append("UPDATE admin SET admin_phone = ? WHERE admin_number = ? ").toString();
-                break;
-            case 2:
-                sql = new StringBuilder()
-                        .append("UPDATE admin SET admin_email = ? WHERE admin_number = ? ").toString();
-                break;
-            case 3:
-                sql = new StringBuilder()
-                        .append("UPDATE admin SET admin_adress = ? WHERE admin_number = ? ").toString();
-                break;
+            rs.close();
+            cs.close();
+            System.out.println(Admin_number + CHANGE_SUCCESS.getText());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BuildifyException(ErrorCode.DB_READ_ALL_ERROR);
         }
+    }
 
+    /**
+     * 관리자 본인의 이메일 수정하는 메소드입니다.
+     * @param Admin_number
+     * @param newValue
+     */
+    @Override
+    public void updateSelfAdminEmail(String Admin_number, String newValue) {
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_ADMIN_UPDATE_Email(?,?)}");
+            cs.setString(1,newValue);
+            cs.setString(2, Admin_number);
+            rs = cs.executeQuery();
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            conn.setAutoCommit(true);
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, Admin_id);
+            rs.close();
+            cs.close();
+            System.out.println(Admin_number + CHANGE_SUCCESS.getText());
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println(Admin_id + CHANGE_SUCCESS.getText());
-//                conn.commit();
-            } else {
-                System.out.println(ADMIN_CHANGE_FAIL.getText());
-//                conn.rollback();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new BuildifyException(ErrorCode.DB_READ_ALL_ERROR);
+        }
+    }
+
+    /**
+     * 관리자 본인의 주소를 수정하는 메소드입니다.
+     * @param Admin_number
+     * @param newValue
+     */
+    @Override
+    public void updateSelfAdminAddress(String Admin_number, String newValue) {
+        try {
+            connection.setAutoCommit(true);
+            cs = connection.prepareCall("{call DB_ADMIN_UPDATE_address(?,?)}");
+            cs.setString(1,newValue);
+            cs.setString(2, Admin_number);
+            rs = cs.executeQuery();
+
+            rs.close();
+            cs.close();
+            System.out.println(Admin_number + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -296,6 +342,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
             if (rs.next()) {
                 size = rs.getInt(1);
             }
+            rs.close();
             cs.close();
             return size;
 
@@ -334,6 +381,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                         .adminPw(rs.getString("admin_pw"))
                         .build();
             }
+            rs.close();
             cs.close();
 
             return dto;
