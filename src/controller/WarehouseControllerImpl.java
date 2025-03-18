@@ -33,6 +33,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final ValidCheck validCheck;
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
     private final UserIntegratedController userIntegratedController;
+    private final InboundController inboundController;
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
@@ -41,13 +42,16 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserIntegratedController userIntegratedController
+            UserIntegratedController userIntegratedController,
+            InboundController inboundController
+
     ) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
         this.validCheck = validCheck;
         this.inventoryIntegratedController = inventoryIntegratedController;
         this.userIntegratedController = userIntegratedController;
+        this.inboundController = inboundController;
     }
 
     @Override
@@ -145,6 +149,8 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
                 case 4 :
                     System.out.println("입고 관리 기능 동작");
+
+
                     break;
                 case 5:
                     System.out.println("출고 관리 기능 동작");
@@ -307,6 +313,9 @@ public class WarehouseControllerImpl implements WarehouseController{
                 validCheck1,
                 inventoryIntegratedController,  // feature
                 userIntegratedController
+
+
+
         );
 
         warehouseController.start();
