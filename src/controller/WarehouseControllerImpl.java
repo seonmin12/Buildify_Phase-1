@@ -7,10 +7,7 @@ import domain.DH_UserManagement.service.*;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
-import domain.UserManagement.controller.LoginController;
-import domain.UserManagement.controller.LoginControllerImpl;
-import domain.UserManagement.controller.UserManagementController;
-import domain.UserManagement.controller.UserManagementControllerImpl;
+import domain.UserManagement.controller.*;
 import domain.UserManagement.repository.LoginRepository;
 import domain.UserManagement.repository.LoginRepositoryImpl;
 import domain.UserManagement.repository.UserManagementRepository;
@@ -33,7 +30,8 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final ValidCheck validCheck;
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
     private final UserIntegratedController userIntegratedController;
-    private final InboundController inboundController;
+    private final AdminController adminController;
+
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
@@ -42,8 +40,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserIntegratedController userIntegratedController,
-            InboundController inboundController
+            UserIntegratedController userIntegratedController, AdminController adminController
 
     ) {
         this.loginController = loginController;
@@ -51,7 +48,8 @@ public class WarehouseControllerImpl implements WarehouseController{
         this.validCheck = validCheck;
         this.inventoryIntegratedController = inventoryIntegratedController;
         this.userIntegratedController = userIntegratedController;
-        this.inboundController = inboundController;
+        this.adminController = adminController;
+
     }
 
     @Override
@@ -177,58 +175,8 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void adminUserManagement(AdminDto adminDto) {
-        System.out.println(ADMIN_USER_MANAGEMENT_MENU.getText());
-        int choice = validCheck.inputNumRegex();
-        switch (choice){
-            case 1:
-                userManagementController.pendingApprovalUsers(adminDto);
-                System.out.println(ADMIN_MENU_CHOICE.getText());
-                choice = validCheck.inputNumRegex();
-                switch (choice) {
-                    case 1 -> userManagementController.approveUser(adminDto);
-                    case 2 -> {
-                        return;
-                    }
-                }
-                break;
-            case 2:
-                System.out.println(ADMIN_USER_SERACH.getText());
-                choice = validCheck.inputNumRegex();
-                switch (choice) {
-                    case 1 -> userManagementController.listAllUsers(adminDto);
-                    case 2 -> userManagementController.searchUser(adminDto);
-                }
-                break;
-            case 3:
-                System.out.println(USER_INFO_CHANGER.getText());
-                userManagementController.updateUser(adminDto);
-                break;
-            case 4:
-                System.out.println("1. 내 정보 조회 2. 내 정보 수정");
-                choice = validCheck.inputNumRegex();
-                switch (choice) {
-                    case 1 -> userManagementController.searchMyInfo(adminDto);
-                    case 2 -> userManagementController.updateSelfAdmin(adminDto);
-                    default -> System.out.println(ERROR_INPUT.getText());
-                }
-
-                break;
-            case 5:
-                System.out.println(LOCAL_ADMIN_MENU.getText());
-                choice = validCheck.inputNumRegex();
-                switch (choice){
-                    case 1 -> userManagementController.listAllLocalAdmin(adminDto);
-                    case 2 -> {
-                        adminDto = loginController.getAdminLoginStatus();
-                        userManagementController.updateAdmin(adminDto);
-                    }
-                    default -> System.out.println(ERROR_INPUT.getText());
-                }
-                break;
-            default:
-                System.out.println(ERROR_INPUT.getText());
-                return;
-        }
+        System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
+        adminController.adminUserManagement(adminDto);
     }
 
     @Override
@@ -257,6 +205,10 @@ public class WarehouseControllerImpl implements WarehouseController{
         LoginRepository loginRepository = new LoginRepositoryImpl();
         LoginService loginService = new LoginServiceImpl(loginRepository);
         LoginController loginController1 = new LoginControllerImpl(validCheck1, loginService);
+
+        UserManagementRepository userManagementRepository = new UserManagementRepositoryImpl();
+        UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+        UserManagementController userManagementController1 = new UserManagementControllerImpl(userManagementService,validCheck1);
 
         // User Management
         UserManagementRepository userManagementRepository = new UserManagementRepositoryImpl();
@@ -305,6 +257,8 @@ public class WarehouseControllerImpl implements WarehouseController{
                 validCheck1
         );
 
+        AdminController adminController1 = new AdminController(validCheck1,loginController1,userManagementController1);
+
 
         // 최종 통합 컨트롤러
         WarehouseController warehouseController = new WarehouseControllerImpl(
@@ -312,9 +266,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                 userManagementController1,
                 validCheck1,
                 inventoryIntegratedController,  // feature
-                userIntegratedController
-
-
+                userIntegratedController,adminController1
 
         );
 
