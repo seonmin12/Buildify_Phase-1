@@ -32,14 +32,14 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserManagementController userManagementController;
     private final UserLoginController userLoginController;
     private final SignUpController signUpController;
-    private final ReqProdRegitController reqProdRegitController;  // dev 브랜치 변경사항
+    private final ProductController productController;  // dev 브랜치 변경사항
     private final ValidCheck validCheck;
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
 
     // === 통합된 생성자 ===
     // 두 브랜치 변경사항 합쳐서, reqProdRegitController + inventoryIntegratedController 모두 주입
     public WarehouseControllerImpl(
-            ReqProdRegitController reqProdRegitController,
+            ProductController productController,
             UserLoginController userLoginController,
             SignUpController signUpController,
             LoginController loginController,
@@ -47,7 +47,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController
     ) {
-        this.reqProdRegitController = reqProdRegitController;
+        this.productController = productController;
         this.userLoginController = userLoginController;
         this.signUpController = signUpController;
         this.loginController = loginController;
@@ -138,7 +138,7 @@ public class WarehouseControllerImpl implements WarehouseController{
             switch (menu) {
                 case 1:
                     System.out.println("상품 정보 등록 기능 동작");
-                    boolean result = reqProdRegitController.requestProdcutRegist();
+                    boolean result = productController.requestProdcutRegist();
                     if(result){
                         System.out.println("상품 정보 등록되었습니다.");
                     }
@@ -267,9 +267,9 @@ public class WarehouseControllerImpl implements WarehouseController{
         SignUpController signUpController = new SignUpControllerImpl(validCheck1, signUpService);
 
         // ReqProdRegit (dev 브랜치에서 온 부분)
-        ReqProdRegitRepository reqProdRegitRepository = new ReqProdRegitRepositoryImpl();
-        ReqProdRegitService reqProdRegitService = new ReqProdRegitServiceImpl(reqProdRegitRepository);
-        ReqProdRegitController reqProdRegitController = new ReqProdRegitControllerImpl(validCheck1, reqProdRegitService);
+        ProductRepository productRepository = new ProductRepositoryImpl();
+        ProductService productService = new ProductServiceImpl(productRepository);
+        ProductController productController = new ProductControllerImpl(validCheck1, productService);
 
         // Read (feature 브랜치에서 온 부분)
         InventoryReadRepo readRepo = new InventoryReadRepoImp();
@@ -297,7 +297,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 
         // 최종 통합 컨트롤러
         WarehouseController warehouseController = new WarehouseControllerImpl(
-                reqProdRegitController,     // dev
+                productController,     // dev
                 userLoginController,
                 signUpController,
                 loginController1,
