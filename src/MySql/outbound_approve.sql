@@ -18,6 +18,12 @@ BEGIN
     UPDATE outbound
     SET status = 1
     WHERE status = 0;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+    and ware_id IS NULL;
+
 END $$
 DELIMITER ;
 
@@ -39,6 +45,12 @@ BEGIN
     SET status = 1
     WHERE status = 0
       AND outbound_number = outbound_input;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+      and ware_id IS NULL;
+
 END $$
 DELIMITER ;
 
@@ -58,8 +70,15 @@ BEGIN
     SET status = 1
     WHERE status = 0
       AND client_id = outbound_input;
+
+    UPDATE outbound
+    SET ware_id = 'ware1'
+    WHERE status = 1
+      and ware_id IS NULL;
+
 END $$
 DELIMITER ;
+
 
 #출고 요청 1개 거절 프로시저(출고아이디기준)
 DELIMITER $$
