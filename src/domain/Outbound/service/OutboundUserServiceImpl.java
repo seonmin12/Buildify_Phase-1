@@ -29,4 +29,17 @@ public class OutboundUserServiceImpl implements OutboundUserService {
         return outboundlist;
 
     }
+
+    @Override
+    public boolean outboundUserDelete(String outboundNumber, String clientID) {
+        int result = outboundUserRepository.deleteOutboundUser(outboundNumber, clientID);
+        return result == 1;
+    }
+
+    @Override
+    public List<OutboundDto> getOutboundRequests(String clientId) {
+       return outboundUserRepository.getOutboundUserRequest(clientId);
+
+
+    }
 }

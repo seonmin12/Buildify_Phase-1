@@ -9,4 +9,9 @@ import java.util.List;
  */
 public interface OutboundUserService {
     List<OutboundDto> outboundUserRead(String clientID);
+
+    boolean outboundUserDelete(String outboundNumber, String clientID);
+
+    List<OutboundDto> getOutboundRequests(String clientId);
+
 }

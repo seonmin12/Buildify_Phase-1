@@ -10,4 +10,8 @@ import java.util.List;
 public interface OutboundUserRepository {
 
     List<OutboundDto> outboundUserRead(String clientID);
+
+    int deleteOutboundUser(String outboundNumber, String clientID);
+
+    List<OutboundDto> getOutboundUserRequest(String clientID);
 }
