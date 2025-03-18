@@ -6,26 +6,59 @@ from outbound;
 DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ALL_APPROVE()
 BEGIN
-    UPDATE outbound SET outbound.status = 1 where outbound.status = 0;
-end $$
+    -- inventory에서 재고 차감 (이번에 승인되는 애들만 반영)
+    UPDATE inventory i
+        JOIN outbound o ON i.prod_id = o.prod_id
+            AND i.client_id = o.client_id
+            AND i.ware_id = o.ware_id
+    SET i.quantity = i.quantity - o.quantity
+    WHERE o.status = 0;  -- 아직 승인 안 된 애들만 반영
+
+    -- 출고 요청 승인 처리
+    UPDATE outbound
+    SET status = 1
+    WHERE status = 0;
+END $$
 DELIMITER ;
 
 #출고 요청 1개 승인 프로시저(출고아이디기준)
 DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ONE_APPROVE(IN outbound_input VARCHAR(30))
 BEGIN
-    UPDATE outbound SET outbound.status = 1 where outbound.status = 0
-                                              and outbound.outbound_number = outbound_input;
-end $$
+    -- inventory에서 재고 차감 (해당 출고번호만 반영)
+    UPDATE inventory i
+        JOIN outbound o ON i.prod_id = o.prod_id
+            AND i.client_id = o.client_id
+            AND i.ware_id = o.ware_id
+    SET i.quantity = i.quantity - o.quantity
+    WHERE o.status = 0
+      AND o.outbound_number = outbound_input;  -- 특정 출고번호만 반영
+
+    -- 출고 요청 승인 처리
+    UPDATE outbound
+    SET status = 1
+    WHERE status = 0
+      AND outbound_number = outbound_input;
+END $$
 DELIMITER ;
 
 #출고 요청 전체 승인 프로시저(클라이언트 ID 기준)
 DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ONE_ID_APPROVE(IN outbound_input VARCHAR(10))
 BEGIN
-    UPDATE outbound SET outbound.status = 1 where outbound.status = 0
-                                              and outbound.client_id = outbound_input;
-end $$
+    UPDATE inventory i
+    JOIN outbound o ON i.prod_id = o.prod_id
+                   AND i.client_id = o.client_id
+                   AND i.ware_id = o.ware_id
+    SET i.quantity = i.quantity - o.quantity
+    WHERE o.status = 0
+      AND o.client_id = outbound_input;
+
+    UPDATE outbound
+    SET status = 1
+    WHERE status = 0
+      AND client_id = outbound_input;
+END $$
 DELIMITER ;
 
 #출고 요청 1개 거절 프로시저(출고아이디기준)
