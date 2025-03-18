@@ -1,21 +1,13 @@
 package controller;
 
 import common.ValidCheck;
-import domain.DH_UserManagement.controller.*;
-import domain.DH_UserManagement.repository.*;
-import domain.DH_UserManagement.service.*;
+import domain.AccountManagement.Admin.controller.AdminController;
+import domain.AccountManagement.Admin.controller.LoginController;
+import domain.AccountManagement.Admin.controller.UserManagementController;
+import domain.AccountManagement.User.controller.UserController;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
-import domain.UserManagement.controller.*;
-import domain.UserManagement.repository.LoginRepository;
-import domain.UserManagement.repository.LoginRepositoryImpl;
-import domain.UserManagement.repository.UserManagementRepository;
-import domain.UserManagement.repository.UserManagementRepositoryImpl;
-import domain.UserManagement.service.LoginService;
-import domain.UserManagement.service.LoginServiceImpl;
-import domain.UserManagement.service.UserManagementService;
-import domain.UserManagement.service.UserManagementServiceImpl;
 import dto.AdminDto;
 import dto.UserDto;
 
@@ -29,7 +21,7 @@ public class WarehouseControllerImpl implements WarehouseController{
     private final UserManagementController userManagementController;
     private final ValidCheck validCheck;
     private final InventoryIntegratedController inventoryIntegratedController; // feature 브랜치 변경사항
-    private final UserIntegratedController userIntegratedController;
+    private final UserController userController;
     private final AdminController adminController;
 
     // === 통합된 생성자 ===
@@ -39,13 +31,13 @@ public class WarehouseControllerImpl implements WarehouseController{
             UserManagementController userManagementController,
             ValidCheck validCheck,
             InventoryIntegratedController inventoryIntegratedController,
-            UserIntegratedController userIntegratedController, AdminController adminController
+            UserController userController, AdminController adminController
     ) {
         this.loginController = loginController;
         this.userManagementController = userManagementController;
         this.validCheck = validCheck;
         this.inventoryIntegratedController = inventoryIntegratedController;
-        this.userIntegratedController = userIntegratedController;
+        this.userController = userController;
         this.adminController = adminController;
     }
 
@@ -115,14 +107,14 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void userStart() {
-        boolean isLogin = userIntegratedController.userLogin();
+        boolean isLogin = userController.userLogin();
 
         if(!isLogin) {
             start();
             return;
         }
 
-        UserDto userDto = userIntegratedController.getUserInfo();
+        UserDto userDto = userController.getUserInfo();
 
         while (true){
             System.out.println("1. 상품 정보 등록 2. 상품 정보 출력 3. 재고관리 4. 입고관리 5. 출고관리 6. 나의 정보 변경 7. 로그아웃");
@@ -131,13 +123,13 @@ public class WarehouseControllerImpl implements WarehouseController{
             switch (menu) {
                 case 1:
                     System.out.println("상품 정보 등록 기능 동작");
-                    boolean result = userIntegratedController.requestProductRegist();
+                    boolean result = userController.requestProductRegist();
                     if(result){
                         System.out.println("상품 정보 등록되었습니다.");
                     }
                     break;
                 case 2:
-                    userIntegratedController.getAllProducts();
+                    userController.getAllProducts();
                     break;
                 case 3:
                     System.out.println("재고 관리 기능 동작");
@@ -152,7 +144,7 @@ public class WarehouseControllerImpl implements WarehouseController{
                     System.out.println("나의 정보 변경 동작");
                     break;
                 case 7:
-                    userIntegratedController.userLogout();
+                    userController.userLogout();
                     start();
                     break;
                 default:
@@ -164,7 +156,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void signUp() {
-        userIntegratedController.userSignUp();
+        userController.userSignUp();
         start();
     }
 

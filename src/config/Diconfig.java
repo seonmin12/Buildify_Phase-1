@@ -3,21 +3,15 @@ package config;
 import common.ValidCheck;
 import controller.WarehouseController;
 import controller.WarehouseControllerImpl;
-import domain.DH_UserManagement.controller.*;
-import domain.DH_UserManagement.repository.*;
-import domain.DH_UserManagement.service.*;
+import domain.AccountManagement.User.controller.*;
+import domain.AccountManagement.User.service.*;
+import domain.AccountManagement.User.repository.*;
 import domain.Inventory.controller.*;
 import domain.Inventory.repository.*;
 import domain.Inventory.service.*;
-import domain.UserManagement.controller.*;
-import domain.UserManagement.repository.LoginRepository;
-import domain.UserManagement.repository.LoginRepositoryImpl;
-import domain.UserManagement.repository.UserManagementRepository;
-import domain.UserManagement.repository.UserManagementRepositoryImpl;
-import domain.UserManagement.service.LoginService;
-import domain.UserManagement.service.LoginServiceImpl;
-import domain.UserManagement.service.UserManagementService;
-import domain.UserManagement.service.UserManagementServiceImpl;
+import domain.AccountManagement.Admin.controller.*;
+import domain.AccountManagement.Admin.service.*;
+import domain.AccountManagement.Admin.repository.*;
 
 public class Diconfig {
     private final ValidCheck validCheck = new ValidCheck();
@@ -54,8 +48,8 @@ public class Diconfig {
 
     private final LoginController loginController = new LoginControllerImpl(validCheck,loginService);
     private final UserManagementController userManagementController = new UserManagementControllerImpl(userManagementService,validCheck);
-    private final InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedControllerImp(inventoryReadController,inventoryUpdateController,inventoryDeleteController,validCheck);
-    private final UserIntegratedController userIntegratedController = new UserIntegratedControllerImpl(userLoginController,productController,signUpController);
+    private final InventoryIntegratedController inventoryIntegratedController = new InventoryIntegratedController(inventoryReadController,inventoryUpdateController,inventoryDeleteController,validCheck);
+    private final UserController userController = new UserController(userLoginController,productController,signUpController);
     private final AdminController adminController = new AdminController(validCheck, loginController, userManagementController);
 
     public WarehouseController warehouseController(){
@@ -63,7 +57,7 @@ public class Diconfig {
                 userManagementController,
                 validCheck,
                 inventoryIntegratedController,
-                userIntegratedController,
+                userController,
                 adminController);
     }
 }
