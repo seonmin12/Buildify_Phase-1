@@ -25,8 +25,9 @@ public class OutboundUserServiceImpl implements OutboundUserService {
         List<OutboundDto> outboundlist = outboundUserRepository.outboundUserRead(clientID);
 
         if(outboundlist == null || outboundlist.isEmpty()){
-            throw new OutboundException(ErrorCode.DB_READ_ALL_ERROR);
+            return null;
         }
+
         return outboundlist;
 
     }
@@ -47,5 +48,10 @@ public class OutboundUserServiceImpl implements OutboundUserService {
     @Override
     public List<ReqOutboundDto> requestOutbound(String clientID) {
         return outboundUserRepository.requestOutbound(clientID);
+    }
+
+    @Override
+    public boolean insertOutbound(OutboundDto outboundDto) {
+        return outboundUserRepository.insertOutbound(outboundDto);
     }
 }

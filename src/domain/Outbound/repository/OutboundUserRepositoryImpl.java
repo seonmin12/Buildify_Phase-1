@@ -32,7 +32,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto outboundDto = OutboundDto.builder()
-                        .outbound_id(rs.getString("key"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -96,7 +96,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto dto = OutboundDto.builder()
-                        .outbound_id(rs.getString("key"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -155,4 +155,34 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
         return  outboundList;
     }
+
+    @Override
+    public boolean insertOutbound(OutboundDto outboundDto) {
+        boolean isSuccess = false;
+        String sql = "INSERT INTO outbound VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, outboundDto.getOutbound_id());
+            pstmt.setString(2, outboundDto.getProd_id());
+            pstmt.setString(3, outboundDto.getClient_id());
+            pstmt.setInt(4, outboundDto.getQuantity());
+            pstmt.setInt(5, outboundDto.getOutbound_status());
+            pstmt.setString(6, outboundDto.getWare_id());
+
+            int rowsAffected = pstmt.executeUpdate(); // ✅ execute() 대신 executeUpdate() 사용 (명확한 반환값 처리)
+            if (rowsAffected > 0) {
+                isSuccess = true;
+                System.out.println("출고 요청이 성공적으로 등록되었습니다.");
+            } else {
+                System.out.println("출고 요청 등록에 실패했습니다.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // ✅ 예외 출력 (혹은 로깅)
+            throw new RuntimeException("출고 데이터 삽입 중 오류 발생", e);
+        }
+
+        return isSuccess;
+    }
+
 }

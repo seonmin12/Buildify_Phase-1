@@ -5,7 +5,7 @@ select * from outbound;
 drop procedure if exists outbound_user_read;
 DELIMITER //
 create procedure outbound_user_read(
-    IN input_client_id varchar(10)
+    IN input_client_id varchar(100)
 )
 BEGIN
 

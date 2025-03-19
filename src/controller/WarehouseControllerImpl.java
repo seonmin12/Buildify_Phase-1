@@ -147,7 +147,8 @@ public class WarehouseControllerImpl implements WarehouseController{
                     break;
                 case 5:
                     System.out.println("출고 관리 기능 동작");
-                    outboundController.outboundRequest(userDto.getClient_id());
+                    outboundController.outboundUser(userDto);
+                    //outboundController.outboundRequest(userDto.getClient_id());
                     break;
                 case 6:
                     userController.updateUserInfo();

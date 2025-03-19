@@ -1,16 +1,17 @@
 use wmsdb;
 select * from outbound;
 
+drop procedure delete_outbound_request;
 DELIMITER //
 CREATE procedure delete_outbound_request(
-    in p_outboundKey varchar(30),
-    in p_clientid varchar(30),
+    in p_outboundKey varchar(100),
+    in p_clientid varchar(100),
     out p_result int
 )
 
 BEGIN
     DELETE FROM outbound
-        where `Key` = p_outboundKey
+        where outbound_id = p_outboundKey
     and client_id = p_clientid
         and status = 0;
 
