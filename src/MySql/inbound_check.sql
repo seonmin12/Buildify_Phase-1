@@ -4,7 +4,7 @@ begin
 select * from inbound where Inbound_status = 0;
 end//
 delimiter ;
-
+//
 CREATE PROCEDURE db_inbound_allcheck_update()
 BEGIN
     -- 기존에 존재하는 상품이라면 수량만 업데이트
