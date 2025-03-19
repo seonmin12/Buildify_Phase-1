@@ -3,67 +3,79 @@ package domain.Inbound.controller;
 import common.ValidCheck;
 import domain.Inbound.service.InboundInsertService;
 import dto.InboundDto;
+import dto.ProductDto;
+import dto.UserDto;
 
-import java.util.Date;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.List;
+
+import java.sql.Date;
+
+import static java.time.LocalTime.now;
 
 public class InboundInsertControllerImp implements InboundInsertController{
-    Scanner sc = new Scanner(System.in);
 
     private final InboundInsertService insertService;
     private final ValidCheck validCheck ;
+
 
     public InboundInsertControllerImp(InboundInsertService insertService, ValidCheck validCheck) {
         this.insertService = insertService;
         this.validCheck = validCheck;
     }
 
+
+
     @Override
-    public InboundDto insert() {
-        InboundDto inboundDto = new InboundDto();
-        System.out.println("입고번호");
-        inboundDto.setInbound_number(sc.nextLine());
-        System.out.println("상품아이디");
-        inboundDto.setProd_id(sc.nextLine());
-        System.out.println("회원아이디");
-        inboundDto.setClient_id(sc.nextLine());
-        System.out.println("수량");
-        inboundDto.setQuantity(sc.nextInt());
-        sc.nextLine();
-        inboundDto.setInbound_status(0);
-        inboundDto.setReq_inbound_day(new Date());
-        System.out.println("창고아이디");
-        inboundDto.setWare_id(sc.nextLine());
+    public InboundDto insert(InboundDto inboundDto) {
         return insertService.insert(inboundDto);
     }
 
+
     @Override
-    public void insertrun() {
-        InboundDto inboundDto = insert();
+    public boolean insertrun(UserDto userDto) {
+        List<ProductDto> productDto = insertService.inboundinsertlist();
 
-        System.out.println("인바운드 인설트 성공");
-
-    }
-
-    private int inputNum(){
-        String str;
-        int input = 0;
-        while (true){
-            str = sc.nextLine();
-            if (str.matches(validCheck.NUMBER_REGEX)){
-                input = Integer.parseInt(str);
-                break;
-            }
-            System.out.println("숫자입력해라");
+        if(productDto == null || productDto.isEmpty()){
+            System.out.println("입고가능 상품이 없습니다.");
+            return false;
         }
-        return input;
+
+        int index = 1;
+        for(ProductDto productDto1 : productDto){
+            System.out.printf("번호:%d ID: %s | 브랜드: %s | 제품명: %s | 가격: %,d원 | 코드: %d | 카테고리: %s | 크기: %.2fcm³\n",index++,productDto1.getProd_id(), productDto1.getBrand(), productDto1.getProd_name(),
+                    productDto1.getProd_price(), productDto1.getProd_code(), productDto1.getProd_category(),
+                   productDto1.getProd_size() );
+        }
+        System.out.println("입고 요청할 번호를 선택하세요 (취소하려면 0입력)");
+        int select = validCheck.inputNumRegex();
+
+        if(select == 0){
+            return true;
+        }else {
+            ProductDto productDto2 = productDto.get(select - 1);
+
+            System.out.print("수량을 입력하세요: ");
+            int amount = Integer.parseInt(validCheck.inputAnyString());
+
+            System.out.println("입고 요청 완료");
+            System.out.printf("제품ID: %s 브랜드: %-8s 제품명:%s 가격: %,8d 제품코드: %9d 카테고리: %-10s 크기(cm³) %8.2f |\n",
+                    productDto2.getProd_id(), productDto2.getBrand(), productDto2.getProd_name(),
+                    productDto2.getProd_price(), productDto2.getProd_code(), productDto2.getProd_category(),
+                    productDto2.getProd_size());
+            System.out.println("출고 수량: " + amount);
+
+            InboundDto inboundDto = new InboundDto();
+            inboundDto.setInbound_number("1_"+productDto2.getProd_id()+"_"+userDto.getClient_id()+"_"+now());
+            inboundDto.setProd_id(productDto2.getProd_id());
+            inboundDto.setClient_id(userDto.getClient_id());
+            inboundDto.setQuantity(amount);
+            inboundDto.setReq_inbound_day(Date.valueOf(LocalDate.now()));
+            inboundDto.setWare_id("ware1");
+            System.out.println(inboundDto.getInbound_number());
+            insert(inboundDto);
+        }
+        return false;
     }
 
-    private String inputString(){
-        String name;
-
-            System.out.printf("인바운드넘버입력");
-            name = sc.nextLine().trim();
-        return name;
-    }
 }

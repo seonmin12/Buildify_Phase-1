@@ -22,8 +22,10 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     @Override
     public void userSearchAll(UserDto userDto) {
+        System.out.println(userDto.getClient_id());
         String a = userDto.getClient_id();
         List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll(a);
+        System.out.println(inboundDtoList.size());
         if(inboundDtoList.isEmpty()){
             System.out.println("입고현황 없음");
             return;

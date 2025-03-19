@@ -21,6 +21,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     @Override
     public List<InboundDto> clientsearch() {
         List<InboundDto> list = new ArrayList<>();
+        connection = DBConnection.getConnection();
         try {
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call db_inbound_search_clientup()}");
@@ -47,6 +48,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     public List<InboundDto> userSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call DB_inbound_usersearch(?)}");
             cs.setString(1, a);
@@ -78,6 +80,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     public List<InboundDto> SearchOne(String inbound_number) {
         List<InboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call DB_inbound_searchone(?)}");
             cs.setString(1, inbound_number);
@@ -108,6 +111,7 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     @Override
     public Optional<List<InboundDto>> SearchAll() {
         List<InboundDto> list = new ArrayList<>();
+        connection = DBConnection.getConnection();
 
         try {
             String sql = new StringBuilder()
