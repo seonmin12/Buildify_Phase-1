@@ -11,7 +11,7 @@ CREATE PROCEDURE SignUp(
     IN p_user_address VARCHAR(30),
     IN p_business_number VARCHAR(30),
     IN p_user_id VARCHAR(15),
-    IN p_user_pw VARCHAR(15),
+    IN p_user_pw VARCHAR(100),
     IN p_user_status TINYINT(1),
     IN p_user_ware_size DECIMAL(10,2),
     IN p_user_ware_use DECIMAL(10,2),
@@ -34,7 +34,7 @@ BEGIN
         SET rtncode = 400;  -- 중복된 user_id가 존재하면 실패 (400);
     ELSE
         -- UUID 생성
-        SET generated_client_id = UUID();
+        SET generated_client_id = LEFT(HEX(MD5(UUID())), 10);
 
         INSERT INTO user (
             client_id, user_name, user_phone, user_email, user_adress,
