@@ -4,4 +4,6 @@ import dto.UserDto;
 
 public interface UpdateUserinfoRepository {
     boolean updateUserinfo(String clientId, int updateOption, String newValue);
+
+    UserDto getUpdatedUserinfo(String clientId);
 }

@@ -4,4 +4,6 @@ import dto.UserDto;
 
 public interface UpdateUserinfoService {
     boolean updateUserinfo(String clientId, int updateOption, String newValue);
+
+    UserDto getUpdateUserinfo(String clientId);
 }

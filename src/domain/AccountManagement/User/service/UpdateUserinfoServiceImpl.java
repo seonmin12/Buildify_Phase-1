@@ -15,4 +15,9 @@ public class UpdateUserinfoServiceImpl implements UpdateUserinfoService {
     public boolean updateUserinfo(String clientId, int updateOption, String newValue) {
         return updateUserinfoRepository.updateUserinfo(clientId, updateOption, newValue);
     }
+
+    @Override
+    public UserDto getUpdateUserinfo(String clientId) {
+        return updateUserinfoRepository.getUpdatedUserinfo(clientId);
+    }
 }
