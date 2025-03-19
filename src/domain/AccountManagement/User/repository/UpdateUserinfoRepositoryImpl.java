@@ -3,10 +3,7 @@ package domain.AccountManagement.User.repository;
 import config.DBConnection;
 import dto.UserDto;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class UpdateUserinfoRepositoryImpl implements UpdateUserinfoRepository {
 
@@ -23,7 +20,6 @@ public class UpdateUserinfoRepositoryImpl implements UpdateUserinfoRepository {
         try (Connection connection = DBConnection.getConnection();
              CallableStatement cs = connection.prepareCall(sql)) {
 
-            // 🔥 IN 파라미터 설정
             cs.setString(1, clientId);
             cs.setInt(2, updateOption);
             cs.setString(3, newValue);
@@ -36,7 +32,7 @@ public class UpdateUserinfoRepositoryImpl implements UpdateUserinfoRepository {
             if (rtncode == 200) {
                 isSuccess = true;
             } else {
-                System.out.println("❌ 업데이트 실패 (rtncode: " + rtncode + ")");
+                System.out.println("업데이트 실패 (rtncode: " + rtncode + ")");
             }
 
         } catch (Exception e) {
@@ -46,4 +42,35 @@ public class UpdateUserinfoRepositoryImpl implements UpdateUserinfoRepository {
         return isSuccess;
     }
 
+    @Override
+    public UserDto getUpdatedUserinfo(String clientId) {
+
+        UserDto userDto = null;
+        String sql = "SELECT * FROM user WHERE client_id = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, clientId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                userDto = UserDto.builder()
+                        .client_id(rs.getString("client_id"))
+                        .user_name(rs.getString("user_name"))
+                        .user_phone(rs.getString("user_phone"))
+                        .user_email(rs.getString("user_email"))
+                        .user_adress(rs.getString("user_adress"))
+                        .business_number(rs.getString("business_number"))
+                        .user_enterday(rs.getDate("user_enterday"))
+                        .user_status(rs.getInt("user_status"))
+                        .user_ware_size(rs.getBigDecimal("user_ware_size"))
+                        .user_ware_use(rs.getBigDecimal("user_ware_use"))
+                        .build();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return userDto;
+    }
 }

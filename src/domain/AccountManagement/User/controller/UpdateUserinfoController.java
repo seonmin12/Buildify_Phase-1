@@ -4,5 +4,7 @@ import dto.UserDto;
 
 public interface UpdateUserinfoController {
     boolean updateUserinfo(UserDto userDto);
+
+    boolean getUpdateUserinfo(String clientId);
 }
 

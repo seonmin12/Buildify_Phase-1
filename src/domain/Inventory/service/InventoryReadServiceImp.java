@@ -76,7 +76,6 @@ public class InventoryReadServiceImp implements InventoryReadService {
     @Override
     public List <InventoryDto> ReadByClientID(String clientID) {
         List<InventoryDto> inventoryList = inventoryReadRepo.ReadByClientID(clientID);
-        System.out.println(inventoryList);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
             System.out.println("재고목록이 없습니다.");

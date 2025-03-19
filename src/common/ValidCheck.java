@@ -65,12 +65,19 @@ public class ValidCheck {
         String str;
         do {
             str = scanner.nextLine();
+
+            if (str.isEmpty()) { // 빈 입력(Enter) 방지
+                System.out.println("값을 입력하세요.");
+                continue; // 다시 입력 요청
+            }
+
             if (!str.matches(regex)){
                 System.out.println(ERROR_INPUT.getText());
             }
         }while (!str.matches(regex) || str.isEmpty());
             return str;
     }
+
 
     /**
      * 숫자 입력하는 메소드
@@ -81,14 +88,22 @@ public class ValidCheck {
         int input = 0;
         do {
             str = scanner.nextLine();
+
+            if (str.isEmpty()) { // 빈 입력(Enter) 방지
+                System.out.println("값을 입력하세요.");
+                continue; // 다시 입력 요청
+            }
+
             if (str.matches(NUMBER_REGEX)) {
                 input = Integer.parseInt(str);
                 break;
             }
             System.out.println(ERROR_NUM.getText());
-        }while (!str.matches(NUMBER_REGEX) || str.isEmpty());
+        }while (!str.matches(NUMBER_REGEX) || str.isEmpty() );
         return input;
     }
+
+
 
     /**
      * 정규표현식 검증하여 정수 입력하는 메소드
@@ -100,6 +115,12 @@ public class ValidCheck {
         int input = 0;
         do {
             str = scanner.nextLine().trim();
+
+            if (str.isEmpty()) { // 빈 입력(Enter) 방지
+                System.out.println("값을 입력하세요.");
+                continue; // 다시 입력 요청
+            }
+
             if (str.matches(regex)) {
                 try {
                     input = Integer.parseInt(str);
@@ -123,6 +144,12 @@ public class ValidCheck {
         BigDecimal input = null;
         do {
             str = scanner.nextLine().trim();
+
+            if (str.isEmpty()) { // 빈 입력(Enter) 방지
+                System.out.println("값을 입력하세요.");
+                continue; // 다시 입력 요청
+            }
+
             if (str.matches(regex)) {
                 try {
                     input = new BigDecimal(str);
@@ -137,8 +164,19 @@ public class ValidCheck {
     }
 
     // 입력 값 제한 없는 입력 메소드
-    public String inputAnyString(){
-        return scanner.nextLine();
+    public String inputAnyString() {
+        String str;
+        do {
+            str = scanner.nextLine().trim(); // 🔥 입력값 앞뒤 공백 제거
+
+            if (str.isEmpty()) { // 빈 입력 방지
+                System.out.println("값을 입력하세요.");
+                continue;
+            }
+
+            return str; // 정상 입력 시 반환
+
+        } while (true); // 무한 루프, 정상 입력 시 반환됨
     }
 
 }
