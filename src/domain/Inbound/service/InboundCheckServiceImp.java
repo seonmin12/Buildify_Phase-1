@@ -24,7 +24,6 @@ public class InboundCheckServiceImp implements InboundCheckService{
     @Override
     public void allCheckUpdate() {
         inboundCheckRepo.allCheckUpdate();
-
     }
 
     @Override

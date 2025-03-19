@@ -22,6 +22,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public List<InboundDto> allCheckRead() {
         List<InboundDto> list = new ArrayList<>();
+        connection = DBConnection.getConnection();
 
         try {
             cs = connection.prepareCall("{ CALl DB_inbound_allcheck_read() }");

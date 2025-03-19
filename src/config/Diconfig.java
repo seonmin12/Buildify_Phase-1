@@ -85,7 +85,7 @@ public class Diconfig {
     private final InboundCheckController inboundCheckController = new InboundCheckControllerImp(inboundCheckService,inboundSearchService,validCheck);
 
 
-    private final InboundController inboundController=new InboundController(validCheck,inboundCheckController,inboundSearchController, inboundInsertController, inboundDeleteController,warehouseController());
+    private final InboundController inboundController=new InboundController(validCheck,inboundCheckController,inboundSearchController, inboundInsertController, inboundDeleteController);
 
     private final OutboundAdminRepository outboundAdminRepository = new OutboundAdminRepositoryImpl();
     private final OutboundAdminService outboundAdminService = new OutboundAdminServiceImpl(outboundAdminRepository);
