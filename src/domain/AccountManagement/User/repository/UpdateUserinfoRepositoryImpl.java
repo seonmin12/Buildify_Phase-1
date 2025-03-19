@@ -18,44 +18,32 @@ public class UpdateUserinfoRepositoryImpl implements UpdateUserinfoRepository {
     @Override
     public boolean updateUserinfo(String clientId, int updateOption, String newValue) {
         boolean isSuccess = false;
-        String sql = "";
+        String sql = "{CALL UpdateUserinfo(?, ?, ?, ?)}"; // 🔥 프로시저 호출
 
-        switch (updateOption) {
-            case 1:
-                sql = "UPDATE user SET user_name = ? WHERE client_id = ?";
-                break;
-            case 2:
-                sql = "UPDATE user SET user_phone = ? WHERE client_id = ?";
-                break;
-            case 3:
-                sql = "UPDATE user SET user_email = ? WHERE client_id = ?";
-                break;
-            case 4:
-                sql = "UPDATE user SET user_adress = ? WHERE client_id = ?";
-                break;
-            case 5:
-                sql = "UPDATE user SET user_pw = ? WHERE client_id = ?";
-                break;
-            default:
-                System.out.println("잘못된 선택입니다.");
-                break;
-        }
+        try (Connection connection = DBConnection.getConnection();
+             CallableStatement cs = connection.prepareCall(sql)) {
 
-        try{
-            pstmt = connection.prepareCall(sql);
-            pstmt.setString(1, newValue);
-            pstmt.setString(2, clientId);
+            // 🔥 IN 파라미터 설정
+            cs.setString(1, clientId);
+            cs.setInt(2, updateOption);
+            cs.setString(3, newValue);
 
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
+            cs.registerOutParameter(4, java.sql.Types.INTEGER);
+
+            cs.execute();
+
+            int rtncode = cs.getInt(4);
+            if (rtncode == 200) {
                 isSuccess = true;
+            } else {
+                System.out.println("❌ 업데이트 실패 (rtncode: " + rtncode + ")");
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-
 
         return isSuccess;
     }
+
 }

@@ -122,6 +122,12 @@ public class WarehouseControllerImpl implements WarehouseController{
 
         UserDto userDto = userController.getUserInfo();
 
+//        if(userDto.getUser_status() == 0){
+//            System.out.println("현재 미승인 상태입니다.");
+//            start();
+//            return;
+//        }
+
         while (true){
             System.out.println("1. 상품 정보 등록 2. 상품 정보 출력 3. 재고관리 4. 입고관리 5. 출고관리 6. 나의 정보 변경 7. 나의 정보 확인 8. 로그아웃");
             int menu = validCheck.inputNumRegex();
