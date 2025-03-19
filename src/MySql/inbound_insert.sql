@@ -1,8 +1,18 @@
-DELIMITER &&
-CREATE PROCEDURE DB_Inbound_INSERT(in inbound_num varchar(30), in prod_id varchar(10), in inclient_id varchar(20), in quantity int,
-                                   in inbound_status int, req_inbound_day datetime, in ware_id varchar(10), in DBname varchar(20))
+delimiter &&
+create procedure db_inbound_insertlist()
+begin
+select * from product;
+end &&
+delimiter ;
+
+
+
+
+    DELIMITER &&
+CREATE PROCEDURE DB_Inbound_INSERT(in inbound_num varchar(255), in prod_id varchar(10), in inclient_id varchar(255), in quantity int,
+                                   in inbound_status int, req_inbound_day datetime, in ware_id varchar(10))
 BEGIN
-    SET @strsql = concat(' INSERT INTO ', DBname, ' VALUES(?,?,?,?,?,?,?);' );
+    SET @strsql = concat(' INSERT INTO inbound VALUES(?,?,?,?,?,?,?);' );
 
     SET @inbound_number = inbound_num;
     SET @prod_id = prod_id;
