@@ -52,8 +52,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_date"))
-                        .last_outbount_day(rs.getDate("last_outbound_date"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbound_day"))
                         .build();
 
 
@@ -101,8 +101,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_date"))
-                        .last_outbount_day(rs.getDate("last_outbound_date"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbound_day"))
 
                         .build();
 
@@ -145,8 +145,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_date"))
-                        .last_outbount_day(rs.getDate("last_outbound_date"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbound_day"))
 
                         .build();
 
@@ -186,8 +186,8 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
                         .client_id(rs.getString("client_id"))
                         .ware_id(rs.getString("ware_id"))
                         .quantity(rs.getInt("quantity"))
-                        .last_inbound_day(rs.getDate("last_inbound_date"))
-                        .last_outbount_day(rs.getDate("last_outbound_date"))
+                        .last_inbound_day(rs.getDate("last_inbound_day"))
+                        .last_outbount_day(rs.getDate("last_outbound_day"))
 
                         .build();
                 list.add(inventoryDto);

@@ -53,6 +53,7 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
      */
     @Override
     public void searchOutboundByUser() {
+        searchOutboundList();
         String client_id;
         System.out.println(SEARCH_USER_INPUT.getText());
         System.out.printf(INPUT_CHOICE.getText());
