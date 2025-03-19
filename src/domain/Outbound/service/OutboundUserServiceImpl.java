@@ -25,8 +25,9 @@ public class OutboundUserServiceImpl implements OutboundUserService {
         List<OutboundDto> outboundlist = outboundUserRepository.outboundUserRead(clientID);
 
         if(outboundlist == null || outboundlist.isEmpty()){
-            throw new OutboundException(ErrorCode.DB_READ_ALL_ERROR);
+            return null;
         }
+
         return outboundlist;
 
     }

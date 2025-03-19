@@ -4,7 +4,7 @@ use wmsdb;
 DELIMITER //
 
 CREATE PROCEDURE outbound_user_pending_read(
-    IN p_clientId VARCHAR(50)
+    IN p_clientId VARCHAR(100)
 )
 BEGIN
     SELECT * FROM outbound

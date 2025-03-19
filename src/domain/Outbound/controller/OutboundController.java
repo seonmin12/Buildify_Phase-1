@@ -23,7 +23,7 @@ public class OutboundController {
     /**
      * 관리자용 출고 메뉴 통합 컨트롤러 메소드입니다.
      */
-    public void outboundAdmin(){
+    public void outboundAdmin() {
         while (true) {
             System.out.println(OUTBOUND_ADMIN_MENU.getText());
             System.out.println(OUTBOUND_ADMIN_SELECT.getText());
@@ -59,19 +59,22 @@ public class OutboundController {
     /**
      * 고객용 출고 메뉴 통합 컨트롤러 메소드입니다.
      */
-    public void outboundUser(UserDto userDto){
+    public void outboundUser(UserDto userDto) {
         System.out.println("1. 출고 요청 2. 출고 조회 3. 출고 요청 취소");
         int input = validCheck.inputNumRegex();
         switch (input) {
-            case 1: outboundRequest(userDto.getClient_id());
+            case 1:
+                outboundUserController.requestOutbound(userDto.getClient_id());
+                break;
             case 2:
-                System.out.println("출고 조회");
+                outboundUserController.outboundUserRead(userDto.getClient_id());
+                break;
             case 3:
-                System.out.println("출고 요청 취소");
+                outboundUserController.outboundUserDelete(userDto.getClient_id());
+                break;
+            default:
+                System.out.println(ERROR_INPUT.getText());
+                break;
         }
-    }
-
-    public void outboundRequest(String clientId){
-        outboundUserController.requestOutbound(clientId);
     }
 }

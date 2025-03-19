@@ -32,7 +32,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto outboundDto = OutboundDto.builder()
-                        .outbound_id(rs.getString("key"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -96,7 +96,7 @@ public class OutboundUserRepositoryImpl implements OutboundUserRepository {
 
             while(rs.next()){
                 OutboundDto dto = OutboundDto.builder()
-                        .outbound_id(rs.getString("key"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
