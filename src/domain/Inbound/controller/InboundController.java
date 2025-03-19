@@ -1,6 +1,7 @@
 package domain.Inbound.controller;
 
 import common.ValidCheck;
+import controller.WarehouseController;
 import dto.UserDto;
 
 import java.util.Scanner;
@@ -12,15 +13,17 @@ public class InboundController {
     private final InboundSearchController inboundSearchController;
     private final InboundInsertController inboundInsertController;
     private final InboundDeleteController inboundDeleteController;
+    private final WarehouseController warehouseController;
 
     Scanner sc = new Scanner(System.in);
 
-    public InboundController(ValidCheck validCheck, InboundCheckController inboundCheckController, InboundSearchController inboundSearchController, InboundInsertController inboundInsertController, InboundDeleteController inboundDeleteController) {
+    public InboundController(ValidCheck validCheck, InboundCheckController inboundCheckController, InboundSearchController inboundSearchController, InboundInsertController inboundInsertController, InboundDeleteController inboundDeleteController, WarehouseController warehouseController) {
         this.validCheck = validCheck;
         this.inboundCheckController = inboundCheckController;
         this.inboundSearchController = inboundSearchController;
         this.inboundInsertController = inboundInsertController;
         this.inboundDeleteController = inboundDeleteController;
+        this.warehouseController = warehouseController;
     }
 
 
@@ -39,8 +42,7 @@ public class InboundController {
                     case 1:inboundSearchController.SearchAll(); break;
                     case 2:inboundSearchController.SearchOne(); break;
                 }
-            case 3:
-                inboundAdminMain(); break;
+            case 3: break;
         }
 
     }

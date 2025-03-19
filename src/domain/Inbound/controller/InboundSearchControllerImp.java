@@ -24,6 +24,10 @@ public class InboundSearchControllerImp implements InboundSearchController{
     public void userSearchAll(UserDto userDto) {
         String a = userDto.getClient_id();
         List<InboundDto> inboundDtoList = inboundSearchService.userSearchAll(a);
+        if(inboundDtoList.isEmpty()){
+            System.out.println("입고현황 없음");
+            return;
+        }
         for(InboundDto inboundDto : inboundDtoList){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
                     inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
@@ -46,10 +50,16 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     @Override
     public void SearchOne() {
+        List<InboundDto> inboundDtoList = inboundSearchService.SearchAll();
+
+        for(InboundDto inboundDto : inboundDtoList){
+            System.out.println("업체명: "+inboundDto.getClient_id());
+        }
+
         System.out.println("조회할 업체 입력: ");
         String a = validCheck.inputAnyString();
-        List<InboundDto> inboundDtoList = inboundSearchService.SearchOne(a);
-        for(InboundDto inboundDto : inboundDtoList){
+        List<InboundDto> list = inboundSearchService.SearchOne(a);
+        for(InboundDto inboundDto : list){
             System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
                     inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
                     inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
