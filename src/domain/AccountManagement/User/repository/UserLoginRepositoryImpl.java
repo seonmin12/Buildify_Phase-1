@@ -53,6 +53,7 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
                         .user_phone(rs.getString("user_phone"))
                         .user_email(rs.getString("user_email"))
                         .user_adress(rs.getString("user_adress"))
+                        .business_number(rs.getString("business_number"))
                         .user_enterday(rs.getDate("user_enterday"))
                         .user_status(rs.getInt("user_status"))
                         .user_ware_size(rs.getBigDecimal("user_ware_size"))

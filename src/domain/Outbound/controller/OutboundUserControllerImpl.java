@@ -83,7 +83,7 @@ public class OutboundUserControllerImpl implements OutboundUserController{
         List<ReqOutboundDto> outboundList = outboundUserService.requestOutbound(clientId);
 
         if(outboundList == null || outboundList.isEmpty()) {
-            System.out.println("출고 요청 가능한 목록이 없습니다,");
+            System.out.println("출고 요청 가능한 목록이 없습니다");
             return false;
         }
 

@@ -123,7 +123,7 @@ public class WarehouseControllerImpl implements WarehouseController{
         UserDto userDto = userController.getUserInfo();
 
         while (true){
-            System.out.println("1. 상품 정보 등록 2. 상품 정보 출력 3. 재고관리 4. 입고관리 5. 출고관리 6. 나의 정보 변경 7. 로그아웃");
+            System.out.println("1. 상품 정보 등록 2. 상품 정보 출력 3. 재고관리 4. 입고관리 5. 출고관리 6. 나의 정보 변경 7. 나의 정보 확인 8. 로그아웃");
             int menu = validCheck.inputNumRegex();
 
             switch (menu) {
@@ -154,6 +154,15 @@ public class WarehouseControllerImpl implements WarehouseController{
                     userController.updateUserInfo();
                     break;
                 case 7:
+                    System.out.println("이름 : "  + userDto.getUser_name());
+                    System.out.println("전화번호 : "  + userDto.getUser_phone());
+                    System.out.println("이메일 : "  + userDto.getUser_email());
+                    System.out.println("주소 : "  + userDto.getUser_adress());
+                    System.out.println("사업자 번호 : "  + userDto.getBusiness_number());
+                    System.out.println("할당된 창고 양 : "  + userDto.getUser_ware_size());
+                    System.out.println("사용중인 창고 양 : "  + userDto.getUser_ware_use());
+                    break;
+                case 8:
                     userController.userLogout();
                     start();
                     break;
