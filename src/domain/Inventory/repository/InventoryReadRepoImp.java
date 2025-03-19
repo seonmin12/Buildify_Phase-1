@@ -38,6 +38,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
 
             cs = connection.prepareCall("{call inventory_readAll()}");

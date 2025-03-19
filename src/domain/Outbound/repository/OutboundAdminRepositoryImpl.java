@@ -38,7 +38,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             while (rs.next()) {
                 OutboundDto dto = OutboundDto.builder()
-                        .outbound_id(rs.getString("outbound_number"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))
@@ -69,7 +69,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             while (rs.next()) {
                 OutboundDto dto = OutboundDto.builder()
-                        .outbound_id(rs.getString("outbound_number"))
+                        .outbound_id(rs.getString("outbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))

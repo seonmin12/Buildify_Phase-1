@@ -38,13 +38,13 @@ BEGIN
             AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
     WHERE o.status = 0
-      AND o.outbound_number = outbound_input;  -- 특정 출고번호만 반영
+      AND o.outbound_id = outbound_input;  -- 특정 출고번호만 반영
 
     -- 출고 요청 승인 처리
     UPDATE outbound
     SET status = 1
     WHERE status = 0
-      AND outbound_number = outbound_input;
+      AND outbound_id = outbound_input;
 
     UPDATE outbound
     SET ware_id = 'ware1'
@@ -85,7 +85,7 @@ DELIMITER $$
 CREATE PROCEDURE OUTBOUND_ONE_RETURN(IN outbound_input VARCHAR(30))
 BEGIN
     UPDATE outbound SET outbound.status = 2 where outbound.status = 0
-                                              and outbound.outbound_number = outbound_input;
+                                              and outbound.outbound_id = outbound_input;
 end $$
 DELIMITER ;
 
@@ -120,7 +120,7 @@ DELIMITER $$
 CREATE PROCEDURE OUTBOUND_CANCEL(IN id VARCHAR(10),IN input VARCHAR(30))
 BEGIN
     DELETE FROM outbound
-    WHERE outbound.outbound_number = input
+    WHERE outbound.outbound_id = input
     and outbound.client_id = id;
 end $$
 DELIMITER ;
@@ -187,7 +187,7 @@ BEGIN
     -- client_id가 존재하는지 확인
     SELECT COUNT(*) INTO number_exists
     FROM outbound
-    WHERE outbound.outbound_number = input;
+    WHERE outbound.outbound_id = input;
 
     -- 결과 출력
     IF number_exists > 0 THEN

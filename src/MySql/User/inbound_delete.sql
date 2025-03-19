@@ -1,3 +1,5 @@
+use wmsdb;
+
 DELIMITER &&
 create procedure DB_INBOUND_DELETE(in inbound_number varchar(30))
 begin

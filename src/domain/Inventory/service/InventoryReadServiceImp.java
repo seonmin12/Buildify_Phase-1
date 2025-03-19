@@ -59,7 +59,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
         List<InventoryDto> inventoryList = inventoryReadRepo.ReadByProductName(productName);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+            System.out.println("해당 상품의 재고가 존재하지 않습니다.");
         }
 
         return inventoryList;

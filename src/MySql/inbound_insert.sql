@@ -1,3 +1,5 @@
+use wmsdb;
+
 delimiter &&
 create procedure db_inbound_insertlist()
 begin
@@ -5,11 +7,11 @@ select * from product;
 end &&
 delimiter ;
 
-
+drop procedure DB_Inbound_INSERT;
 
 
     DELIMITER &&
-CREATE PROCEDURE DB_Inbound_INSERT(in inbound_num varchar(255), in prod_id varchar(10), in inclient_id varchar(255), in quantity int,
+CREATE PROCEDURE DB_Inbound_INSERT(in inbound_num varchar(100), in prod_id varchar(10), in inclient_id varchar(255), in quantity int,
                                    in inbound_status int, req_inbound_day datetime, in ware_id varchar(10))
 BEGIN
     SET @strsql = concat(' INSERT INTO inbound VALUES(?,?,?,?,?,?,?);' );

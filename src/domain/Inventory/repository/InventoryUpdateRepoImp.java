@@ -35,6 +35,7 @@ public class InventoryUpdateRepoImp implements InventoryUpdateRepo {
     @Override
     public Optional<InventoryDto> updateQuantity(String prodID, String clientID, String wareID, int newQuantity) throws InventoryException {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_update_quantity(?,?,?,?)}");
             cs.setString(1,prodID);
