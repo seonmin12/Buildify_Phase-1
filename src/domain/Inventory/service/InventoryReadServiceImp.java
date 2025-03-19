@@ -79,7 +79,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
         System.out.println(inventoryList);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+            System.out.println("재고목록이 없습니다.");
         }
 
         return inventoryList;

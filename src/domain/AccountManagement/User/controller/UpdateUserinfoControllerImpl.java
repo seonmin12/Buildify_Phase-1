@@ -30,24 +30,36 @@ public class UpdateUserinfoControllerImpl implements UpdateUserinfoController {
                 System.out.print("새로운 이름을 입력하세요: ");
                 String newName = validCheck.inputAnyString();
                 isSuccess = updateUserinfoService.updateUserinfo(userDto.getClient_id(), selected, newName);
+                if(isSuccess) {
+                    System.out.println(newName + " 으로 변경 되었습니다.");
+                }
                 break;
 
             case 2:
                 System.out.print("새로운 전화번호를 입력하세요: ");
                 String newPhone = validCheck.inputAnyString();
                 isSuccess = updateUserinfoService.updateUserinfo(userDto.getClient_id(), selected, newPhone);
+                if(isSuccess) {
+                    System.out.println(newPhone + " 으로 변경 되었습니다.");
+                }
                 break;
 
             case 3:
                 System.out.print("새로운 이메일을 입력하세요: ");
                 String newEmail = validCheck.inputAnyString();
                 isSuccess = updateUserinfoService.updateUserinfo(userDto.getClient_id(), selected, newEmail);
+                if(isSuccess) {
+                    System.out.println(newEmail + " 으로 변경 되었습니다.");
+                }
                 break;
 
             case 4:
                 System.out.print("새로운 주소를 입력하세요: ");
                 String newAddress = validCheck.inputAnyString();
                 isSuccess = updateUserinfoService.updateUserinfo(userDto.getClient_id(), selected, newAddress);
+                if(isSuccess) {
+                    System.out.println(newAddress + " 으로 변경 되었습니다.");
+                }
                 break;
 
             case 5:
@@ -63,6 +75,9 @@ public class UpdateUserinfoControllerImpl implements UpdateUserinfoController {
                         System.out.println("❌ 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
                     } else {
                         isSuccess = updateUserinfoService.updateUserinfo(userDto.getClient_id(), selected, confirmPassword);
+                        if(isSuccess) {
+                            System.out.println("비밀번호가 변경 되었습니다.");
+                        }
                     }
                 } while (!password.equals(confirmPassword));
                 break;
