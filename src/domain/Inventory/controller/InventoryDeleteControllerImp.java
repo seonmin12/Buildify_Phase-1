@@ -2,20 +2,37 @@ package domain.Inventory.controller;
 
 import common.ValidCheck;
 import domain.Inventory.service.InventoryDeleteService;
+import domain.Inventory.service.InventoryReadService;
 import dto.InventoryDto;
+
+import java.util.List;
 
 public class InventoryDeleteControllerImp implements InventoryDeleteController {
     private final InventoryDeleteService inventoryDeleteService;
     private final ValidCheck validCheck;
+    private final InventoryReadService inventoryReadService;
 
-    public InventoryDeleteControllerImp(InventoryDeleteService inventoryDeleteService, ValidCheck validCheck) {
+    public InventoryDeleteControllerImp(InventoryDeleteService inventoryDeleteService, ValidCheck validCheck, InventoryReadService inventoryReadService) {
         this.inventoryDeleteService = inventoryDeleteService;
         this.validCheck = validCheck;
+        this.inventoryReadService = inventoryReadService;
     }
 
     @Override
     public InventoryDto deleteInventory() {
         System.out.println("[재고 삭제]");
+        List<InventoryDto> inventoryList = inventoryReadService.ReadAll();
+        if(inventoryList.isEmpty()){
+            System.out.println("현재 등록된 재고가 없습니다.");
+            return null;
+        }
+        System.out.println("\n [현재 재고 목록] ");
+        for (InventoryDto dto : inventoryList) {
+            System.out.printf("상품명:%-8s | 창고ID:%-6s | 입점사ID:%-6s | 상품ID:%-8s | 재고:%4d | 최종출고일:%s | 최종입고일:%s\n",
+                    dto.getProd_name(), dto.getWare_id(), dto.getClient_id(),
+                    dto.getProd_id(), dto.getQuantity(), dto.getLast_outbount_day(), dto.getLast_inbound_day());
+        }
+        System.out.println("===============================================================================");
         System.out.println("삭제할 재고의 상품 ID,client ID, 창고 ID를 입력하세요");
         System.out.print("상품ID를 입력하세요: ");
         String prodID = validCheck.inputAnyString();

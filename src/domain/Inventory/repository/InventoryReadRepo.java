@@ -19,7 +19,7 @@ public interface InventoryReadRepo {
      * @return 재고 정보 리스트를 포함한 Optional 객체.
      *         데이터가 없을 경우 빈 Optional이 반환된다.
      */
-    Optional<List<InventoryDto>> ReadAll();
+    List<InventoryDto> ReadAll();
 
 
     /**

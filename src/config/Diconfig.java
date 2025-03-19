@@ -40,11 +40,11 @@ public class Diconfig {
 
     private final InventoryUpdateRepo inventoryUpdateRepo = new InventoryUpdateRepoImp();
     private final InventoryUpdateService inventoryUpdateService = new InventoryUpdateServiceImp(inventoryUpdateRepo);
-    private final InventoryUpdateController inventoryUpdateController = new InventoryUpdateControllerImp(inventoryUpdateService,validCheck);
+    private final InventoryUpdateController inventoryUpdateController = new InventoryUpdateControllerImp(inventoryUpdateService,validCheck,inventoryReadService);
 
     private final InventoryDeleteRepo inventoryDeleteRepo = new InventoryDeleteRepoImp();
     private final InventoryDeleteService inventoryDeleteService = new InventoryDeleteServiceImp(inventoryDeleteRepo);
-    private final InventoryDeleteController inventoryDeleteController = new InventoryDeleteControllerImp(inventoryDeleteService,validCheck);
+    private final InventoryDeleteController inventoryDeleteController = new InventoryDeleteControllerImp(inventoryDeleteService,validCheck,inventoryReadService);
 
     private final UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
     private final UserLoginService userLoginService = new UserLoginServiceImpl(userLoginRepository);

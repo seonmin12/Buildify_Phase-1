@@ -33,7 +33,7 @@ public class InventoryUpdateRepoImp implements InventoryUpdateRepo {
      * @throws InventoryException SQL 예외 발생 시 커스텀 예외 발생
      */
     @Override
-    public Optional<InventoryDto> updateQuantity(String prodID, String clientID, String wareID, int newQuantity) throws InventoryException {
+    public Optional<InventoryDto> updateQuantity(String prodID, String clientID, String wareID, int newQuantity)  {
         try {
             connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
@@ -62,13 +62,15 @@ public class InventoryUpdateRepoImp implements InventoryUpdateRepo {
 
                         return Optional.of(inventoryDto);
 
+
+
             }else return Optional.empty();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+
         }
 
-
+        return Optional.empty();
 
     }
 }

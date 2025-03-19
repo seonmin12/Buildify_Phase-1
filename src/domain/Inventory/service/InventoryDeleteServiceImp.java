@@ -41,7 +41,7 @@ public class InventoryDeleteServiceImp implements InventoryDeleteService {
         try {
             return inventoryDeleteRepo.deleteInventory(prodID,clientID,wareID).orElseThrow(()->new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
         } catch (NotFoundException e) {
-            throw new InventoryException(ErrorCode.ERROR_INPUT); //수정필요
+            return null;
         }
     }
 }

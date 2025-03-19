@@ -41,7 +41,7 @@ public class InventoryUpdateServiceImp implements InventoryUpdateService {
         try {
             return inventoryUpdateRepo.updateQuantity(prodID,clientID,wareID,newQuantity).orElseThrow(()->new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
         } catch (NotFoundException e) {
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+            return null;
         }
     }
 }
