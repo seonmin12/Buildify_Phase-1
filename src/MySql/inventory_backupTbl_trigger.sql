@@ -1,4 +1,5 @@
 use wmsdb;
+
 select * from inventory;
 
 drop table if exists inventory_backup;

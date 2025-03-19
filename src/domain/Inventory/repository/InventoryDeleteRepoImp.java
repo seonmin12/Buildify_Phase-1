@@ -35,6 +35,7 @@ public class InventoryDeleteRepoImp implements InventoryDeleteRepo {
     @Override
     public Optional<InventoryDto> deleteInventory(String prodID, String clientID, String wareID) throws InventoryException {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_delete(?,?,?)}");
             cs.setString(1,prodID);

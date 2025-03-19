@@ -1,3 +1,5 @@
+use wmsdb;
+
 delimiter &&
 create procedure DB_INBOUND_SEARCHONE(in a varchar(255))
 Begin

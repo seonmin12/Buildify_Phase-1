@@ -1,10 +1,13 @@
+use wmsdb;
+
 delimiter //
 create procedure DB_INBOUND_allcheck_read()
 begin
 select * from inbound where Inbound_status = 0;
 end//
 delimiter ;
-//
+
+delimiter //
 CREATE PROCEDURE db_inbound_allcheck_update()
 BEGIN
     -- 기존에 존재하는 상품이라면 수량만 업데이트
@@ -32,8 +35,8 @@ WHERE i.inbound_status = 0
 UPDATE inbound
 SET inbound_status = 1, ware_id = 'ware1'
 WHERE inbound_status = 0;
-END &&
-DELIMITER ;
+END;
+DELIMITER //
 
     delimiter //
 create procedure db_inbound_check_client_read(in a varchar(255))
@@ -127,14 +130,14 @@ WHERE inbound_number = inbound_num_param
 
 END //
 
-DELIMITER ;
+DELIMITER //
 
 
 create procedure db_inbound_check_inbound_number_return(in a varchar(30))
 begin
 update inbound set Inbound_status = 2 where inbound_number = a and Inbound_status = 0;
-end //
-delimiter ;
+end ;
+delimiter //
 
 
 
