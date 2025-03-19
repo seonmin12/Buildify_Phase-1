@@ -17,4 +17,6 @@ public interface OutboundUserRepository {
     List<OutboundDto> getOutboundUserRequest(String clientID);
 
     List<ReqOutboundDto> requestOutbound(String clientID);
+
+    boolean insertOutbound(OutboundDto outboundDto);
 }

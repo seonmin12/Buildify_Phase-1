@@ -17,4 +17,6 @@ public interface OutboundUserService {
 
     List<ReqOutboundDto> requestOutbound(String clientID);
 
+    boolean insertOutbound(OutboundDto outboundDto);
+
 }

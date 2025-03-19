@@ -7,6 +7,7 @@ import dto.OutboundDto;
 import dto.ReqOutboundDto;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * (고객용) 출고관리 컨트롤러 구현체입니다.
@@ -113,10 +114,24 @@ public class OutboundUserControllerImpl implements OutboundUserController{
             System.out.println("출고 요청 상품: " + reqOutboundDto);
             System.out.println("출고 수량: " + amount);
 
-            // 출고 요청하는 repo 기능 동작 필요
+            OutboundDto outboundDto = new OutboundDto();
+            String prodID = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
+            outboundDto.setOutbound_id(prodID);
+            outboundDto.setProd_id(reqOutboundDto.getProdId());
+            outboundDto.setClient_id(reqOutboundDto.getClientId());
+            outboundDto.setQuantity(amount);
+            outboundDto.setReq_outbound_day(null);
+            outboundDto.setWare_id("ware1");
+
+            insertOutboundUser(outboundDto);
         }
 
         return true;
+    }
+
+    @Override
+    public boolean insertOutboundUser(OutboundDto outboundDto) {
+        return outboundUserService.insertOutbound(outboundDto);
     }
 
 

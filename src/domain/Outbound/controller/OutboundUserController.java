@@ -13,4 +13,6 @@ public interface OutboundUserController {
     void outboundUserDelete();
 
     boolean requestOutbound(String clientId);
+
+    boolean insertOutboundUser(OutboundDto outboundDto);
 }

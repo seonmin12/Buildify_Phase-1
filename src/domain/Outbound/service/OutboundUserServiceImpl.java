@@ -48,4 +48,9 @@ public class OutboundUserServiceImpl implements OutboundUserService {
     public List<ReqOutboundDto> requestOutbound(String clientID) {
         return outboundUserRepository.requestOutbound(clientID);
     }
+
+    @Override
+    public boolean insertOutbound(OutboundDto outboundDto) {
+        return outboundUserRepository.insertOutbound(outboundDto);
+    }
 }
