@@ -52,6 +52,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void allCheckUpdate() {
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_allcheck_update() }");
             cs.executeUpdate();
 
@@ -65,6 +66,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void allCheckReturn() {
         try{
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_allcheck_return() }");
             cs.executeQuery();
             System.out.println("인바운드 올체크 리");
@@ -79,6 +81,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     public List<InboundDto> prodCheckRead() {
         List<InboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALl DB_inbound_check_prod_read() }");
             ResultSet rs = cs.executeQuery();
             while (rs.next()){
@@ -105,6 +108,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void prodCheckUpdate() {
         try{
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_prod_update() }");
             cs.executeQuery();
             System.out.println("인바운드 프로드체크 업데이트");
@@ -119,6 +123,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void prodCheckReturn() {
         try{
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_prod_return() }");
             cs.executeQuery();
             System.out.println("임바운드 프로드체크 리");
@@ -133,6 +138,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     public List<InboundDto> clientCheckRead(String a) {
         List<InboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALl DB_inbound_check_client_read(?) }");
             cs.setString(1,a);
             ResultSet rs = cs.executeQuery();
@@ -160,6 +166,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void clientCheckUpdate(String a) {
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_update(?) }");
             cs.setString(1,a);
             cs.executeQuery();
@@ -174,6 +181,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void clientCheckReturn(String a) {
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_client_return(?) }");
             cs.setString(1,a);
             cs.executeQuery();
@@ -188,6 +196,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void inbound_number_check_update(String ci) {
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_inbound_number_update(?) }");
             cs.setString(1,ci);
             cs.executeQuery();
@@ -201,6 +210,7 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
     @Override
     public void inbound_number_check_return(String ci) {
         try {
+            connection = DBConnection.getConnection();
             cs = connection.prepareCall("{ CALL DB_inbound_check_inbound_number_return(?) }");
             cs.setString(1, ci);
             cs.executeQuery();

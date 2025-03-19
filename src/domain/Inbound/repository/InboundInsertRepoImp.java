@@ -42,7 +42,7 @@ public class InboundInsertRepoImp implements InboundInsertRepo{
            return list;
        } catch (SQLException e) {
            e.printStackTrace();
-           throw new InboundException(ErrorCode.ERROR_INPUT);
+           throw new InboundException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
        }
     }
 
@@ -65,7 +65,7 @@ public class InboundInsertRepoImp implements InboundInsertRepo{
 
         }catch (SQLException e){
             e.printStackTrace();
-            throw new InboundException(ErrorCode.ERROR_INPUT);
+            System.out.println("입고요청 실패");
         }
 
     }

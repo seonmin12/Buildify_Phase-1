@@ -1,13 +1,17 @@
 package domain.Inbound.repository;
 
+import dto.ClientUpdateDto;
 import dto.InboundDto;
+import dto.UserDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface InboundSearchRepo {
 
-    List<InboundDto> clientsearch();
+
+
+    List<ClientUpdateDto> clientsearch();
 
     List<InboundDto> userSearch(String a);
 

@@ -186,6 +186,7 @@ public class WarehouseControllerImpl implements WarehouseController{
 
     @Override
     public void adminInboundStart(AdminDto adminDto) {
+        UserDto userDto = userController.getUserInfo();
         System.out.println("현재 로그인 관리자 : " + adminDto.getAdminName());
         inboundController.inboundAdminMain();
     }

@@ -2,7 +2,9 @@ package domain.Inbound.service;
 
 import common.ErrorCode;
 import domain.Inbound.repository.InboundSearchRepo;
+import dto.ClientUpdateDto;
 import dto.InboundDto;
+import dto.UserDto;
 import exception.InboundException;
 import exception.NotFoundException;
 
@@ -18,8 +20,10 @@ public class InboundSearchServiceImp implements InboundSearchService{
     }
 
 
+
+
     @Override
-    public List<InboundDto> clientupdatesearch() {
+    public List<ClientUpdateDto> clientupdatesearch() {
         return inboundSearchRepo.clientsearch();
     }
 

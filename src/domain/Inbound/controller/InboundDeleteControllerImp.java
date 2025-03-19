@@ -21,7 +21,7 @@ public class InboundDeleteControllerImp implements InboundDeleteController{
 
     @Override
     public void delete(UserDto userDto) {
-
+        String status;
         String a = userDto.getClient_id();
         List<InboundDto> inboundDtoList = inboundDeleteService.deletesearch(a);
         if (inboundDtoList.isEmpty()){
@@ -29,9 +29,14 @@ public class InboundDeleteControllerImp implements InboundDeleteController{
             return;
         }
         for(InboundDto inboundDto : inboundDtoList){
-            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %d | 요청일: %s | 창고ID: %s\n",
+            if (inboundDto.getInbound_status() == 0){
+                status= "대기";
+            }else if (inboundDto.getInbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            System.out.printf("입고번호: %s | 상품ID: %s | 고객ID: %s | 수량: %d | 상태: %s | 요청일: %s | 창고ID: %s\n",
                     inboundDto.getInbound_number(),inboundDto.getProd_id(), inboundDto.getClient_id(),inboundDto.getQuantity(),
-                    inboundDto.getInbound_status(), inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
+                    status, inboundDto.getReq_inbound_day(),inboundDto.getWare_id());
         }
         System.out.println("삭제할 입고번호 입력");
         String inbound_num = validCheck.inputAnyString();

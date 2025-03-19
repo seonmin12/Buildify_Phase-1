@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import java.sql.Date;
+import java.util.UUID;
 
 import static java.time.LocalTime.now;
 
@@ -43,6 +44,7 @@ public class InboundInsertControllerImp implements InboundInsertController{
 
         int index = 1;
         for(ProductDto productDto1 : productDto){
+
             System.out.printf("번호:%d ID: %s | 브랜드: %s | 제품명: %s | 가격: %,d원 | 코드: %d | 카테고리: %s | 크기: %.2fcm³\n",index++,productDto1.getProd_id(), productDto1.getBrand(), productDto1.getProd_name(),
                     productDto1.getProd_price(), productDto1.getProd_code(), productDto1.getProd_category(),
                    productDto1.getProd_size() );
@@ -64,9 +66,9 @@ public class InboundInsertControllerImp implements InboundInsertController{
                     productDto2.getProd_price(), productDto2.getProd_code(), productDto2.getProd_category(),
                     productDto2.getProd_size());
             System.out.println("출고 수량: " + amount);
-
+            String inbound_num = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
             InboundDto inboundDto = new InboundDto();
-            inboundDto.setInbound_number("1_"+productDto2.getProd_id()+"_"+userDto.getClient_id()+"_"+now());
+            inboundDto.setInbound_number(inbound_num);
             inboundDto.setProd_id(productDto2.getProd_id());
             inboundDto.setClient_id(userDto.getClient_id());
             inboundDto.setQuantity(amount);

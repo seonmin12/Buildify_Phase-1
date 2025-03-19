@@ -2,7 +2,9 @@ package domain.Inbound.repository;
 
 import common.ErrorCode;
 import config.DBConnection;
+import dto.ClientUpdateDto;
 import dto.InboundDto;
+import dto.UserDto;
 import exception.InboundException;
 
 import java.sql.*;
@@ -18,18 +20,21 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     PreparedStatement pstmt = null;
 
 
+
     @Override
-    public List<InboundDto> clientsearch() {
-        List<InboundDto> list = new ArrayList<>();
-        connection = DBConnection.getConnection();
+    public List<ClientUpdateDto> clientsearch() {
+
+        List<ClientUpdateDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call db_inbound_search_clientup()}");
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                InboundDto dto = InboundDto.builder()
+                ClientUpdateDto dto = ClientUpdateDto.builder()
                         .client_id(rs.getString("client_id"))
+                        .user_id(rs.getString("user_name"))
                         .build();
                 list.add(dto);
             }

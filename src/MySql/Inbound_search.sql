@@ -26,10 +26,13 @@ end //
 
 
 
-
+drop procedure db_inbound_search_clientup;
     delimiter &&
 create procedure db_inbound_search_clientup()
 begin
-select distinct client_id from inbound where Inbound_status = 0;
-end &&
+select distinct inbound.client_id, user.user_name from inbound join user on  inbound.client_id=user.client_id where  inbound.Inbound_status = 0;
+end ;
     delimiter ;
+
+
+

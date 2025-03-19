@@ -7,6 +7,8 @@ select * from inbound where Inbound_status = 0;
 end//
 delimiter ;
 
+-- 관리자 입고요청 전체승인
+DROP PROCEDURE IF EXISTS db_inbound_allcheck_update;
 delimiter //
 CREATE PROCEDURE db_inbound_allcheck_update()
 BEGIN
@@ -20,8 +22,8 @@ ON i.prod_id = v.prod_id
 WHERE i.inbound_status = 0;
 
 -- 존재하지 않는 상품이라면 새로 추가
-INSERT INTO inventory (prod_id, client_id, quantity, ware_id)
-SELECT i.prod_id, i.client_id, i.quantity, 'ware1'
+INSERT INTO inventory (prod_id, client_id, quantity, ware_id, last_inbound_day)
+SELECT i.prod_id, i.client_id, i.quantity, 'ware1', now()
 FROM inbound i
 WHERE i.inbound_status = 0
   AND NOT EXISTS (
@@ -46,7 +48,8 @@ end //
 delimiter ;
 
 
-
+-- 관리자 입고요청 업체별 승인
+drop procedure if exists db_inbound_check_client_update;
     DELIMITER &&
 CREATE PROCEDURE db_inbound_check_client_update(IN client_id_param VARCHAR(255))
 BEGIN
@@ -60,8 +63,8 @@ ON i.prod_id = v.prod_id
 WHERE i.inbound_status = 0 AND i.client_id = client_id_param;
 
 -- 2️⃣ `inventory` 테이블에 없는 경우 → 새로운 데이터 INSERT
-INSERT INTO inventory (prod_id, client_id, quantity, ware_id)
-SELECT i.prod_id, i.client_id, i.quantity, 'ware1'
+INSERT INTO inventory (prod_id, client_id, quantity, ware_id, last_inbound_day)
+SELECT i.prod_id, i.client_id, i.quantity, 'ware1', now()
 FROM inbound i
 WHERE i.inbound_status = 0
   AND i.client_id = client_id_param
@@ -96,7 +99,8 @@ end //
 
 
 
-
+-- 관리자 입고요청 개별승인
+drop procedure if exists db_inbound_check_inbound_number_update;
     DELIMITER //
 CREATE PROCEDURE db_inbound_check_inbound_number_update(IN inbound_num_param VARCHAR(255))
 BEGIN
@@ -112,8 +116,8 @@ WHERE i.inbound_number = inbound_num_param
   AND i.inbound_status = 0;
 
 -- 존재하지 않으면 새로 삽입
-INSERT INTO inventory (prod_id, client_id, quantity, ware_id)
-SELECT prod_id, client_id, quantity, 'ware1'
+INSERT INTO inventory (prod_id, client_id, quantity, ware_id, last_inbound_day)
+SELECT prod_id, client_id, quantity, 'ware1', now()
 FROM inbound i
 WHERE inbound_number = inbound_num_param
   AND inbound_status = 0
@@ -128,11 +132,10 @@ SET inbound_status = 1, ware_id = 'ware1'
 WHERE inbound_number = inbound_num_param
   AND inbound_status = 0;
 
-END //
+END ;
+DELIMITER ;
 
-DELIMITER //
-
-
+delimiter //
 create procedure db_inbound_check_inbound_number_return(in a varchar(30))
 begin
 update inbound set Inbound_status = 2 where inbound_number = a and Inbound_status = 0;

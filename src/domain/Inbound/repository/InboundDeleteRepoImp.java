@@ -22,6 +22,7 @@ public class InboundDeleteRepoImp implements InboundDeleteRepo{
     public List<InboundDto> deleteSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call db_inbound_deletesearch(?)}");
             cs.setString(1, a);
