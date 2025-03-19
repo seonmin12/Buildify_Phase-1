@@ -7,6 +7,7 @@ import dto.WarehouseDto;
 import exception.InventoryException;
 import exception.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,12 +38,11 @@ public class InventoryReadServiceImp implements InventoryReadService {
      */
     @Override
     public List<InventoryDto> ReadAll() {
-        try {
-            return inventoryReadRepo.ReadAll().orElseThrow(() -> new NotFoundException(String.valueOf(ErrorCode.ERROR_INPUT)));
-        } catch (NotFoundException e) {
-            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
-        }
-
+       List<InventoryDto> inventoryDtoList = inventoryReadRepo.ReadAll();
+       if(inventoryDtoList.isEmpty()){
+           return null;
+       }
+       return inventoryDtoList;
 
     }
 
@@ -59,7 +59,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
         List<InventoryDto> inventoryList = inventoryReadRepo.ReadByProductName(productName);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
-            System.out.println("해당 상품의 재고가 존재하지 않습니다.");
+            return null;
         }
 
         return inventoryList;
@@ -98,7 +98,7 @@ public class InventoryReadServiceImp implements InventoryReadService {
         List<InventoryDto> inventoryList = inventoryReadRepo.ReadByCategory(category);
 
         if (inventoryList == null || inventoryList.isEmpty()) {
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+            return null;
         }
 
         return inventoryList;

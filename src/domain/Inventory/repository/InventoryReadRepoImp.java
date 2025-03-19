@@ -34,7 +34,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
      * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
-    public Optional<List<InventoryDto>> ReadAll() throws InventoryException {
+    public List<InventoryDto> ReadAll()  {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
@@ -66,10 +66,11 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+
         }
 
-        return Optional.of(inventoryDtoList);
+
+        return inventoryDtoList;
 
 
     }
@@ -83,7 +84,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
      * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
-    public List<InventoryDto> ReadByProductName(String productName) throws InventoryException {
+    public List<InventoryDto> ReadByProductName(String productName)  {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
@@ -109,12 +110,14 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
             }
             cs.close();
-            return inventoryDtoList;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+
         }
+
+        return inventoryDtoList;
 
 
     }
@@ -155,8 +158,9 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+
         }
+        return inventoryDtoList;
     }
     /**
      * 상품 카테고리를 기준으로 재고 정보를 조회하는 메서드.
@@ -190,12 +194,13 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
 
             }
             cs.close();
-            return list;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.DB_INVENTORY_READ_ALL_ERROR);
+
         }
+        return list;
     }
 }
 

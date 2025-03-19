@@ -70,9 +70,8 @@ public class InventoryReadControllerImp implements InventoryReadController {
                 return null;
             }
 
-            System.out.println("전체 재고 정보를 검색합니다.");
-            System.out.println("테스트입니다");
-            System.out.println("나중에 업데이트 예정");
+            System.out.println("[전체 재고 정보 조회]");
+
 
             for (InventoryDto inventoryDto : inventoryDtoList) {
                 System.out.printf(
@@ -94,6 +93,10 @@ public class InventoryReadControllerImp implements InventoryReadController {
     public List<InventoryDto> ReadByClientID() {
         System.out.print("조회할 입점사 ID(Client_id)를 입력하세요: ");
         String client_id = validCheck.inputAnyString();
+        if (client_id == null || client_id.isEmpty()) {
+            System.out.println("해당 입점사ID(clientID)를 찾을 수 없습니다.");
+            return null;
+        }
         return processInventoryRead(client_id);
     }
 
@@ -107,6 +110,11 @@ public class InventoryReadControllerImp implements InventoryReadController {
         public List<InventoryDto> ReadByClientID (UserDto userDto) {
 
             String clientId = userDto.getClient_id();
+            if (clientId == null || clientId.isEmpty()) {
+                System.out.println("해당 clientID를 찾을 수 없습니다");
+                return null;
+            }
+
 
            return processInventoryRead(clientId);
 
@@ -165,7 +173,7 @@ public class InventoryReadControllerImp implements InventoryReadController {
         List<InventoryDto> inventoryDtoList = inventoryReadService.ReadByClientID(clientId);
 
         if (inventoryDtoList == null || inventoryDtoList.isEmpty()) {
-            System.out.println("해당 카테고리의 재고가 없습니다.");
+
             return null;
         }
 

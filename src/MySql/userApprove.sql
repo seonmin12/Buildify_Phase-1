@@ -25,6 +25,7 @@ BEGIN
 end $$
 DELIMITER ;
 
+
 call USE_AVAILABLE_WARE();
 
 

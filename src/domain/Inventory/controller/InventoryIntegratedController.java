@@ -29,7 +29,7 @@ public class InventoryIntegratedController {
             System.out.println("1. 재고 조회");
             System.out.println("2. 재고 삭제");
             System.out.println("3. 재고 수정");
-            System.out.println("0. 종료");
+            System.out.println("0. 이전 메뉴");
             System.out.print("선택 > ");
             int choice = validCheck.inputNumRegex();
 
@@ -67,14 +67,14 @@ public class InventoryIntegratedController {
     public void inventoryRunForUser(UserDto userDto) {
         System.out.println("\n=== 회원 재고 조회 메뉴 ===");
         System.out.println("1. 내 회사 재고 조회");
-        System.out.println("0. 종료");
+        System.out.println("0. 이전 메뉴");
         System.out.print("선택 > ");
         int choice = validCheck.inputNumRegex();
 
         switch (choice) {
             case 1 -> inventoryReadController.ReadByClientID(userDto);
             case 0 -> {
-                System.out.println("프로그램 종료");
+
                 return;
             }
             default -> System.out.println("잘못된 입력입니다.");

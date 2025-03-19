@@ -33,7 +33,7 @@ public class InventoryDeleteRepoImp implements InventoryDeleteRepo {
      * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
-    public Optional<InventoryDto> deleteInventory(String prodID, String clientID, String wareID) throws InventoryException {
+    public Optional<InventoryDto> deleteInventory(String prodID, String clientID, String wareID)  {
         try {
             connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
@@ -53,8 +53,10 @@ public class InventoryDeleteRepoImp implements InventoryDeleteRepo {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new InventoryException(ErrorCode.ERROR_INPUT);
+
         }
+
+        return Optional.empty();
 
 
     }
