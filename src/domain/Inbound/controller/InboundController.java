@@ -1,7 +1,6 @@
 package domain.Inbound.controller;
 
 import common.ValidCheck;
-import controller.WarehouseController;
 import dto.UserDto;
 
 import java.util.Scanner;

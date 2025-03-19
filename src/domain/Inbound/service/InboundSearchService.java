@@ -1,12 +1,16 @@
 package domain.Inbound.service;
 
+import dto.ClientUpdateDto;
 import dto.InboundDto;
+import dto.UserDto;
 
 import java.util.List;
 
 public interface InboundSearchService {
 
-    List<InboundDto> clientupdatesearch();
+
+
+    List<ClientUpdateDto> clientupdatesearch();
 
     List<InboundDto> userSearchAll(String a);
 
