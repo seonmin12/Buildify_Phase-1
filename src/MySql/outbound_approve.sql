@@ -5,6 +5,8 @@ from outbound;
 #출고 요청 전체 승인 프로시저
 DELIMITER $$
 
+drop procedure OUTBOUND_ALL_APPROVE;
+
 CREATE PROCEDURE OUTBOUND_ALL_APPROVE()
 BEGIN
     -- 임시 테이블 생성 (이번에 승인될 출고 요청 ID 저장)
@@ -37,7 +39,7 @@ BEGIN
     UPDATE inventory i2
         JOIN outbound o2 ON i2.client_id = o2.client_id
             AND o2.prod_id = i2.prod_id
-    SET i2.last_outbond_day = NOW()
+    SET i2.last_outbound_day = NOW()
     WHERE o2.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
     -- 임시 테이블 삭제
@@ -48,6 +50,8 @@ DELIMITER ;
 
 #출고 요청 1개 승인 프로시저(출고아이디기준)
 DELIMITER $$
+
+drop procedure OUTBOUND_ONE_APPROVE;
 
 CREATE PROCEDURE OUTBOUND_ONE_APPROVE(IN outbound_input VARCHAR(30))
 BEGIN
@@ -81,7 +85,7 @@ BEGIN
     UPDATE inventory i2
         JOIN outbound o2 ON i2.client_id = o2.client_id
             AND o2.prod_id = i2.prod_id
-    SET i2.last_outbond_day = NOW()
+    SET i2.last_outbound_day = NOW()
     WHERE o2.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
     --  임시 테이블 삭제
@@ -90,6 +94,8 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+drop procedure OUTBOUND_APPROVE_BY_CLIENT;
 #출고 요청 전체 승인 프로시저(클라이언트 ID 기준)
 DELIMITER $$
 
@@ -125,7 +131,7 @@ BEGIN
     UPDATE inventory i2
         JOIN outbound o2 ON i2.client_id = o2.client_id
             AND o2.prod_id = i2.prod_id
-    SET i2.last_outbond_day = NOW()
+    SET i2.last_outbound_day = NOW()
     WHERE o2.client_id IN (SELECT client_id FROM ApprovedOutbound);
 
     -- 임시 테이블 삭제

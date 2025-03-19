@@ -4,6 +4,8 @@ drop procedure if exists inventory_update_quantity;
 
 DELIMITER //
 
+drop procedure inventory_update_quantity;
+
 CREATE PROCEDURE inventory_update_quantity(
 IN input_prod_id varchar(20), IN input_client_id varchar(50)
 ,IN input_ware_id varchar(30), IN newQuantity int
@@ -17,7 +19,7 @@ BEGIN
     and ware_id = input_ware_id;
 
     select i.prod_id, prod_name, i.client_id, i.ware_id, i.quantity,
-           i.last_inbound_date, i.last_outbound_date
+           i.last_inbound_day, i.last_outbound_day
     from inventory i
              join product p on i.prod_id = p.prod_id
     order by i.prod_id, i.ware_id;

@@ -69,13 +69,12 @@ public class InboundCheckControllerImp implements InboundCheckController {
 
             case 2:
                   List<ClientUpdateDto> clientUpdateDto = inboundSearchService.clientupdatesearch();
-//                List<InboundDto> inboundDtoList = inboundSearchService.clientupdatesearch();
 
-//                if (clientUpdateDto == null || clientUpdateDto.isEmpty()) {
-//                    System.out.println("클라이언트 입고 정보가 없습니다.");
-//                    return;
-//                }
-                System.out.println("sdlkjfsdf");
+                if (clientUpdateDto == null || clientUpdateDto.isEmpty()) {
+                    System.out.println("클라이언트 입고 정보가 없습니다.");
+                    return;
+                }
+
                 for (ClientUpdateDto clientUpdateDto1 : clientUpdateDto) {
                     System.out.println("업체명: " + clientUpdateDto1.getClient_id() + "  ("+clientUpdateDto1.getUser_id()+")");
                 }

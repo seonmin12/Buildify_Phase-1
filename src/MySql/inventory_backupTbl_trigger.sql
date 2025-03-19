@@ -10,13 +10,15 @@ CREATE TABLE inventory_backup (
                                   client_id VARCHAR(50),
                                   quantity INT,
                                   ware_id VARCHAR(50),
-                                  last_inbound_date DATE,
-                                  last_outbound_date DATE
+                                  last_inbound_day DATE,
+                                  last_outbound_day DATE
 );
 
 
 -- 재고 삭제시 정보를 백업테이블에 기록하는 트리거 생성
 DELIMITER $$
+
+drop trigger  backup_before_delete;
 
 CREATE TRIGGER backup_before_delete
 BEFORE DELETE ON inventory
@@ -28,8 +30,8 @@ INSERT INTO inventory_backup(
                              client_id ,
                              quantity ,
                              ware_id ,
-                             last_inbound_date ,
-                             last_outbound_date
+                             last_inbound_day ,
+                             last_outbound_day
                             )
 
     values (
@@ -37,8 +39,8 @@ INSERT INTO inventory_backup(
             OLD.client_id,
             OLD.quantity,
             OLD.ware_id,
-            OLD.last_inbound_date,
-            OLD.last_outbound_date
+            OLD.last_inbound_day,
+            OLD.last_outbound_day
 
               );
 
