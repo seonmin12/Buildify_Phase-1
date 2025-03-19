@@ -31,6 +31,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     public List<OutboundDto> searchOutboundList() {
         List<OutboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             String sql = new StringBuilder()
                     .append("SELECT * FROM outbound").toString();
             pstmt = connection.prepareStatement(sql);
@@ -49,6 +50,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
                 list.add(dto);
             }
             pstmt.close();
+            connection.close();
 
             return list;
         } catch (SQLException e) {
@@ -61,6 +63,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     public List<OutboundDto> searchOutboundByUser(String Client_id) {
         List<OutboundDto> list = new ArrayList<>();
         try {
+            connection = DBConnection.getConnection();
             String sql = new StringBuilder()
                     .append("SELECT * FROM outbound WHERE client_id = ?").toString();
             pstmt = connection.prepareStatement(sql);
@@ -80,6 +83,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
                 list.add(dto);
             }
             pstmt.close();
+            connection.close();
 
             return list;
         } catch (SQLException e) {
@@ -94,6 +98,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     @Override
     public void approveAllList() {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call OUTBOUND_ALL_APPROVE()}");
             rs = cs.executeQuery();
@@ -101,6 +106,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -116,6 +122,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     @Override
     public void approveOneId(String Client_id) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call OUTBOUND_ONE_ID_APPROVE(?)}");
             cs.setString(1, Client_id);
@@ -124,6 +131,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Client_id+ USER_OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -138,6 +146,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     @Override
     public void approveOneNumber(String outbound_number) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call OUTBOUND_ONE_APPROVE(?)}");
             cs.setString(1, outbound_number);
@@ -146,6 +155,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(outbound_number+ OUTBOUND_APPROVE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -160,6 +170,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     @Override
     public void returnOneNumber(String outbound_number) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call OUTBOUND_ONE_RETURN(?)}");
             cs.setString(1, outbound_number);
@@ -168,7 +179,8 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
 
             rs.close();
             cs.close();
-            System.out.println(outbound_number+ OUTBOUND_APPROVE_SUCCESS.getText());
+            connection.close();
+            System.out.println(outbound_number+ OUTBOUND_RETURN_SUCCESS.getText());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -185,6 +197,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     public String clientIdValidCheck(String Client_id) {
         String result = null;
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call CLIENT_ID_VALIDATION(?)}");
             cs.setString(1, Client_id);
@@ -195,6 +208,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
             }
             rs.close();
             cs.close();
+            connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -212,6 +226,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
     public String outboundNumberValidCheck(String number) {
         String result = null;
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call OUTBOUND_NUMBER_VALIDATION(?)}");
             cs.setString(1, number);
@@ -222,6 +237,7 @@ public class OutboundAdminRepositoryImpl implements OutboundAdminRepository {
             }
             rs.close();
             cs.close();
+            connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

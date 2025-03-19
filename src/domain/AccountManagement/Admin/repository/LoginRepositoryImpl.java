@@ -22,6 +22,7 @@ public class LoginRepositoryImpl implements LoginRepository {
     public AdminDto login(String id) {
         AdminDto adminDto = null;
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call DB_ADMIN_READONE(?)}");
             cs.setString(1,id);

@@ -85,7 +85,6 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
      */
     @Override
     public void approveAllList() {
-        searchOutboundList();
         outboundAdminService.approveAllList();
     }
 
@@ -94,6 +93,43 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
      */
     @Override
     public void approveById() {
+
+        List<OutboundDto> outboundDtoList = outboundAdminService.searchOutboundList();
+        if (outboundDtoList.isEmpty()){
+            System.out.println(NOT_FOUND_OUNTBOUND.getText());
+            return;
+        }
+        int pendingCount = 0;
+        for (OutboundDto outbound : outboundDtoList) {
+            if (outbound.getOutbound_status() == 0) {
+                pendingCount++;
+            }
+        }
+        System.out.println("미승인 출고 건수: " + pendingCount);
+        if (pendingCount <= 0){
+            System.out.println("출고 미승인 리스트가 없습니다.");
+            return;
+        }
+        String status;
+        System.out.printf("%-20s %-15s %-12s %4s %10s %10s %10s\n",
+                "출고번호", "상품번호", "고객번호", "수량", "출고상태", "출고요청일", "창고ID");
+        System.out.println(ROUND_BAR.getText());
+        for (OutboundDto list : outboundDtoList) {
+            if (list.getOutbound_status() == 0){
+                status = "대기";
+            }else if (list.getOutbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            if (list.getOutbound_status() == 0) {
+                System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
+                        list.getOutbound_id(), list.getProd_id(),
+                        list.getClient_id(), list.getQuantity(),
+                        status, list.getReq_outbound_day(),
+                        list.getWare_id());
+            }
+        }
+
+
         String Client_id;
         System.out.println(OUTBOUND_APPROVE_CLIENT.getText());
         System.out.printf(INPUT_CHOICE.getText());
@@ -106,6 +142,42 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
      */
     @Override
     public void approveOneNumber() {
+
+        List<OutboundDto> outboundDtoList = outboundAdminService.searchOutboundList();
+        if (outboundDtoList.isEmpty()){
+            System.out.println(NOT_FOUND_OUNTBOUND.getText());
+            return;
+        }
+        int pendingCount = 0;
+        for (OutboundDto outbound : outboundDtoList) {
+            if (outbound.getOutbound_status() == 0) {
+                pendingCount++;
+            }
+        }
+        System.out.println("미승인 출고 건수: " + pendingCount);
+        if (pendingCount <= 0){
+            System.out.println("출고 미승인 리스트가 없습니다.");
+            return;
+        }
+        String status;
+        System.out.printf("%-20s %-15s %-12s %4s %10s %10s %10s\n",
+                "출고번호", "상품번호", "고객번호", "수량", "출고상태", "출고요청일", "창고ID");
+        System.out.println(ROUND_BAR.getText());
+        for (OutboundDto list : outboundDtoList) {
+            if (list.getOutbound_status() == 0){
+                status = "대기";
+            }else if (list.getOutbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            if (list.getOutbound_status() == 0) {
+                System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
+                        list.getOutbound_id(), list.getProd_id(),
+                        list.getClient_id(), list.getQuantity(),
+                        status, list.getReq_outbound_day(),
+                        list.getWare_id());
+            }
+        }
+
         String outbound_number;
         System.out.println(OUTBOUND_APPROVE_NUMBER.getText());
         System.out.printf(INPUT_CHOICE.getText());
@@ -118,6 +190,42 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
      */
     @Override
     public void returnOneNumber() {
+
+        List<OutboundDto> outboundDtoList = outboundAdminService.searchOutboundList();
+        if (outboundDtoList.isEmpty()){
+            System.out.println(NOT_FOUND_OUNTBOUND.getText());
+            return;
+        }
+        int pendingCount = 0;
+        for (OutboundDto outbound : outboundDtoList) {
+            if (outbound.getOutbound_status() == 0) {
+                pendingCount++;
+            }
+        }
+        System.out.println("미승인 출고 건수: " + pendingCount);
+        if (pendingCount <= 0){
+            System.out.println("출고 미승인 리스트가 없습니다.");
+            return;
+        }
+        String status;
+        System.out.printf("%-20s %-15s %-12s %4s %10s %10s %10s\n",
+                "출고번호", "상품번호", "고객번호", "수량", "출고상태", "출고요청일", "창고ID");
+        System.out.println(ROUND_BAR.getText());
+        for (OutboundDto list : outboundDtoList) {
+            if (list.getOutbound_status() == 0){
+                status = "대기";
+            }else if (list.getOutbound_status() == 1){
+                status = "승인";
+            }else status = "반려";
+            if (list.getOutbound_status() == 0) {
+                System.out.printf("%-23s %-16s %-4s %14d %10s %15s %10s\n",
+                        list.getOutbound_id(), list.getProd_id(),
+                        list.getClient_id(), list.getQuantity(),
+                        status, list.getReq_outbound_day(),
+                        list.getWare_id());
+            }
+        }
+
         String outbound_number;
         System.out.println(REJECT_OUTBOUND.getText());
         System.out.printf(INPUT_CHOICE.getText());
@@ -125,3 +233,4 @@ public class OutboundAdminControllerImpl implements OutboundAdminController {
         outboundAdminService.returnOneNumber(outbound_number);
     }
 }
+

@@ -207,7 +207,7 @@ public class UserManagementControllerImpl implements UserManagementController{
         System.out.printf(INPUT_CHOICE.getText());
         String newValue = null;
         switch (choice){
-            case 1 -> newValue = validCheck.inputStringRegex(validCheck.NUMBER_REGEX);
+            case 1 -> newValue = validCheck.inputStringRegex(validCheck.SIGN_UP_PHONE_REGEX);
             case 2 -> newValue = validCheck.inputStringRegex(validCheck.EMAIL_REGEX);
             case 3 -> newValue = validCheck.inputAnyString();
         }
