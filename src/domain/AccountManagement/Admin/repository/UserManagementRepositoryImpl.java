@@ -29,6 +29,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         List<UserDto> list = new ArrayList<>();
 
         try {
+            connection = DBConnection.getConnection();
             String sql = new StringBuilder()
                     .append("SELECT * FROM user").toString();
             pstmt = connection.prepareStatement(sql);
@@ -47,7 +48,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
                 list.add(dto);
             }
             pstmt.close();
-
+            connection.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,6 +65,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         List<AdminDto> list = new ArrayList<>();
 
         try {
+            connection = DBConnection.getConnection();
             String sql = new StringBuilder()
                     .append("SELECT * FROM admin WHERE admin_role = '창고관리자' ").toString();
             pstmt = connection.prepareStatement(sql);
@@ -85,6 +87,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
             }
             rs.close();
             pstmt.close();
+            connection.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,6 +104,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         List<UserDto> pendinglist = new ArrayList<>();
 
         try {
+            connection = DBConnection.getConnection();
             String sql = new StringBuilder()
                     .append("SELECT * FROM user WHERE user_status = 0 ").toString();
 
@@ -122,7 +126,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
             }
             rs.close();
             pstmt.close();
-
+            connection.close();
             return pendinglist;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,10 +141,13 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void approveUser(String Client_id) throws BuildifyException {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_APPROVE(?)}");
             cs.setString(1, Client_id);
             rs = cs.executeQuery();
+
+            connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,6 +165,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         UserDto dto = null;
 
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_READONE(?)}");
             cs.setString(1, Client_id);
@@ -177,7 +185,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
             }
             rs.close();
             cs.close();
-
+            connection.close();
             return dto;
 
         } catch (SQLException e) {
@@ -194,6 +202,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateUserPhone(String Client_id,String newValue){
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_UPDATE_PHONE(?,?)}");
             cs.setInt(1,Integer.parseInt(newValue));
@@ -202,6 +211,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Client_id + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -217,6 +227,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateUserEmail(String Client_id,String newValue){
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_UPDATE_EMAIL(?,?)}");
             cs.setString(1,newValue);
@@ -225,6 +236,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Client_id + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -240,6 +252,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateUserAddress(String Client_id,String newValue){
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_USER_UPDATE_ADDRESS(?,?)}");
             cs.setString(1,newValue);
@@ -248,6 +261,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Client_id + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -264,6 +278,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateSelfAdminPhone(String Admin_number, String newValue) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_ADMIN_UPDATE_PHONE(?,?)}");
             cs.setInt(1,Integer.parseInt(newValue));
@@ -272,6 +287,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Admin_number + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -288,6 +304,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateSelfAdminEmail(String Admin_number, String newValue) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_ADMIN_UPDATE_Email(?,?)}");
             cs.setString(1,newValue);
@@ -296,6 +313,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Admin_number + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -312,6 +330,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     @Override
     public void updateSelfAdminAddress(String Admin_number, String newValue) {
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_ADMIN_UPDATE_address(?,?)}");
             cs.setString(1,newValue);
@@ -320,6 +339,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
 
             rs.close();
             cs.close();
+            connection.close();
             System.out.println(Admin_number + CHANGE_SUCCESS.getText());
 
         } catch (SQLException e) {
@@ -336,14 +356,17 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
     public int getUseWareSize() {
         int size = 0;
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call USE_AVAILABLE_WARE()}");
             rs = cs.executeQuery();
             if (rs.next()) {
                 size = rs.getInt(1);
             }
+            connection.commit();
             rs.close();
             cs.close();
+            connection.close();
             return size;
 
         } catch (SQLException e) {
@@ -363,6 +386,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
         AdminDto dto = null;
 
         try {
+            connection = DBConnection.getConnection();
             connection.setAutoCommit(true);
             cs = connection.prepareCall("{call DB_ADMIN_NUMBER_READONE(?)}");
             cs.setString(1, Admin_id);
@@ -383,6 +407,7 @@ public class UserManagementRepositoryImpl implements UserManagementRepository {
             }
             rs.close();
             cs.close();
+            connection.close();
 
             return dto;
 

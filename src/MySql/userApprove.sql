@@ -15,7 +15,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE USE_AVAILABLE_WARE()
 BEGIN
-    DECLARE ware_size INT DEFAULT (select ware_size
+    DECLARE ware_size INT DEFAULT (select warehouse_area.ware_total_size
                                    from wmsdb.warehouse join wmsdb.warehouse_area
                                                              on wmsdb.warehouse_area.ware_id = wmsdb.warehouse.ware_id);
     DECLARE user_use INT DEFAULT (SELECT sum(user.user_ware_size)

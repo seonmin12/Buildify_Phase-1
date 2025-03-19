@@ -61,7 +61,8 @@ public enum Text {
     OUTBOUND_APPROVE_MENU("1. 전체 승인 2. 업체별 승인 3. 출고 아이디 승인 4. 반려(출고Number)"),
     OUTBOUND_APPROVE_SUCCESS("출고 승인 성공!"),
     USER_OUTBOUND_APPROVE_SUCCESS("고객 전체 승인 성공!"),
-    SEARCH_CLIENT_INPUT("조회할 고객의 Client ID 를 입력하세요.");
+    SEARCH_CLIENT_INPUT("조회할 고객의 Client ID 를 입력하세요."),
+    OUTBOUND_RETURN_SUCCESS("반려 성공!");
 
     private final String text;
       Text(String text) {

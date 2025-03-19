@@ -4,79 +4,135 @@ from outbound;
 
 #출고 요청 전체 승인 프로시저
 DELIMITER $$
+
 CREATE PROCEDURE OUTBOUND_ALL_APPROVE()
 BEGIN
-    -- inventory에서 재고 차감 (이번에 승인되는 애들만 반영)
+    -- 임시 테이블 생성 (이번에 승인될 출고 요청 ID 저장)
+    CREATE TEMPORARY TABLE ApprovedOutbound (outbound_id VARCHAR(30));
+
+    -- 현재 승인될 출고 요청을 임시 테이블에 저장
+    INSERT INTO ApprovedOutbound (outbound_id)
+    SELECT outbound_id FROM outbound WHERE status = 0;
+
+    -- 재고 차감 (이번 승인된 것만 반영)
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
             AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
-    WHERE o.status = 0;  -- 아직 승인 안 된 애들만 반영
+    WHERE o.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
     -- 출고 요청 승인 처리
     UPDATE outbound
     SET status = 1
-    WHERE status = 0;
+    WHERE outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
+    -- ware_id 설정 (ware_id가 NULL이면 기본값 'ware1' 설정)
     UPDATE outbound
     SET ware_id = 'ware1'
-    WHERE status = 1
-    and ware_id IS NULL;
+    WHERE outbound_id IN (SELECT outbound_id FROM ApprovedOutbound)
+      AND ware_id IS NULL;
+
+    -- 재고 최종 출고일 갱신
+    UPDATE inventory i2
+        JOIN outbound o2 ON i2.client_id = o2.client_id
+            AND o2.prod_id = i2.prod_id
+    SET i2.last_outbond_day = NOW()
+    WHERE o2.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
+
+    -- 임시 테이블 삭제
+    DROP TEMPORARY TABLE ApprovedOutbound;
 
 END $$
 DELIMITER ;
 
 #출고 요청 1개 승인 프로시저(출고아이디기준)
 DELIMITER $$
+
 CREATE PROCEDURE OUTBOUND_ONE_APPROVE(IN outbound_input VARCHAR(30))
 BEGIN
-    -- inventory에서 재고 차감 (해당 출고번호만 반영)
+    -- 임시 테이블 생성 (이번 승인될 출고 요청 저장)
+    CREATE TEMPORARY TABLE ApprovedOutbound (outbound_id VARCHAR(30));
+
+    -- 현재 승인될 출고 요청을 임시 테이블에 저장
+    INSERT INTO ApprovedOutbound (outbound_id)
+    SELECT outbound_id FROM outbound WHERE status = 0 AND outbound_id = outbound_input;
+
+    -- 재고 차감 (이번 승인된 것만 반영)
     UPDATE inventory i
         JOIN outbound o ON i.prod_id = o.prod_id
             AND i.client_id = o.client_id
             AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
     SET i.quantity = i.quantity - o.quantity
-    WHERE o.status = 0
-      AND o.outbound_id = outbound_input;  -- 특정 출고번호만 반영
+    WHERE o.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
     -- 출고 요청 승인 처리
     UPDATE outbound
     SET status = 1
-    WHERE status = 0
-      AND outbound_id = outbound_input;
+    WHERE outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
 
+    --  ware_id 설정 (ware_id가 NULL이면 기본값 'ware1' 설정)
     UPDATE outbound
     SET ware_id = 'ware1'
-    WHERE status = 1
-      and ware_id IS NULL;
+    WHERE outbound_id IN (SELECT outbound_id FROM ApprovedOutbound)
+      AND ware_id IS NULL;
+
+    -- 재고 최종 출고일 갱신
+    UPDATE inventory i2
+        JOIN outbound o2 ON i2.client_id = o2.client_id
+            AND o2.prod_id = i2.prod_id
+    SET i2.last_outbond_day = NOW()
+    WHERE o2.outbound_id IN (SELECT outbound_id FROM ApprovedOutbound);
+
+    --  임시 테이블 삭제
+    DROP TEMPORARY TABLE ApprovedOutbound;
 
 END $$
 DELIMITER ;
 
 #출고 요청 전체 승인 프로시저(클라이언트 ID 기준)
 DELIMITER $$
-CREATE PROCEDURE OUTBOUND_ONE_ID_APPROVE(IN outbound_input VARCHAR(10))
-BEGIN
-    UPDATE inventory i
-    JOIN outbound o ON i.prod_id = o.prod_id
-                   AND i.client_id = o.client_id
-                  AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
-    SET i.quantity = i.quantity - o.quantity
-    WHERE o.status = 0
-      AND o.client_id = outbound_input;
 
+CREATE PROCEDURE OUTBOUND_APPROVE_BY_CLIENT(IN client_input VARCHAR(10))
+BEGIN
+    -- 임시 테이블 생성 (이번 승인될 출고 요청 저장)
+    CREATE TEMPORARY TABLE ApprovedOutbound (client_id VARCHAR(10));
+
+    -- 현재 승인될 출고 요청을 임시 테이블에 저장
+    INSERT INTO ApprovedOutbound (client_id)
+    SELECT client_id FROM outbound WHERE status = 0 AND client_id = client_input;
+
+    -- 재고 차감 (이번 승인된 것만 반영)
+    UPDATE inventory i
+        JOIN outbound o ON i.prod_id = o.prod_id
+            AND i.client_id = o.client_id
+            AND (i.ware_id = o.ware_id OR o.ware_id IS NULL)
+    SET i.quantity = i.quantity - o.quantity
+    WHERE o.client_id IN (SELECT client_id FROM ApprovedOutbound);
+
+    -- 출고 요청 승인 처리
     UPDATE outbound
     SET status = 1
-    WHERE status = 0
-      AND client_id = outbound_input;
+    WHERE client_id IN (SELECT client_id FROM ApprovedOutbound);
 
+    -- ware_id 설정 (ware_id가 NULL이면 기본값 'ware1' 설정)
     UPDATE outbound
     SET ware_id = 'ware1'
-    WHERE status = 1
-      and ware_id IS NULL;
+    WHERE client_id IN (SELECT client_id FROM ApprovedOutbound)
+      AND ware_id IS NULL;
+
+    -- 재고 최종 출고일 갱신
+    UPDATE inventory i2
+        JOIN outbound o2 ON i2.client_id = o2.client_id
+            AND o2.prod_id = i2.prod_id
+    SET i2.last_outbond_day = NOW()
+    WHERE o2.client_id IN (SELECT client_id FROM ApprovedOutbound);
+
+    -- 임시 테이블 삭제
+    DROP TEMPORARY TABLE ApprovedOutbound;
 
 END $$
+
 DELIMITER ;
 
 
