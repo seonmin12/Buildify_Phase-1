@@ -65,7 +65,7 @@ public class InventoryReadControllerImp implements InventoryReadController {
 
             List<InventoryDto> inventoryDtoList = inventoryReadService.ReadAll();
 
-            if (inventoryDtoList.isEmpty()) {
+            if (inventoryDtoList == null || inventoryDtoList.isEmpty()) {
                 System.out.println("저장된 재고 정보가 없습니다");
                 return null;
             }

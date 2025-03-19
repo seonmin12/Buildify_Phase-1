@@ -27,11 +27,13 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     PreparedStatement pstmt = null;
 
     /**
-     * 전체 재고 정보를 조회하는 메서드.
-     * 데이터베이스에 저장된 모든 재고 데이터를 조회하며, 결과가 없더라도 빈 리스트를 포함한 Optional로 반환한다.
+     * 데이터베이스에서 모든 재고 정보를 조회하는 메서드.
+     * <p>
+     * 저장 프로시저 {@code inventory_readAll()}을 호출하여 조회된 결과를
+     * {@link InventoryDto} 리스트로 반환한다.
+     * </p>
      *
-     * @return 전체 재고 정보를 담은 Optional 리스트
-     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
+     * @return 재고 정보 리스트. 예외 발생 시 빈 리스트 반환.
      */
     @Override
     public List<InventoryDto> ReadAll()  {
