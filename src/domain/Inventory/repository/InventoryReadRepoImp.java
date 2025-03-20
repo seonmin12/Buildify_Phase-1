@@ -89,6 +89,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
 
         try {
+            Connection connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_readOne_productName(?)}");
             cs.setString(1, productName);
@@ -133,6 +134,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
     public List<InventoryDto> ReadByClientID(String clientID) {
         List<InventoryDto> inventoryDtoList = new ArrayList<>();
         try {
+            Connection connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_read_by_clientID(?)}");
             cs.setString(1,clientID);
@@ -173,6 +175,7 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
         List<InventoryDto> list = new ArrayList<>();
 
         try {
+            Connection connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
             cs = connection.prepareCall("{call inventory_read_by_category(?)}");
             cs.setString(1,category);
