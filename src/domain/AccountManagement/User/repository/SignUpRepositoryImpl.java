@@ -5,13 +5,32 @@ import dto.UserDto;
 
 import java.sql.*;
 
+/**
+ * {@link SignUpRepository}의 구현체.
+ *
+ * <p>사용자 회원가입 및 ID 중복 검사를 수행하는 리포지토리 클래스입니다.</p>
+ *
+ * <p>회원가입 시, 저장 프로시저 `SignUp`을 호출하며, 성공 또는 실패 여부를 반환합니다.
+ * 또한, ID 중복 여부를 확인하는 기능을 제공합니다.</p>
+ *
+ * @author 이동휘
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class SignUpRepositoryImpl implements SignUpRepository {
 
-    Connection connection = DBConnection.getConnection();
-    CallableStatement cs = null;
-    ResultSet rs = null;
-    PreparedStatement pstmt = null;
+    private final Connection connection = DBConnection.getConnection();
+    private CallableStatement cs = null;
 
+    /**
+     * 새로운 사용자를 데이터베이스에 추가합니다.
+     *
+     * <p>회원가입은 저장 프로시저 `SignUp`을 호출하여 수행됩니다.
+     * 회원가입이 성공하면 커밋되고, 실패하면 롤백됩니다.</p>
+     *
+     * @param userDto 등록할 사용자 정보를 포함한 {@link UserDto} 객체
+     * @return 회원가입이 성공하면 {@code true}, 실패하면 {@code false}
+     */
     @Override
     public boolean InsertUser(UserDto userDto) {
         boolean isSuccess = false;
@@ -46,9 +65,6 @@ public class SignUpRepositoryImpl implements SignUpRepository {
                 isSuccess = true;
                 connection.commit(); // 데이터 반영
                 System.out.println("회원가입 성공! 데이터가 저장되었습니다.");
-            } else if(rtncode == 400){
-                connection.rollback(); // 실패 시 롤백
-                System.out.println("회원가입 실패! rtncode: " + rtncode);
             } else {
                 connection.rollback(); // 실패 시 롤백
                 System.out.println("회원가입 실패! rtncode: " + rtncode);
@@ -74,6 +90,12 @@ public class SignUpRepositoryImpl implements SignUpRepository {
         return isSuccess;
     }
 
+    /**
+     * 주어진 사용자 ID가 데이터베이스에 이미 존재하는지 확인합니다.
+     *
+     * @param userid 중복 여부를 확인할 사용자 ID
+     * @return 중복된 ID가 있으면 {@code true}, 없으면 {@code false}
+     */
     @Override
     public boolean duplicateCheckUserID(String userid) {
         boolean exists = false;

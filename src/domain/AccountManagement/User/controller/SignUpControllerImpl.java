@@ -10,15 +10,38 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * {@link SignUpController}의 구현체.
+ *
+ * <p>사용자의 회원가입 및 ID 중복 확인 기능을 제공합니다.</p>
+ *
+ * @author 이동휘
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class SignUpControllerImpl implements SignUpController {
     private final ValidCheck validCheck;
     private final SignUpService signUpService;
 
+    /**
+     * {@code SignUpControllerImpl} 생성자.
+     *
+     * @param validCheck 입력값 유효성 검사를 위한 유틸리티 클래스
+     * @param signUpService 회원가입 관련 비즈니스 로직을 처리하는 서비스 클래스
+     */
     public SignUpControllerImpl(ValidCheck validCheck, SignUpService signUpService) {
         this.validCheck = validCheck;
         this.signUpService = signUpService;
     }
 
+    /**
+     * 사용자의 회원가입을 수행합니다.
+     *
+     * <p>사용자는 ID, 비밀번호, 이름, 전화번호, 주소, 이메일, 사업자 번호, 창고 할당량 등의 정보를 입력해야 합니다.</p>
+     * <p>비밀번호는 SHA-256 해시 알고리즘을 사용하여 암호화되며, 무작위 Salt 값이 추가됩니다.</p>
+     *
+     * @return 회원가입이 성공하면 {@code true}, 실패하면 {@code false}
+     */
     @Override
     public boolean signUp() {
 
@@ -82,13 +105,23 @@ public class SignUpControllerImpl implements SignUpController {
         return signUpService.registerUser(userDto);
     }
 
+    /**
+     * 주어진 사용자 ID가 중복되는지 확인합니다.
+     *
+     * @param userid 중복 여부를 확인할 사용자 ID
+     * @return 중복된 ID가 있으면 {@code true}, 없으면 {@code false}
+     */
     @Override
     public boolean duplicateCheckUserID(String userid) {
         return signUpService.duplicateCheckUserID(userid);
     }
 
     /**
-     * 무작위 문자열 Salt 생성
+     * 무작위 Salt 값을 생성합니다.
+     *
+     * <p>비밀번호 암호화를 위한 16바이트 길이의 무작위 Salt를 생성하며, Base64로 인코딩됩니다.</p>
+     *
+     * @return 생성된 Salt 값 (Base64 인코딩 문자열)
      */
     public String getSalt() {
         SecureRandom sr = new SecureRandom();
@@ -100,7 +133,14 @@ public class SignUpControllerImpl implements SignUpController {
     }
 
     /**
-     * SHA-256 알고리즘 적용
+     * 주어진 비밀번호에 Salt 값을 적용하여 SHA-256 해시 알고리즘으로 암호화합니다.
+     *
+     * <p>SHA-256 해싱 후 16진수 문자열로 변환하여 반환합니다.</p>
+     *
+     * @param pwd 사용자가 입력한 원본 비밀번호
+     * @param salt 비밀번호 암호화를 위한 Salt 값
+     * @return SHA-256으로 암호화된 비밀번호
+     * @throws RuntimeException 암호화 알고리즘을 찾을 수 없는 경우 예외 발생
      */
     public String getEncrypt(String pwd, String salt) {
         String result= "";
@@ -122,5 +162,4 @@ public class SignUpControllerImpl implements SignUpController {
 
         return result;
     }
-
 }

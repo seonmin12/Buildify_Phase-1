@@ -4,15 +4,39 @@ import common.ValidCheck;
 import domain.AccountManagement.User.service.UpdateUserinfoService;
 import dto.UserDto;
 
+/**
+ * {@link UpdateUserinfoController}의 구현체.
+ *
+ * <p>사용자의 정보를 수정하고, 특정 사용자의 정보를 조회하는 기능을 제공합니다.</p>
+ *
+ * @author 이동휘
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class UpdateUserinfoControllerImpl implements UpdateUserinfoController {
     private final ValidCheck validCheck;
     private final UpdateUserinfoService updateUserinfoService;
 
+    /**
+     * {@code UpdateUserinfoControllerImpl} 생성자.
+     *
+     * @param validCheck 입력값 유효성 검사를 위한 유틸리티 클래스
+     * @param updateUserinfoService 사용자 정보 업데이트 관련 비즈니스 로직을 처리하는 서비스 클래스
+     */
     public UpdateUserinfoControllerImpl(ValidCheck validCheck, UpdateUserinfoService updateUserinfoService) {
         this.validCheck = validCheck;
         this.updateUserinfoService = updateUserinfoService;
     }
 
+    /**
+     * 사용자의 정보를 업데이트합니다.
+     *
+     * <p>사용자는 변경할 항목을 선택한 후 새로운 값을 입력해야 합니다.
+     * 수정 가능한 항목은 이름, 전화번호, 이메일, 주소, 비밀번호입니다.</p>
+     *
+     * @param userDto 업데이트할 사용자 정보가 포함된 {@link UserDto} 객체
+     * @return 업데이트가 성공하면 {@code true}, 실패하면 {@code false}
+     */
     @Override
     public boolean updateUserinfo(UserDto userDto) {
         boolean isSuccess = false;
@@ -90,6 +114,14 @@ public class UpdateUserinfoControllerImpl implements UpdateUserinfoController {
         return isSuccess;
     }
 
+    /**
+     * 특정 사용자의 정보를 조회합니다.
+     *
+     * <p>사용자의 이름, 전화번호, 이메일, 주소, 사업자 번호, 창고 사용량 등의 정보를 출력합니다.</p>
+     *
+     * @param clientId 정보를 조회할 사용자 클라이언트 ID
+     * @return 사용자 정보를 성공적으로 조회하면 {@code true}, 실패하면 {@code false}
+     */
     @Override
     public boolean getUpdateUserinfo(String clientId) {
         boolean isSuccess = false;
@@ -109,5 +141,4 @@ public class UpdateUserinfoControllerImpl implements UpdateUserinfoController {
 
         return isSuccess;
     }
-
 }
