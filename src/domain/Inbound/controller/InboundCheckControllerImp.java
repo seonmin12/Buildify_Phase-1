@@ -50,7 +50,6 @@ public class InboundCheckControllerImp implements InboundCheckController {
                     return;
                 }
 
-
                 System.out.println("1.승인 2.반려 3.나가기");
                 a = validCheck.inputNumRegex();
                 switch (a) {
