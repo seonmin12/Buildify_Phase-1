@@ -16,7 +16,20 @@
 
 ## 📂 프로젝트 구조
 
-BuildiFy ├── common ├── config ├── controller ├── domain │ ├── inbound │ ├── outbound │ ├── inventory │ └── accountManagement │ ├── User │ └── Admin ├── dto ├── exception ├── MySql └── resources
+BuildiFy ├── common 
+         ├── config 
+         ├── controller 
+         ├── domain    
+         ├── inbound   
+         ├── outbound   
+         ├── inventory  
+         └── accountManagement
+                             ├── User
+                             └── Admin 
+         ├── dto 
+         ├── exception 
+         ├── MySql 
+         └── resources
 
 
 - `common`: 공통 유틸 및 상수 정의
