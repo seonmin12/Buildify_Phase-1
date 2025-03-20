@@ -36,8 +36,25 @@ public class ProductControllerImpl implements ProductController {
         System.out.println("바코드를 입력하세요. (숫자만 8~13자리, EAN-8 또는 EAN-13 형식)");
         int barcode = validCheck.inputIntRegex(validCheck.PRODUCT_CODE_REGEX);
 
-        System.out.println("카테고리를 입력하세요. (한글 또는 영문, 2~20자)");
-        String category = validCheck.inputStringRegex(validCheck.PRODUCT_CATEGORY_REGEX);
+        System.out.println("카테고리를 입력하세요.");
+        System.out.println("1.cpu\t2.메인보드\t3.램\t4.그래픽카드\t5.모니터\t6.키보드\t7.마우스");
+        String category;
+       do {
+           int choice = validCheck.inputNumRegex();
+           switch (choice) {
+               case 1 -> category = "cpu";
+               case 2 -> category = "메인보드";
+               case 3 -> category = "램";
+               case 4 -> category = "그래픽카드";
+               case 5 -> category = "모니터";
+               case 6 -> category = "키보드";
+               case 7 -> category = "마우스";
+               default -> {
+                   System.out.println("잘못된 입력 입니다.");
+                   category = null;
+               }
+           }
+       }while (category == null);
 
         System.out.println("사이즈를 입력하세요. (정수 또는 소수점 이하 2자리까지 가능, 예: 42, 42.5, 100.99)");
         BigDecimal size = validCheck.inputDecimalRegex(validCheck.PRODUCT_SIZE_REGEX);
