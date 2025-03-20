@@ -30,7 +30,6 @@ public class InventoryDeleteRepoImp implements InventoryDeleteRepo {
      * @param wareID   해당 상품의 창고 ID
      * @return 삭제 성공 시 빈 {@link InventoryDto}를 담은 Optional 객체 반환,
      *         삭제 실패 시 Optional.empty() 반환
-     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
     public Optional<InventoryDto> deleteInventory(String prodID, String clientID, String wareID)  {

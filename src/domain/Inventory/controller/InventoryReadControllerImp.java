@@ -17,12 +17,7 @@ public class InventoryReadControllerImp implements InventoryReadController {
     private final InventoryReadService inventoryReadService;
     private final ValidCheck validCheck;
 
-    /**
-     * InventoryReadControllerImp 생성자.
-     *
-     * @param inventoryReadService 재고 조회 서비스 의존성
-     * @param validCheck 사용자 입력 검증 도구
-     */
+
     public InventoryReadControllerImp(InventoryReadService inventoryReadService, ValidCheck validCheck) {
         this.inventoryReadService = inventoryReadService;
         this.validCheck = validCheck;
@@ -89,6 +84,11 @@ public class InventoryReadControllerImp implements InventoryReadController {
             return null;
         }
 
+    /**
+     * 관리자로부터 클라이언트 ID를 입력받아 재고 정보를 조회하고 출력한다.
+     *
+     * @return 조회된 재고 정보 리스트, 없을 경우 null
+     */
     @Override
     public List<InventoryDto> ReadByClientID() {
         System.out.print("조회할 입점사 ID(Client_id)를 입력하세요: ");
@@ -167,7 +167,12 @@ public class InventoryReadControllerImp implements InventoryReadController {
 
 
         }
-
+    /**
+     * 클라이언트 ID로 재고 정보를 조회하고 출력한다.
+     * user 와 관리자 공통으로 재고 정보를 조회하고 출력한다.
+     * @param clientId 조회할 클라이언트 ID
+     * @return 조회된 재고 정보 리스트, 없을 경우 null
+     */
     @Override
     public List<InventoryDto> processInventoryRead(String clientId) {
         List<InventoryDto> inventoryDtoList = inventoryReadService.ReadByClientID(clientId);

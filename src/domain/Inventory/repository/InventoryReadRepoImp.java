@@ -83,7 +83,6 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
      *
      * @param productName 조회할 상품명
      * @return 해당 상품명과 일치하는 재고 정보 리스트
-     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
     public List<InventoryDto> ReadByProductName(String productName)  {
@@ -129,7 +128,6 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
      *
      * @param clientID 조회할 클라이언트 ID
      * @return 해당 클라이언트 ID에 해당하는 재고 정보 리스트
-     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
     public List<InventoryDto> ReadByClientID(String clientID) {
@@ -169,7 +167,6 @@ public class InventoryReadRepoImp implements InventoryReadRepo {
      *
      * @param category 조회할 카테고리명
      * @return 해당 카테고리에 속하는 재고 정보 리스트
-     * @throws InventoryException 데이터베이스 오류 발생 시 예외 처리
      */
     @Override
     public List<InventoryDto> ReadByCategory(String category) {
