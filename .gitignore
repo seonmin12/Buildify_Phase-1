@@ -63,7 +63,6 @@ replay_pid*
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -183,8 +182,12 @@ yarn-error.log*
 ### Homebrew ###
 Brewfile.lock.json
 
+# IntelliJ 특정 설정 파일 유지
 !.idea/misc.xml
 !.idea/modules.xml
+
+# IntelliJ IDEA VCS 설정 파일 무시
+.idea/vcs.xml
 
 # 환경 설정 파일 제외
 src/resources/config.properties
