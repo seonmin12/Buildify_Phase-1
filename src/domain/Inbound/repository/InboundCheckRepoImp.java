@@ -77,62 +77,6 @@ public class InboundCheckRepoImp implements InboundCheckRepo {
 
     }
 
-    @Override
-    public List<InboundDto> prodCheckRead() {
-        List<InboundDto> list = new ArrayList<>();
-        try {
-            connection = DBConnection.getConnection();
-            cs = connection.prepareCall("{ CALl DB_inbound_check_prod_read() }");
-            ResultSet rs = cs.executeQuery();
-            while (rs.next()){
-                InboundDto dto = InboundDto.builder()
-                        .inbound_number(rs.getString("inbound_id"))
-                        .prod_id(rs.getString("prod_id"))
-                        .client_id(rs.getString("client_id"))
-                        .quantity(rs.getInt("quantity"))
-                        .inbound_status(rs.getInt("inbound_status"))
-                        .req_inbound_day(rs.getDate("req_inbound_day"))
-                        .ware_id(rs.getString("wqre_id"))
-                        .build();
-                list.add(dto);
-            }
-            rs.close();
-            cs.close();
-            return list;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new InboundException(ErrorCode.ERROR_INPUT);
-        }
-    }
-
-    @Override
-    public void prodCheckUpdate() {
-        try{
-            connection = DBConnection.getConnection();
-            cs = connection.prepareCall("{ CALL DB_inbound_check_prod_update() }");
-            cs.executeQuery();
-            System.out.println("인바운드 프로드체크 업데이트");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new InboundException(ErrorCode.ERROR_INPUT);
-        }
-
-    }
-
-    @Override
-    public void prodCheckReturn() {
-        try{
-            connection = DBConnection.getConnection();
-            cs = connection.prepareCall("{ CALL DB_inbound_check_prod_return() }");
-            cs.executeQuery();
-            System.out.println("임바운드 프로드체크 리");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new InboundException(ErrorCode.ERROR_INPUT);
-        }
-
-    }
 
     @Override
     public List<InboundDto> clientCheckRead(String a) {
