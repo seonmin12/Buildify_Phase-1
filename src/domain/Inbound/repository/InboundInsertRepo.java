@@ -11,8 +11,15 @@ import java.util.List;
 
 public interface InboundInsertRepo {
 
-
-
+    /**
+     * 회원 입고요청 상품리스트 조회
+     * @return
+     */
     List<ProductDto> inboundinsertlist();
+
+    /**
+     * 회원 입고요청
+     * @param inboundDto
+     */
     void insert(InboundDto inboundDto);
 }

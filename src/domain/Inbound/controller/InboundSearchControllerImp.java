@@ -19,7 +19,10 @@ public class InboundSearchControllerImp implements InboundSearchController{
     }
 
 
-
+    /**
+     * 회원 입고요청 전체조회
+     * @param userDto
+     */
     @Override
     public void userSearchAll(UserDto userDto) {
         String status;
@@ -45,6 +48,9 @@ public class InboundSearchControllerImp implements InboundSearchController{
 
     }
 
+    /**
+     * 관리자 입고요청 전체조회
+     */
     @Override
     public void SearchAll() {
         String status;
@@ -62,6 +68,9 @@ public class InboundSearchControllerImp implements InboundSearchController{
         }
     }
 
+    /**
+     * 관리자 입고요청 업체별 죄회
+     */
     @Override
     public void SearchOne() {
         String status;

@@ -17,6 +17,10 @@ public class InboundInsertRepoImp implements InboundInsertRepo{
     CallableStatement cs = null;
     ResultSet rs = null;
 
+    /**
+     * 회원 입고요청 상품 리스트 조회
+     * @return
+     */
     @Override
     public List<ProductDto> inboundinsertlist() {
        List<ProductDto> list = new ArrayList<>();
@@ -46,6 +50,11 @@ public class InboundInsertRepoImp implements InboundInsertRepo{
        }
     }
 
+    /**
+     * 회원 입고요청
+     * @param inboundDto
+     * @throws InboundException
+     */
     @Override
     public void insert(InboundDto inboundDto) throws InboundException {
         try{

@@ -20,18 +20,31 @@ public class InboundSearchServiceImp implements InboundSearchService{
     }
 
 
-
-
+    /**
+     * 입고요청진행 업체리스트 조회
+     * @return
+     */
     @Override
     public List<ClientUpdateDto> clientupdatesearch() {
         return inboundSearchRepo.clientsearch();
     }
 
+    /**
+     * 회원 입고요청 리스트 업체별 조회
+     * @param a
+     * @return
+     */
     @Override
     public List<InboundDto> userSearchAll(String a) {
         return inboundSearchRepo.userSearch(a);
     }
 
+    /**
+     관리자 입고요청 리스트 업체별 조회
+     *
+     * @param inbound_number
+     * @return
+     */
     @Override
     public List<InboundDto> SearchOne(String inbound_number) {
         try{
@@ -42,6 +55,10 @@ public class InboundSearchServiceImp implements InboundSearchService{
 
     }
 
+    /**
+     * 관리자 입고요청 리스트 전체조회
+     * @return
+     */
     @Override
     public List<InboundDto> SearchAll() {
         try{

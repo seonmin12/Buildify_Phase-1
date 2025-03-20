@@ -19,6 +19,10 @@ public class InboundDeleteControllerImp implements InboundDeleteController{
         this.validCheck = validCheck;
     }
 
+    /**
+     * 회원 입고요청 삭제
+     * @param userDto
+     */
     @Override
     public void delete(UserDto userDto) {
         String status;

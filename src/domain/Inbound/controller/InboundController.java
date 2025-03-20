@@ -26,8 +26,9 @@ public class InboundController {
     }
 
 
-
-
+    /**
+     * 관리자 입고관리 메인
+     */
     public void inboundAdminMain() {
         System.out.println("관리자 입고관리입니다.");
         System.out.println("1.입고요청확인 2.현황조회 3.나가기");
@@ -46,7 +47,9 @@ public class InboundController {
 
     }
 
-
+    /**
+     *회원 입고관리 메인
+     */
     public void inboundUserMain(UserDto userDto) {
 
         System.out.println("회원 입고관리입니다.");

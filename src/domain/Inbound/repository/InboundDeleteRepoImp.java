@@ -18,6 +18,11 @@ public class InboundDeleteRepoImp implements InboundDeleteRepo{
     CallableStatement cs = null;
     ResultSet rs = null;
 
+    /**
+     * 회원 입고삭제 가능리스트 조회
+     * @param a
+     * @return
+     */
     @Override
     public List<InboundDto> deleteSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
@@ -51,6 +56,11 @@ public class InboundDeleteRepoImp implements InboundDeleteRepo{
 
     }
 
+    /**
+     * 회원 입고요청 삭제
+     * @param inboundDto
+     * @throws InboundException
+     */
     @Override
     public void Delete(String  inboundDto) throws InboundException {
 

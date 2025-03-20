@@ -24,7 +24,9 @@ public class InboundCheckControllerImp implements InboundCheckController {
     List<InboundDto> dto;
     List<UserDto> userDto;
 
-
+    /**
+     * 관리자 입고확인 (승인/반려)
+     */
     @Override
     public void check( ) {
         String status;
