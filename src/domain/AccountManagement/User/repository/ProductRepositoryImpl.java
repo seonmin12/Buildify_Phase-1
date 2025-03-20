@@ -7,12 +7,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@link ProductRepository}의 구현체.
+ *
+ * <p>상품 정보를 데이터베이스에 추가하고 조회하는 기능을 수행합니다.</p>
+ *
+ * @author 이동휘
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class ProductRepositoryImpl implements ProductRepository {
-    Connection connection = DBConnection.getConnection();
-    CallableStatement cs = null;
-    ResultSet rs = null;
-    PreparedStatement pstmt = null;
+    private final Connection connection = DBConnection.getConnection();
+    private PreparedStatement pstmt = null;
 
+    /**
+     * 새로운 상품을 데이터베이스에 추가합니다.
+     *
+     * @param productDto 등록할 상품 정보를 포함한 {@link ProductDto} 객체
+     * @return 상품 등록이 성공하면 {@code true}, 실패하면 {@code false}
+     */
     @Override
     public boolean insertProduct(ProductDto productDto) {
         boolean isSuccess = false;
@@ -46,20 +59,20 @@ public class ProductRepositoryImpl implements ProductRepository {
         return isSuccess;
     }
 
+    /**
+     * 데이터베이스에서 모든 상품 목록을 조회합니다.
+     *
+     * @return {@link ProductDto} 객체 리스트, 조회된 상품이 없을 경우 빈 리스트 반환
+     * @throws RuntimeException SQL 실행 중 예외 발생 시 예외 처리
+     */
     @Override
     public List<ProductDto> getAllProduct() {
         List<ProductDto> productDtoList = new ArrayList<>();
 
-        Connection connection = DBConnection.getConnection();
-        CallableStatement cs = null;
-        ResultSet rs = null;
-        PreparedStatement pstmt = null;
+        String sql = "SELECT * FROM product";
 
-        String sql = "SELECT * FROM  product";
-
-        try {
-            pstmt = connection.prepareStatement(sql);
-            rs = pstmt.executeQuery();
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 ProductDto productDto = new ProductDto(
@@ -79,6 +92,5 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
 
         return productDtoList;
-
     }
 }

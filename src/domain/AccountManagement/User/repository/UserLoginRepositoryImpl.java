@@ -7,16 +7,33 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
+/**
+ * {@link UserLoginRepository}의 구현체.
+ *
+ * <p>사용자의 로그인 인증을 수행하며, 저장된 해시된 비밀번호와 비교하여 로그인 여부를 결정합니다.</p>
+ *
+ * <p>비밀번호는 SHA-256 해시 알고리즘과 Salt 값을 사용하여 암호화되어 저장됩니다.</p>
+ *
+ * @author 이동휘
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class UserLoginRepositoryImpl implements UserLoginRepository {
-    Connection connection = DBConnection.getConnection();
-    CallableStatement cs = null;
-    ResultSet rs = null;
-    PreparedStatement pstmt = null;
+    private final Connection connection = DBConnection.getConnection();
 
+    /**
+     * 사용자 로그인 인증을 수행합니다.
+     *
+     * <p>입력된 사용자 ID를 조회하고, 저장된 해시된 비밀번호 및 Salt 값을 이용하여
+     * 사용자가 입력한 비밀번호를 검증합니다.</p>
+     *
+     * @param userid 로그인할 사용자 ID
+     * @param inputPassword 사용자가 입력한 비밀번호
+     * @return 로그인된 사용자의 {@link UserDto} 객체, 인증 실패 시 {@code null} 반환
+     */
     @Override
     public UserDto login(String userid, String inputPassword) {
         UserDto userDto = null;
-
         String sql = "SELECT * FROM user WHERE user_id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -70,6 +87,16 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
         return userDto;
     }
 
+    /**
+     * 주어진 비밀번호에 Salt 값을 적용하여 SHA-256 해시 알고리즘으로 암호화합니다.
+     *
+     * <p>비밀번호와 Salt 값을 결합하여 해싱한 후, 16진수 문자열로 변환하여 반환합니다.</p>
+     *
+     * @param pwd 사용자가 입력한 원본 비밀번호
+     * @param salt 비밀번호 암호화를 위한 Salt 값
+     * @return SHA-256으로 암호화된 비밀번호
+     * @throws RuntimeException 암호화 알고리즘을 찾을 수 없는 경우 예외 발생
+     */
     public String getEncrypt(String pwd, String salt) {
         String result= "";
 
@@ -90,5 +117,4 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
 
         return result;
     }
-
 }
