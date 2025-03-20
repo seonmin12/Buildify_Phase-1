@@ -73,7 +73,7 @@ public class InboundInsertControllerImp implements InboundInsertController{
                     productDto2.getProd_id(), productDto2.getBrand(), productDto2.getProd_name(),
                     productDto2.getProd_price(), productDto2.getProd_code(), productDto2.getProd_category(),
                     productDto2.getProd_size());
-            System.out.println("출고 수량: " + amount);
+            System.out.println("입고 수량: " + amount);
             String inbound_num = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
             InboundDto inboundDto = new InboundDto();
             inboundDto.setInbound_number(inbound_num);
@@ -82,7 +82,7 @@ public class InboundInsertControllerImp implements InboundInsertController{
             inboundDto.setQuantity(amount);
             inboundDto.setReq_inbound_day(Date.valueOf(LocalDate.now()));
             inboundDto.setWare_id("ware1");
-            System.out.println(inboundDto.getInbound_number());
+            //System.out.println(inboundDto.getInbound_number());
             insert(inboundDto);
         }
         return false;
