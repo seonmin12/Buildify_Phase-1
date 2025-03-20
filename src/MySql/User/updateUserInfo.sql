@@ -1,13 +1,14 @@
 use wmsdb;
 
-DELIMITER //
 
+##
+DROP PROCEDURE IF EXISTS UpdateUserinfo;
+DELIMITER &&
 CREATE PROCEDURE UpdateUserinfo(
     IN p_client_id VARCHAR(10),
     IN p_update_option INT,
     IN p_new_value VARCHAR(255),
-    OUT rtncode INT
-)
+    OUT rtncode INT)
 BEGIN
     DECLARE sql_query VARCHAR(255);
 
@@ -46,7 +47,6 @@ BEGIN
         -- 성공 코드 반환
         SET rtncode = 200;
     END IF;
-END //
-
+END &&
 DELIMITER ;
 

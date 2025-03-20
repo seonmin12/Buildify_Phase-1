@@ -1,14 +1,12 @@
 use wmsdb;
-select * from outbound;
 
-drop procedure delete_outbound_request;
-DELIMITER //
+
+DROP PROCEDURE IF EXISTS delete_outbound_request;
+DELIMITER &&
 CREATE procedure delete_outbound_request(
     in p_outboundKey varchar(100),
     in p_clientid varchar(100),
-    out p_result int
-)
-
+    out p_result int)
 BEGIN
     DELETE FROM outbound
         where outbound_id = p_outboundKey
@@ -20,8 +18,5 @@ BEGIN
         else
         set p_result = 0; -- 삭제 실패
     end if;
-
-
-end //
-
+end &&
 DELIMITER ;

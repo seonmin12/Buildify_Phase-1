@@ -1,6 +1,7 @@
 
 use wmsdb;
 # 현재 유저에게 할당된 창고 용적률 구하는 프로시저
+DROP PROCEDURE IF EXISTS useware;
 DELIMITER $$
 CREATE PROCEDURE useware()
 BEGIN
@@ -12,6 +13,7 @@ DELIMITER ;
 
 # 현재 할당 가능한 창고 면적
 # 창고사이즈 - 현재 승인된 회원에게 할당중인 창고 평수 계산
+DROP PROCEDURE IF EXISTS USE_AVAILABLE_WARE;
 DELIMITER $$
 CREATE PROCEDURE USE_AVAILABLE_WARE()
 BEGIN
@@ -25,13 +27,3 @@ BEGIN
 end $$
 DELIMITER ;
 
-
-call USE_AVAILABLE_WARE();
-
-
-# USE_AVAILABLE_WARE() 프로시저 테스트용 DATA
-INSERT INTO warehouse_area (ware_id, ware_name, ware_location, ware_size)
-VALUES ('WH001', '메인창고', '서울A구역', 10000);
-
-INSERT INTO warehouse (ware_id, client_id, prod_id, quantity, last_inbound_day, last_outbount_day)
-VALUES ('WH001', 'C001', 'P001', 500, '2025-03-10', NULL);

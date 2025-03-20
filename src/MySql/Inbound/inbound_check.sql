@@ -1,15 +1,18 @@
 use wmsdb;
 
-delimiter //
+##
+DROP PROCEDURE IF EXISTS DB_INBOUND_allcheck_read;
+delimiter &&
 create procedure DB_INBOUND_allcheck_read()
 begin
 select * from inbound where Inbound_status = 0;
-end//
+end &&
 delimiter ;
 
--- 관리자 입고요청 전체승인
+
+## 관리자 입고요청 전체승인
 DROP PROCEDURE IF EXISTS DB_inbound_check_client_read;
-delimiter //
+delimiter &&
 CREATE PROCEDURE DB_inbound_check_client_read()
 BEGIN
     -- 기존에 존재하는 상품이라면 수량만 업데이트
@@ -32,24 +35,26 @@ WHERE i.inbound_status = 0
       AND v.client_id = i.client_id
 
 );
-
 -- 입고 상태 변경
 UPDATE inbound
 SET inbound_status = 1, ware_id = 'ware1'
 WHERE inbound_status = 0;
-END;
-DELIMITER //
+END &&
+DELIMITER ;
 
-    delimiter //
+
+##
+DROP PROCEDURE IF EXISTS db_inbound_check_client_read;
+delimiter &&
 create procedure db_inbound_check_client_read(in a varchar(255))
 begin
 select * from inbound where client_id = a and Inbound_status = 0;
-end //
+end &&
 delimiter ;
 
 
--- 관리자 입고요청 업체별 승인
-drop procedure if exists db_inbound_check_client_update;
+## 관리자 입고요청 업체별 승인
+DROP PROCEDURE IF EXISTS db_inbound_check_client_update;
     DELIMITER &&
 CREATE PROCEDURE db_inbound_check_client_update(IN client_id_param VARCHAR(255))
 BEGIN
@@ -72,41 +77,42 @@ WHERE i.inbound_status = 0
     SELECT 1 FROM inventory v
     WHERE v.prod_id = i.prod_id
       AND v.client_id = i.client_id
-
 );
 -- 3️⃣ `inbound` 상태 업데이트 (승인 완료: `0` → `1`)
 UPDATE inbound
 SET Inbound_status = 1, ware_id = 'ware1'
 WHERE Inbound_status = 0
   AND client_id = client_id_param;
-
 END &&
 DELIMITER ;
 
-delimiter //
+
+##
+DROP PROCEDURE IF EXISTS db_inbound_allcheck_return;
+delimiter &&
 create procedure db_inbound_allcheck_return()
 begin
 update inbound set Inbound_status = 2 where Inbound_status = 0;
-end //
+end &&
 delimiter ;
 
-    delimiter //
+##
+DROP PROCEDURE IF EXISTS db_inbound_check_client_return;
+delimiter &&
 create procedure db_inbound_check_client_return(in a varchar(255))
 begin
-update inbound set Inbound_status = 2 where client_id = a and Inbound_status = 0;
-end //
+    update inbound set Inbound_status = 2 where client_id = a and Inbound_status = 0;
+end &&
+delimiter ;
 
 
-
-
--- 관리자 입고요청 개별승인
+## 관리자 입고요청 개별승인
 drop procedure if exists db_inbound_check_inbound_number_update;
-    DELIMITER //
+DELIMITER &&
 CREATE PROCEDURE db_inbound_check_inbound_number_update(IN inbound_num_param VARCHAR(255))
 BEGIN
     -- 기존에 inventory 테이블에 존재하는지 확인
-
-        -- 기존 데이터가 존재하면 수량만 추가
+    -- 기존 데이터가 존재하면 수량만 추가
 UPDATE inventory v
     JOIN inbound i ON i.prod_id = v.prod_id
     AND i.client_id = v.client_id
@@ -131,21 +137,25 @@ UPDATE inbound
 SET inbound_status = 1, ware_id = 'ware1'
 WHERE inbound_id = inbound_num_param
   AND inbound_status = 0;
-
-END ;
+END &&
 DELIMITER ;
 
-delimiter //
+
+##
+DROP PROCEDURE IF EXISTS db_inbound_check_inbound_number_return;
+delimiter &&
 create procedure db_inbound_check_inbound_number_return(in a varchar(30))
 begin
-update inbound set Inbound_status = 2 where inbound_id = a and Inbound_status = 0;
+    update inbound set Inbound_status = 2 where inbound_id = a and Inbound_status = 0;
 end ;
-delimiter //
+delimiter ;
 
 
-
+##
+DROP PROCEDURE IF EXISTS db_inbound_userSearch;
+delimiter &&
 create procedure db_inbound_userSearch(in a varchar(255))
 begin
-select * from inbound where client_id = a order by Inbound_status;
-end //
+    select * from inbound where client_id = a order by Inbound_status;
+end &&
 delimiter ;
