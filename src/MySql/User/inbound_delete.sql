@@ -1,9 +1,9 @@
 use wmsdb;
-
+DROP PROCEDURE DB_INBOUND_DELETE;
 DELIMITER &&
 create procedure DB_INBOUND_DELETE(in inbound_number varchar(30))
 begin
-    set @strsql = concat(' DELETE FROM INBOUND WHERE inbound_number = ? ');
+    set @strsql = concat(' DELETE FROM INBOUND WHERE inbound_id = ? ');
     SET @inbound_number = inbound_number;
 
 prepare stmt from @strsql;

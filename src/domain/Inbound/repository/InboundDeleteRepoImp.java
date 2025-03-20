@@ -29,7 +29,7 @@ public class InboundDeleteRepoImp implements InboundDeleteRepo{
             rs = cs.executeQuery();
             while (rs.next()) {
                 InboundDto dto = InboundDto.builder()
-                        .inbound_number(rs.getString("inbound_number"))
+                        .inbound_number(rs.getString("inbound_id"))
                         .prod_id(rs.getString("prod_id"))
                         .client_id(rs.getString("client_id"))
                         .quantity(rs.getInt("quantity"))

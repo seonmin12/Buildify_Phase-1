@@ -18,5 +18,6 @@ public interface InboundCheckRepo {
     void clientCheckReturn(String ci);
 
     void inbound_number_check_update(String ci);
+
     void inbound_number_check_return(String ci);
 }

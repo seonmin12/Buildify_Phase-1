@@ -8,9 +8,9 @@ end//
 delimiter ;
 
 -- 관리자 입고요청 전체승인
-DROP PROCEDURE IF EXISTS db_inbound_allcheck_update;
+DROP PROCEDURE IF EXISTS DB_inbound_check_client_read;
 delimiter //
-CREATE PROCEDURE db_inbound_allcheck_update()
+CREATE PROCEDURE DB_inbound_check_client_read()
 BEGIN
     -- 기존에 존재하는 상품이라면 수량만 업데이트
 UPDATE inventory v
@@ -112,14 +112,14 @@ UPDATE inventory v
     AND i.client_id = v.client_id
 
     SET v.quantity = v.quantity + i.quantity
-WHERE i.inbound_number = inbound_num_param
+WHERE i.inbound_id = inbound_num_param
   AND i.inbound_status = 0;
 
 -- 존재하지 않으면 새로 삽입
 INSERT INTO inventory (prod_id, client_id, quantity, ware_id, last_inbound_day)
 SELECT prod_id, client_id, quantity, 'ware1', now()
 FROM inbound i
-WHERE inbound_number = inbound_num_param
+WHERE inbound_id = inbound_num_param
   AND inbound_status = 0
   and not exists(
     select 1 from inventory v
@@ -129,7 +129,7 @@ WHERE inbound_number = inbound_num_param
 -- inbound_status를 1로 변경 (처리 완료)
 UPDATE inbound
 SET inbound_status = 1, ware_id = 'ware1'
-WHERE inbound_number = inbound_num_param
+WHERE inbound_id = inbound_num_param
   AND inbound_status = 0;
 
 END ;
@@ -138,7 +138,7 @@ DELIMITER ;
 delimiter //
 create procedure db_inbound_check_inbound_number_return(in a varchar(30))
 begin
-update inbound set Inbound_status = 2 where inbound_number = a and Inbound_status = 0;
+update inbound set Inbound_status = 2 where inbound_id = a and Inbound_status = 0;
 end ;
 delimiter //
 
