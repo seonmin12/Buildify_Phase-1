@@ -7,6 +7,11 @@ import dto.InventoryDto;
 
 import java.util.List;
 
+/**
+ * 재고 삭제 기능을 구현한 컨트롤러 클래스.
+ * <p>
+ * 사용자 입력을 받아 재고를 삭제하고 결과를 출력한다.
+ */
 public class InventoryDeleteControllerImp implements InventoryDeleteController {
     private final InventoryDeleteService inventoryDeleteService;
     private final ValidCheck validCheck;
@@ -18,11 +23,17 @@ public class InventoryDeleteControllerImp implements InventoryDeleteController {
         this.inventoryReadService = inventoryReadService;
     }
 
+
+    /**
+     * 사용자로부터 재고 정보를 입력받아 해당 재고를 삭제한다.
+     * 삭제 전 전체 재고 조회를 통해 정보를 입력할 수 있다.
+     * @return 삭제된 재고 정보
+     */
     @Override
     public InventoryDto deleteInventory() {
         System.out.println("[재고 삭제]");
         List<InventoryDto> inventoryList = inventoryReadService.ReadAll();
-        if(inventoryList.isEmpty()){
+        if(inventoryList == null || inventoryList.isEmpty()){
             System.out.println("현재 등록된 재고가 없습니다.");
             return null;
         }

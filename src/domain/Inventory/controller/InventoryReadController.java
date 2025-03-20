@@ -9,7 +9,6 @@ import java.util.Optional;
 
 /**
  * 사용자 입력을 받아 재고 정보를 조회하고 화면에 출력하는 컨트롤러 인터페이스.
- * 입력은 메서드 내부에서 직접 받아 처리한다.
  */
 public interface InventoryReadController {
     /**
@@ -33,7 +32,12 @@ public interface InventoryReadController {
      */
     List<InventoryDto> ReadByClientID();
 
-    // user 용 오버로딩
+    /**
+     * 회원의 클라이언트 ID를 이용해 재고 정보를 조회한다.
+     *
+     * @param userDto 회원 정보
+     * @return 해당 회원의 재고 정보 리스트
+     */
     List<InventoryDto>ReadByClientID(UserDto userDto);
 
     /**
@@ -43,7 +47,12 @@ public interface InventoryReadController {
      */
     List<InventoryDto> ReadByCategory();
 
-    // 공통 조회, 출력 담당 메소드
- List<InventoryDto> processInventoryRead(String clientId);
+    /**
+     * 클라이언트 ID로 재고 정보를 조회하고 출력한다.
+     *
+     * @param clientId 조회할 클라이언트 ID
+     * @return 조회된 재고 정보 리스트
+     */
+    List<InventoryDto> processInventoryRead(String clientId);
 
 }

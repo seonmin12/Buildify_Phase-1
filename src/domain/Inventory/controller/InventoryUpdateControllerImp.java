@@ -6,7 +6,11 @@ import domain.Inventory.service.InventoryUpdateService;
 import dto.InventoryDto;
 
 import java.util.List;
-
+/**
+ * 재고 수량 업데이트 기능을 구현한 컨트롤러 클래스.
+ * <p>
+ * 사용자로부터 재고 정보와 수정할 수량을 입력을 받아 재고 수량을 수정하고 결과를 출력한다.
+ */
 public class InventoryUpdateControllerImp implements InventoryUpdateController {
     private final InventoryUpdateService inventoryUpdateService;
     private final ValidCheck validCheck;
@@ -18,6 +22,13 @@ public class InventoryUpdateControllerImp implements InventoryUpdateController {
         this.inventoryReadService = inventoryReadService;
     }
 
+    /**
+     * 사용자로부터 재고 정보를 입력받아 수량을 업데이트한다.
+     * <p>
+     * 수정 결과를 출력하고, 수정된 재고 정보를 반환한다.
+     *
+     * @return 수정된 재고 정보
+     */
     @Override
     public InventoryDto updateQuantity() {
         System.out.println("[수량 업데이트]");

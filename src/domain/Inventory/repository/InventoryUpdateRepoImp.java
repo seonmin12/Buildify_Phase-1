@@ -30,7 +30,6 @@ public class InventoryUpdateRepoImp implements InventoryUpdateRepo {
      * @param newQuantity 변경할 수량 값
      * @return 업데이트된 재고 정보를 담은 Optional 객체.
      *         업데이트 실패 또는 결과 없음 시 Optional.empty() 반환
-     * @throws InventoryException SQL 예외 발생 시 커스텀 예외 발생
      */
     @Override
     public Optional<InventoryDto> updateQuantity(String prodID, String clientID, String wareID, int newQuantity)  {

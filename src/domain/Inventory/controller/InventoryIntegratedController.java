@@ -3,7 +3,11 @@ package domain.Inventory.controller;
 import common.ValidCheck;
 import dto.AdminDto;
 import dto.UserDto;
-
+/**
+ * 재고 통합 기능관리를 담당하는 컨트롤러 클래스.
+ * <p>
+ * 관리자 및 회원 권한에 따라 재고 조회, 수정, 삭제 기능을 제공한다.
+ */
 public class InventoryIntegratedController {
 
     private final InventoryReadController inventoryReadController;
@@ -21,7 +25,13 @@ public class InventoryIntegratedController {
 
 
 
-
+    /**
+     * 관리자용 재고 관리 메뉴를 실행한다.
+     * <p>
+     * 재고 조회, 삭제, 수정 기능을 선택할 수 있다.
+     *
+     * @param adminDto 관리자 정보
+     */
     public void inventoryRunForAdmin(AdminDto adminDto) {
 
         while(true){
@@ -63,7 +73,11 @@ public class InventoryIntegratedController {
 
     }
 
-
+    /**
+     * 회원 전용 재고 조회 메뉴를 실행한다.
+     *
+     * @param userDto 회원 정보
+     */
     public void inventoryRunForUser(UserDto userDto) {
         System.out.println("\n=== 회원 재고 조회 메뉴 ===");
         System.out.println("1. 내 회사 재고 조회");
@@ -90,7 +104,11 @@ public class InventoryIntegratedController {
     }
 
 
-    // 관리자용 재고조회 메뉴 세분화
+    /**
+     * 관리자용 재고 조회 메뉴를 출력하고 기능을 실행한다.
+     *
+     * @param adminDto 관리자 정보
+     */
     private void inventoryReadMenu(AdminDto adminDto){
         System.out.println("\n--- 재고 조회 메뉴 ---");
         System.out.println("1. 상품명으로 조회");

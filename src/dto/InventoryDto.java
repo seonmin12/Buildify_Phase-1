@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-// 재고 관리 도메인을 확실히 구분하고 향후 확장성과 유지 보수를 위해 생성
+
 public class InventoryDto {
     private String prod_id;
     private String client_id;

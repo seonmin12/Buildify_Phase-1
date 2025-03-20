@@ -38,21 +38,19 @@ public class InventoryReadServiceImp implements InventoryReadService {
      */
     @Override
     public List<InventoryDto> ReadAll() {
-       List<InventoryDto> inventoryDtoList = inventoryReadRepo.ReadAll();
-       if(inventoryDtoList.isEmpty()){
-           return null;
-       }
-       return inventoryDtoList;
+        List<InventoryDto> inventoryDtoList = inventoryReadRepo.ReadAll();
+        if (inventoryDtoList.isEmpty()) {
+            return null;
+        }
+        return inventoryDtoList;
 
     }
 
     /**
      * 상품명을 기준으로 재고 정보를 조회한다.
-     * 결과가 없을 경우 예외를 발생시킨다.
      *
      * @param productName 조회할 상품명
      * @return 해당 상품명과 일치하는 재고 정보 리스트
-     * @throws InventoryException 조회 실패 시 발생
      */
     @Override
     public List<InventoryDto> ReadByProductName(String productName) {
@@ -67,11 +65,9 @@ public class InventoryReadServiceImp implements InventoryReadService {
 
     /**
      * 클라이언트 ID를 기준으로 재고 정보를 조회한다.
-     * 결과가 없을 경우 예외를 발생시킨다.
      *
      * @param clientID 조회할 클라이언트 ID
      * @return 해당 클라이언트 ID에 해당하는 재고 정보 리스트
-     * @throws InventoryException 조회 실패 시 발생
      */
     @Override
     public List <InventoryDto> ReadByClientID(String clientID) {
@@ -87,11 +83,9 @@ public class InventoryReadServiceImp implements InventoryReadService {
 
     /**
      * 카테고리를 기준으로 재고 정보를 조회한다.
-     * 결과가 없을 경우 예외를 발생시킨다.
      *
      * @param category 조회할 카테고리명
      * @return 해당 카테고리에 속하는 재고 정보 리스트
-     * @throws InventoryException 조회 실패 시 발생
      */
     @Override
     public List<InventoryDto> ReadByCategory(String category) {
