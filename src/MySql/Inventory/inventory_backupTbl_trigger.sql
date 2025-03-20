@@ -11,9 +11,7 @@ CREATE TABLE inventory_backup (
                                   quantity INT,
                                   ware_id VARCHAR(50),
                                   last_inbound_day DATE,
-                                  last_outbound_day DATE
-);
-
+                                  last_outbound_day DATE);
 
 -- 재고 삭제시 정보를 백업테이블에 기록하는 트리거 생성
 DELIMITER $$
@@ -46,8 +44,6 @@ INSERT INTO inventory_backup(
 
 
 end $$
-
-
 DELIMITER ;
 
 

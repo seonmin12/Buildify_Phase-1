@@ -1,9 +1,9 @@
 USE wmsdb;
 
+
+##
 DROP PROCEDURE IF EXISTS SignUp;
-
-DELIMITER //
-
+DELIMITER &&
 CREATE PROCEDURE SignUp(
     IN p_user_name VARCHAR(20),
     IN p_user_phone VARCHAR(15),
@@ -15,8 +15,7 @@ CREATE PROCEDURE SignUp(
     IN p_user_status TINYINT(1),
     IN p_user_ware_size DECIMAL(10,2),
     IN p_user_ware_use DECIMAL(10,2),
-    OUT rtncode INT  -- 반환 코드
-)
+    OUT rtncode INT ) -- 반환 코드
 BEGIN
     DECLARE userExists INT;
     DECLARE generated_client_id VARCHAR(36);  -- UUID를 저장할 변수
@@ -29,7 +28,6 @@ BEGIN
 
     -- 중복된 user_id 확인
     SELECT COUNT(*) INTO userExists FROM user WHERE user_id = p_user_id;
-
     IF userExists > 0 THEN
         SET rtncode = 400;  -- 중복된 user_id가 존재하면 실패 (400);
     ELSE
@@ -49,9 +47,6 @@ BEGIN
         -- 삽입 성공 시 200 반환
         SET rtncode = 200;
     END IF;
-END //
-
+END &&
 DELIMITER ;
 
-ALTER TABLE user
-    MODIFY COLUMN business_number VARCHAR(30) NOT NULL;
