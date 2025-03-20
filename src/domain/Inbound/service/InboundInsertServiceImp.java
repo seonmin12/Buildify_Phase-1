@@ -21,11 +21,21 @@ public class InboundInsertServiceImp  implements InboundInsertService{
         this.inboundSearchRepo = inboundSearchRepo;
     }
 
+    /**
+     * 회원 입고요청 상품리스트 조회
+     * @return
+     */
     @Override
     public List<ProductDto> inboundinsertlist() {
         return inboundInsertRepo.inboundinsertlist();
     }
 
+    /**
+     * 회원 입고요청
+     * @param inboundDto
+     * @return
+     * @throws InboundException
+     */
     @Override
     public InboundDto insert(InboundDto inboundDto) throws InboundException {
         inboundInsertRepo.insert(InboundDto.builder()

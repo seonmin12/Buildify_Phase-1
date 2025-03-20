@@ -26,13 +26,21 @@ public class InboundInsertControllerImp implements InboundInsertController{
     }
 
 
-
+    /**
+     * 회원 입고요청
+     * @param inboundDto
+     * @return
+     */
     @Override
     public InboundDto insert(InboundDto inboundDto) {
         return insertService.insert(inboundDto);
     }
 
-
+    /**
+     * 회원 입고요청 시작
+     * @param userDto
+     * @return
+     */
     @Override
     public boolean insertrun(UserDto userDto) {
         List<ProductDto> productDto = insertService.inboundinsertlist();

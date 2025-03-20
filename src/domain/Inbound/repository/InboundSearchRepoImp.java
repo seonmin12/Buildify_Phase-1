@@ -20,7 +20,10 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
     PreparedStatement pstmt = null;
 
 
-
+    /**
+     * 입고요청진행 업체리스트 조회
+     * @return
+     */
     @Override
     public List<ClientUpdateDto> clientsearch() {
 
@@ -49,6 +52,11 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
 
     }
 
+    /**
+     * 회원 입고요청 리스트 조회
+     * @param a
+     * @return
+     */
     @Override
     public List<InboundDto> userSearch(String a) {
         List<InboundDto> list = new ArrayList<>();
@@ -81,6 +89,11 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
         }
     }
 
+    /**
+     * 관리자 입고요청 리스트 업체별 조회
+     * @param inbound_number
+     * @return
+     */
     @Override
     public List<InboundDto> SearchOne(String inbound_number) {
         List<InboundDto> list = new ArrayList<>();
@@ -113,6 +126,10 @@ public class InboundSearchRepoImp implements InboundSearchRepo {
         }
     }
 
+    /**
+     * 관리자 입고요청 리스트 전체조회
+     * @return
+     */
     @Override
     public Optional<List<InboundDto>> SearchAll() {
         List<InboundDto> list = new ArrayList<>();
