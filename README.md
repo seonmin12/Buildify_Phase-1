@@ -1,6 +1,10 @@
 
 
 # 📦 BuildiFy - WMS 시스템 (1차 프로젝트)
+<img width="1156" alt="image" src="https://github.com/user-attachments/assets/ca669e96-f1d9-44d1-b46c-b0bd78190c1f" />
+
+
+
 
 ## 📌 프로젝트 개요
 **BuildiFy**는 Java CLI 환경에서 구현된 창고 관리 시스템(Warehouse Management System, WMS)입니다.  
@@ -8,11 +12,23 @@
 
 ---
 
-## 🖥️ 주요 기술 스택
-- **Language**: Java  
-- **Database**: MySQL  
-- **Framework/Library**: JDBC  
-- **Version Control**: Git  
+## 🖥 주요 기술 스택
+
+- **Language:** ![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white)
+- **Database:** ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+- **Framework/Library:** ![JDBC](https://img.shields.io/badge/JDBC-336791?style=flat&logo=apachemaven&logoColor=white)
+- **Version Control:** ![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
+
+## 🧩 2차 프로젝트 기술 스택 (예정)
+
+![Linux](https://img.shields.io/badge/Linux-000000?style=flat&logo=linux&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white)
+![MyBatis](https://img.shields.io/badge/MyBatis-FF6600?style=flat&logo=datagrip&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
+![Ajax](https://img.shields.io/badge/AJAX-0B98DC?style=flat&logo=javascript&logoColor=white)
+
+
 
 ---
 
